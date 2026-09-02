@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!-- Guide: project board (StoryQuest) · v18 · DRAFT · 2026-08-27 · style: LEARNER-GUIDES.md · media: GUIDE-MEDIA-v6 §2.8 (external clips) -->
-<html lang="en" data-lang="en" data-guide="project-board" data-guide-v="18">
+<!-- Guide: project board (StoryQuest) · v19 · PUBLISH · 2026-09-02 · style: LEARNER-GUIDES.md · media: GUIDE-MEDIA-v6 §2.8 (external clips) · build: publish (edit layer stripped) -->
+<html lang="en" data-lang="en" data-guide="project-board" data-guide-v="19">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -92,10 +92,8 @@ main{max-width:760px;margin:0 auto;padding:0 20px 90px;counter-reset:stage}
 .sec .goal{margin:12px 0 0;color:var(--ink-soft);font-size:16px}
 
 .sec.sec-collapse > h2{cursor:pointer;margin-left:-12px;padding-left:12px;padding-right:94px;border-radius:12px 12px 0 0;transition:background .15s ease-out}
-body:not(.editing) .sec.sec-collapse > h2{user-select:none}
-body:not(.editing) .sec-collapse > h2:hover{background:var(--coin-soft)}
-body.editing .sec.sec-collapse > h2{cursor:text}
-body.editing .sec-collapse > h2 .chev{cursor:pointer}
+.sec.sec-collapse > h2{user-select:none}
+.sec-collapse > h2:hover{background:var(--coin-soft)}
 .sec-collapse > h2:focus-visible{outline:2px solid var(--coin);outline-offset:3px;border-radius:12px}
 .sec-collapse[data-open="false"] > h2{color:var(--ink-soft)}
 .sec-collapse[data-open="false"] > .secbody{display:none}
@@ -204,7 +202,6 @@ figure.shotfig figcaption{margin-top:10px;font-size:13.5px;color:var(--ink-faint
 .mediawrap:hover .mt-badge{background:var(--coin)}
 .mediathumb:focus-visible{outline:2px solid var(--coin);outline-offset:-2px}
 .mt-label{display:block;padding:7px 11px;font:600 12.5px Inter,sans-serif;color:var(--ink);border-top:1px solid var(--hairline)}
-body.editing .mt-label{cursor:text}
 
 /* ---------- definition / picture modal ---------- */
 .defbox{margin:0;padding:13px 16px;background:#fff;border:1px solid var(--coin);border-radius:16px;font-size:14.5px;color:var(--ink);position:relative}
@@ -246,31 +243,9 @@ body.modal-open{overflow:hidden}
 
 footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid var(--hairline);font-size:13px;color:var(--ink-faint)}
 
-/* ---------- edit layer (review tool — stripped before publish) ---------- */
-#editbar{position:fixed;right:18px;bottom:18px;z-index:200;display:flex;gap:8px;align-items:center;background:#fff;border:1px solid var(--hairline);border-radius:100px;padding:7px 10px;box-shadow:0 6px 22px rgba(2,6,23,.16);font:600 12px Inter,sans-serif}
-#editbar button{border:1px solid var(--hairline);background:#fff;border-radius:100px;padding:5px 12px;font:600 12px Inter,sans-serif;color:var(--ink);cursor:pointer}
-#editbar button:hover{border-color:var(--coin);color:var(--accent-text)}
-#editbar button:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
-#editbar button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-#editbar button.warn{background:var(--coin);color:#fff;border-color:var(--coin)}
-#editbar .wc{font:600 11px ui-monospace,monospace;color:var(--ink-faint);padding:0 3px;white-space:nowrap}
-#editbar .wc b{color:var(--ink);font-weight:700}
-#editbar .wc.over b{color:var(--accent-text)}
-body.editing [contenteditable]{outline:1px dashed rgba(245,74,0,.45);outline-offset:3px;border-radius:3px}
-body.editing [contenteditable]:focus{outline:2px solid var(--coin);background:#fff}
-.ed-changed{background:rgba(245,74,0,.09);border-radius:3px;box-shadow:0 0 0 2px rgba(245,74,0,.09)}
-#edpanel{position:fixed;right:18px;bottom:72px;z-index:201;width:min(580px,calc(100vw - 36px));background:#fff;border:1px solid var(--hairline);border-radius:18px;box-shadow:0 12px 36px rgba(2,6,23,.22);padding:14px 16px;display:none}
-#edpanel.open{display:block}
-#edpanel .row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:9px}
-#edpanel .ttl{font:700 13px Inter,sans-serif;color:var(--ink-strong)}
-#edpanel .hint{font:400 12px Inter,sans-serif;color:var(--ink-faint);margin:9px 0 0}
-#edpanel textarea{width:100%;height:230px;box-sizing:border-box;border:1px solid var(--hairline);border-radius:10px;padding:10px 12px;font:400 12.5px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--ink);background:var(--paper);resize:vertical}
-#edpanel button{border:1px solid var(--hairline);background:#fff;border-radius:100px;padding:4px 11px;font:600 11.5px Inter,sans-serif;color:var(--ink);cursor:pointer}
-#edpanel button:hover{border-color:var(--coin);color:var(--accent-text)}
-@media print{#editbar,#edpanel{display:none!important}}
 
 @media print{
-  #editbar,.lang,.progress{display:none!important}
+  .lang,.progress{display:none!important}
   html,body{background:#fff}
   body{font-size:10.5pt;line-height:1.5}
   .topbar{position:static;border-bottom:0;padding:0}
@@ -291,7 +266,7 @@ body.editing [contenteditable]:focus{outline:2px solid var(--coin);background:#f
 <header class="topbar">
   <div class="progress" id="progress"></div>
   <div class="topbar-inner">
-    <div class="brand"><span class="en"><b>StoryQuest board</b> · How to use it</span><span class="es"><b>Tablero de StoryQuest</b> · Cómo usarlo</span></div>
+    <div class="brand"><span class="en"><b>StoryQuest board</b></span><span class="es"><b>Tablero de StoryQuest</b></span></div>
     <div class="lang" role="group" aria-label="Language">
       <button id="langEn" class="on" aria-pressed="true">EN</button>
       <button id="langEs" aria-pressed="false">ES</button>
@@ -627,10 +602,6 @@ function fillDefbox(box, key, def){
     box.querySelector(".slide-next").addEventListener("click", () => { idx = (idx + 1) % slides.length; sshow(); });
     sshow();
   }
-  if(document.body.classList.contains("editing")){
-    box.querySelector(".deftitle").setAttribute("contenteditable", "true");
-    box.querySelector(".defcap").setAttribute("contenteditable", "true");
-  }
 }
 
 /* ---------- modal plumbing ---------- */
@@ -673,8 +644,6 @@ function secHeadFrom(t){
   const head = t.closest && t.closest("h2");
   if(!head || !head.parentElement.classList.contains("sec-collapse")) return null;
   if(t.closest(".term")) return null;
-  if(t.closest('[contenteditable="true"]')) return null;
-  if(document.body.classList.contains("editing") && !t.closest(".chev")) return null;
   return head;
 }
 
@@ -722,224 +691,6 @@ addEventListener("scroll", () => {
   progress.style.width = (max > 0 ? (doc.scrollTop / max) * 100 : 0) + "%";
 }, { passive: true });
 
-/* ============================================================================
-   6. EDIT LAYER — review tool. Remove this block (and its CSS) before publish.
-   Edits autosave to this browser (localStorage), keyed by guide + version, and
-   Download writes a clean copy with the layer and contenteditable stripped and
-   the TERMS object rewritten so edited definitions survive.
-   ============================================================================ */
-(function(){
-  const WORD_TARGET = 700;
-  const GUIDE = document.documentElement.dataset.guide ||
-                (location.pathname.split("/").pop() || "guide").replace(/-edited(\.html?)?$/, "");
-  const GVER  = document.documentElement.dataset.guideV || "0";
-  const STORE_KEY = "guide-edits:" + GUIDE + ":v" + GVER;
-
-  const bar = document.createElement("div");
-  bar.id = "editbar";
-  bar.innerHTML =
-    '<span class="wc" title="which build you are looking at">v' + GVER + '</span>' +
-    '<button id="edToggle" type="button">Edit text</button>' +
-    '<span class="wc">EN <b id="edWords">0</b> words</span>' +
-    '<button id="edShow" type="button">Copy my changes</button>' +
-    '<span class="wc" id="edStatus"></span>' +
-    '<button id="edSave" type="button" title="only needed for a full-file handoff">Download</button>';
-  document.body.appendChild(bar);
-
-  const panel = document.createElement("div");
-  panel.id = "edpanel";
-  panel.innerHTML =
-    '<div class="row"><span class="ttl">Your changes</span>' +
-    '<span><button id="edCopy" type="button">Copy</button> ' +
-    '<button id="edRevert" type="button">Revert all</button> ' +
-    '<button id="edClose" type="button">Close</button></span></div>' +
-    '<textarea id="edText" readonly></textarea>' +
-    '<p class="hint">Paste this into your chat with Claude. That is the whole handoff — no files, no downloading.</p>';
-  document.body.appendChild(panel);
-
-  const originals = new Map();
-  let editing = false;
-
-  function targets(){
-    return Array.from(document.querySelectorAll("main .en, main .es"))
-      .filter(el => !el.querySelector(".en, .es"));
-  }
-  const T = targets();
-  T.forEach(el => originals.set(el, el.innerHTML));
-
-  const termOriginals = JSON.parse(JSON.stringify(TERMS));
-  function termChanged(){
-    const out = [];
-    Object.keys(TERMS).forEach(k => ["en","es"].forEach(l => ["t","d"].forEach(f => {
-      if(TERMS[k][l] && TERMS[k][l][f] !== termOriginals[k][l][f])
-        out.push({ k: k, l: l, f: f, was: termOriginals[k][l][f], now: TERMS[k][l][f] });
-    })));
-    return out;
-  }
-  function editableDefboxes(on){
-    document.querySelectorAll(".defbox").forEach(box => {
-      [".deftitle", ".defcap"].forEach(sel => {
-        const el = box.querySelector(sel);
-        if(!el) return;
-        if(on) el.setAttribute("contenteditable", "true");
-        else el.removeAttribute("contenteditable");
-      });
-    });
-  }
-  function englishWords(){
-    const txt = Array.from(document.querySelectorAll("main .en"))
-      .filter(el => !el.querySelector(".en")).map(el => el.textContent).join(" ");
-    return (txt.trim().match(/\S+/g) || []).length;
-  }
-  function changed(){ return T.filter(el => el.innerHTML !== originals.get(el)); }
-  function strip(html){ const d = document.createElement("div"); d.innerHTML = html; return d.textContent; }
-
-  function refresh(){
-    const n = englishWords();
-    document.getElementById("edWords").textContent = n;
-    bar.querySelector(".wc").classList.toggle("over", n > WORD_TARGET);
-    T.forEach(el => el.classList.toggle("ed-changed", el.innerHTML !== originals.get(el)));
-    const c = changed().length + termChanged().length;
-    const show = document.getElementById("edShow");
-    show.classList.toggle("warn", c > 0);
-    show.textContent = c ? "Copy my changes (" + c + ")" : "Copy my changes";
-  }
-  function persist(){
-    const data = { s: {}, t: {} };
-    T.forEach((el, i) => { if(el.innerHTML !== originals.get(el)) data.s[i] = el.innerHTML; });
-    termChanged().forEach(c => { data.t[c.k + "|" + c.l + "|" + c.f] = c.now; });
-    try{ localStorage.setItem(STORE_KEY, JSON.stringify(data)); }catch(e){}
-  }
-  function restore(){
-    let data = null;
-    try{ data = JSON.parse(localStorage.getItem(STORE_KEY) || "null"); }catch(e){}
-    if(!data) return 0;
-    let n = 0;
-    Object.keys(data.s || {}).forEach(k => { const el = T[Number(k)]; if(el){ el.innerHTML = data.s[k]; n++; } });
-    Object.keys(data.t || {}).forEach(k => {
-      const p = k.split("|");
-      if(TERMS[p[0]] && TERMS[p[0]][p[1]]){ TERMS[p[0]][p[1]][p[2]] = data.t[k]; n++; }
-    });
-    return n;
-  }
-  function serialize(){
-    if(typeof closeDef === "function") closeDef();
-    const clone = document.documentElement.cloneNode(true);
-    clone.querySelectorAll("[contenteditable]").forEach(el => el.removeAttribute("contenteditable"));
-    clone.querySelectorAll(".ed-changed").forEach(el => el.classList.remove("ed-changed"));
-    clone.querySelectorAll("font").forEach(n => { const p = n.parentNode; while(n.firstChild) p.insertBefore(n.firstChild, n); n.remove(); });
-    const body = clone.querySelector("body");
-    if(body) body.classList.remove("editing");
-    ["#editbar", "#edpanel"].forEach(s => { const n = clone.querySelector(s); if(n) n.remove(); });
-    clone.querySelectorAll(".defmodal").forEach(n => n.remove());
-    const scripts = clone.querySelectorAll("script");
-    const last = scripts[scripts.length - 1];
-    if(last && /const TERMS = \{/.test(last.textContent)){
-      last.textContent = last.textContent.replace(/const TERMS = \{[\s\S]*?\n\};/, "const TERMS = " + JSON.stringify(TERMS, null, 2) + ";");
-    }
-    return "<!DOCTYPE html>\n" + clone.outerHTML;
-  }
-  function setStatus(msg, good){
-    const s = document.getElementById("edStatus");
-    s.textContent = msg || "";
-    s.style.color = good ? "#55852e" : "";
-  }
-
-  let storageOK = true;
-  try{ localStorage.setItem("__probe", "1"); localStorage.removeItem("__probe"); }
-  catch(e){ storageOK = false; }
-  const restored = restore();
-  refresh();
-  if(!storageOK) setStatus("autosave off here — copy before closing");
-  else if(restored) setStatus(restored + " edit" + (restored === 1 ? "" : "s") + " restored", true);
-
-  document.getElementById("edToggle").addEventListener("click", () => {
-    editing = !editing;
-    document.body.classList.toggle("editing", editing);
-    const btn = document.getElementById("edToggle");
-    btn.classList.toggle("on", editing);
-    btn.textContent = editing ? "Done editing" : "Edit text";
-    T.forEach(el => editing ? el.setAttribute("contenteditable", "true") : el.removeAttribute("contenteditable"));
-    editableDefboxes(editing);
-  });
-
-  function scrub(el){
-    el.querySelectorAll("font").forEach(n => { const p = n.parentNode; while(n.firstChild) p.insertBefore(n.firstChild, n); n.remove(); });
-    el.querySelectorAll("[style],[color]").forEach(n => { n.removeAttribute("style"); n.removeAttribute("color"); });
-    el.normalize();
-  }
-  document.addEventListener("focusout", e => {
-    const el = e.target.closest && e.target.closest("[contenteditable]");
-    if(el){ scrub(el); refresh(); persist(); }
-  }, true);
-  document.addEventListener("input", e => {
-    if(!editing) return;
-    const box = e.target.closest && e.target.closest(".defbox");
-    if(box && TERMS[box.dataset.t]){
-      const lang = root.dataset.lang === "es" ? "es" : "en";
-      TERMS[box.dataset.t][lang].t = box.querySelector(".deftitle").textContent;
-      TERMS[box.dataset.t][lang].d = box.querySelector(".defcap").textContent;
-    }
-    refresh(); persist();
-  });
-  document.addEventListener("click", e => {
-    if(!editing) return;
-    // while editing, a click inside editable text places the caret — don't let it open a modal or toggle
-    if(e.target.closest('[contenteditable="true"]')){ e.stopPropagation(); return; }
-    if(e.target.closest(".sec-collapse > h2") && !e.target.closest(".chev")){ e.stopPropagation(); e.preventDefault(); }
-  }, true);
-
-  function renderPanel(){
-    const list = changed().map(el => {
-      const lang = el.classList.contains("es") ? "ES" : "EN";
-      return "[" + lang + "] WAS: " + strip(originals.get(el)) + "\n[" + lang + "] NOW: " + el.textContent;
-    }).concat(termChanged().map(c => {
-      const label = "[" + c.l.toUpperCase() + " · definition of \"" + c.k + "\"" + (c.f === "t" ? " · title" : "") + "]";
-      return label + " WAS: " + c.was + "\n" + label + " NOW: " + c.now;
-    }));
-    document.getElementById("edText").value = list.length ? list.join("\n\n") : "No changes yet.";
-  }
-  document.getElementById("edShow").addEventListener("click", () => {
-    renderPanel();
-    panel.classList.add("open");
-    const ta = document.getElementById("edText");
-    ta.removeAttribute("readonly"); ta.focus(); ta.select();
-    let ok = false;
-    try{ ok = document.execCommand("copy"); }catch(e){}
-    ta.setAttribute("readonly", "readonly");
-    setStatus(ok ? "copied — paste it to Claude" : "selected — press Ctrl+C", ok);
-  });
-  document.getElementById("edClose").addEventListener("click", () => panel.classList.remove("open"));
-  document.getElementById("edCopy").addEventListener("click", () => {
-    const ta = document.getElementById("edText");
-    ta.removeAttribute("readonly"); ta.select();
-    let ok = false;
-    try{ ok = document.execCommand("copy"); }catch(e){}
-    ta.setAttribute("readonly", "readonly");
-    setStatus(ok ? "copied" : "select it by hand");
-  });
-  document.getElementById("edRevert").addEventListener("click", () => {
-    if(!confirm("Put every edited line back to the original wording?")) return;
-    T.forEach(el => el.innerHTML = originals.get(el));
-    Object.keys(TERMS).forEach(k => ["en","es"].forEach(l => ["t","d"].forEach(f => {
-      if(TERMS[k][l]) TERMS[k][l][f] = termOriginals[k][l][f];
-    })));
-    if(typeof closeDef === "function") closeDef();
-    try{ localStorage.removeItem(STORE_KEY); }catch(e){}
-    refresh(); renderPanel();
-  });
-  document.getElementById("edSave").addEventListener("click", () => {
-    const blob = new Blob([serialize()], { type: "text/html" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = GUIDE + "-v" + GVER + "-edited.html";
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-  });
-  window.addEventListener("beforeunload", e => {
-    if(changed().length){ e.preventDefault(); e.returnValue = ""; }
-  });
-})();
 </script>
 </body>
 </html>

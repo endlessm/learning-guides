@@ -80,6 +80,11 @@ h1,h2,h3{
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 .topbar .brand b{color:var(--ink);font-weight:700}
+.tb-left{display:flex;align-items:center;gap:12px;min-width:0}
+.hublink{flex:none;display:inline-flex;align-items:center;gap:6px;font:600 12px Inter,sans-serif;color:var(--accent-text);text-decoration:none;border:1px solid var(--hairline);border-radius:100px;background:#fff;padding:5px 12px 5px 10px;white-space:nowrap}
+.hublink .arw{font-weight:700;font-size:13px;line-height:1}
+.hublink:hover{border-color:var(--coin);background:var(--coin-soft);color:var(--accent-deep)}
+.hublink:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
 .progress{
   position:absolute;left:0;top:0;height:2px;width:0;
   background:var(--coin);
@@ -412,7 +417,7 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 }
 
 @media print{
-  .lang,.progress,.replay,.done-legend{display:none!important}
+  .hublink,.lang,.progress,.replay,.done-legend{display:none!important}
   html,body{background:#fff}
   body{font-size:10.5pt;line-height:1.5}
   .topbar{position:static;border-bottom:0;padding:0}
@@ -435,8 +440,11 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 <header class="topbar">
   <div class="progress" id="progress"></div>
   <div class="topbar-inner">
-    <div class="brand">
-      <span class="en"><b>Set up your StoryQuest kit</b> · Getting started</span><span class="es"><b>Configura tu kit de StoryQuest</b> · Primeros pasos</span>
+    <div class="tb-left">
+      <a class="hublink" href="../"><span class="arw" aria-hidden="true">&larr;</span><span class="en">Guide Hub</span><span class="es">Centro de guías</span></a>
+      <div class="brand">
+        <span class="en"><b>Set up your StoryQuest kit</b> · Getting started</span><span class="es"><b>Configura tu kit de StoryQuest</b> · Primeros pasos</span>
+      </div>
     </div>
     <div class="lang" role="group" aria-label="Language">
       <button id="langEn" class="on" aria-pressed="true">EN</button>

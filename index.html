@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<!-- Core Threadbare Guide Hub · top-level index for the learning-guides site.
+     HUB / INDEX PAGE. A tight home base that links out to every guide.
+     No visuals, no modals — one link row per guide, grouped by section.
+     Bilingual EN/ES with a language toggle (house standard): every visible
+     string has an <span class="en"> and a matching <span class="es">.
+
+     HOW TO ADD A LINK: find the guide's <a class="row"> below and replace
+     href="#" with the guide's real URL. Any row still pointing at "#" auto-
+     shows a "link pending" / "enlace pendiente" tag, so you can see at a
+     glance what is wired and what still needs a URL.
+
+     HOW TO ADD A GUIDE: copy one <a class="row"> ... </a> block into the right
+     section and change the .en and .es titles (and .en/.es desc if you want one).
+
+     The plain-text source (core-threadbare-guide-hub-source.txt) carries the
+     stable IDs, order, and both languages — edit there and regenerate.
+-->
+<html lang="en" data-lang="en" data-guide="core-threadbare-guide-hub">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Core Threadbare Guide Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   Core Threadbare Guide Hub — a simple index that links out to every guide.
+   Same paper/ink/coin palette and type as the guide family (LEARNER-GUIDES v14),
+   stripped down to link rows grouped under sections. Bilingual EN/ES.
+   ============================================================================ */
+
+:root{
+  --paper:#f8fafc;
+  --paper-deep:#f1f5f9;
+  --ink:#1d293d;
+  --ink-strong:#020618;
+  --ink-soft:#45556c;
+  --ink-faint:#62748e;
+  --hairline:#dcdce9;
+  --coin:#f54a00;
+  --accent-text:#ca3500;
+  --accent-deep:#7e2a0c;
+  --coin-soft:#fff7ed;
+  --success:#55852e;
+  --radius-card:18px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font:400 17px/1.65 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:Figtree,Inter,system-ui,sans-serif;color:var(--ink-strong);line-height:1.15;margin:0}
+
+/* ---------- language toggle ---------- */
+[data-lang="en"] .es{display:none}
+[data-lang="es"] .en{display:none}
+
+/* ---------- sticky header ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(248,250,252,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--hairline)}
+.topbar-inner{max-width:820px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar .brand{font:600 13px/1.2 Inter,sans-serif;letter-spacing:.02em;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .brand b{color:var(--ink);font-weight:700}
+.tb-right{display:flex;align-items:center;gap:10px;flex:none}
+.lang{display:inline-flex;border:1px solid var(--hairline);border-radius:100px;overflow:hidden;background:#fff;flex:none}
+.lang button{border:0;background:transparent;font:600 12px Inter,sans-serif;color:var(--ink-faint);padding:5px 12px;cursor:pointer}
+.lang button.on{background:var(--ink);color:var(--paper)}
+.lang button:focus-visible{outline:2px solid var(--coin);outline-offset:-2px}
+.topbar .draft{flex:none;font:700 10px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-deep);background:var(--coin-soft);border-radius:100px;padding:3px 10px}
+
+/* ---------- layout ---------- */
+main{max-width:820px;margin:0 auto;padding:0 20px 96px}
+.hero{padding:52px 0 8px}
+.eyebrow{font:700 12px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-text);margin:0 0 14px}
+.hero h1{font-size:clamp(32px,5.5vw,50px);font-weight:700;letter-spacing:-.01em}
+.hero h1 .ac{color:var(--coin)}
+.lede{font-size:18px;color:var(--ink-soft);max-width:660px;margin:22px 0 0}
+.hint-line{margin:16px 0 0;font:600 13px Inter,sans-serif;color:var(--ink-faint);display:flex;align-items:center;gap:8px}
+.hint-line .chip{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:6px;background:var(--coin-soft);border:1.5px solid var(--coin);color:var(--accent-text);font:700 11px/1 Inter,sans-serif}
+
+/* ---------- sections ---------- */
+.sec{margin-top:44px;scroll-margin-top:64px}
+.sec > h2{font-size:clamp(20px,3.2vw,26px);font-weight:700;border-bottom:2px solid var(--ink);padding-bottom:10px}
+.seclede{margin:12px 0 0;font-size:14.5px;color:var(--ink-faint)}
+
+/* ---------- link rows ---------- */
+.rows{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.row{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 16px;border:1px solid var(--hairline);border-radius:var(--radius-card);
+  background:#fff;text-decoration:none;color:inherit;
+  transition:border-color .15s,background .15s,transform .12s ease-out;
+}
+.row:hover{background:var(--coin-soft);border-color:var(--coin);transform:translateY(-1px)}
+.row:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
+.row .num{flex:none;font:700 12px/1 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--ink-faint);width:22px}
+.row .body{flex:1;min-width:0;display:flex;flex-direction:column}
+.row .title{font-family:Figtree,Inter,sans-serif;font-weight:700;font-size:16.5px;color:var(--ink-strong)}
+.row .desc{margin-top:3px;font:400 13.5px/1.4 Inter,sans-serif;color:var(--ink-faint)}
+.row .go{flex:none;display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--coin-soft);border:1.5px solid var(--coin);color:var(--accent-text);font:700 14px/1 Inter,sans-serif;transition:background .15s,color .15s,transform .15s ease-out}
+.row .go::before{content:"\2192"}                 /* right arrow: go to guide */
+.row:hover .go{background:var(--coin);color:#fff;transform:translateX(1px)}
+
+/* a row whose href is still "#" — flagged automatically by the script below */
+.row.pending{background:var(--paper-deep);border-style:dashed;cursor:default}
+.row.pending:hover{background:var(--paper-deep);border-color:var(--hairline);transform:none}
+.row.pending .go{display:none}
+.row.pending .body::after{
+  content:"link pending";
+  display:inline-block;margin-top:6px;
+  font:700 8.5px ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--accent-deep);background:var(--coin-soft);border:1px solid #f6c9a8;border-radius:100px;padding:2px 9px;
+}
+[data-lang="es"] .row.pending .body::after{content:"enlace pendiente"}
+
+@media(prefers-reduced-motion:reduce){.row,.row .go{transition:none}}
+@media print{
+  .topbar{position:static}
+  .row{break-inside:avoid}
+  .row.pending .body::after{content:"link pending —"}
+  [data-lang="es"] .row.pending .body::after{content:"enlace pendiente —"}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><b>Core Threadbare</b> · <span class="en">Guide Hub</span><span class="es">Centro de guías</span></div>
+    <div class="tb-right">
+      <div class="lang" role="group" aria-label="Language / Idioma">
+        <button id="langEn" class="on" type="button" aria-pressed="true">EN</button>
+        <button id="langEs" type="button" aria-pressed="false">ES</button>
+      </div>
+      </div>
+  </div>
+</header>
+
+<main>
+<!-- ======================================================= HERO -->
+<section class="hero">
+  <p class="eyebrow"><span class="en">Guide Hub</span><span class="es">Centro de guías</span></p>
+  <h1><span class="en">Core Threadbare <span class="ac">Guides</span></span><span class="es"><span class="ac">Guías</span> de Core Threadbare</span></h1>
+  <p class="lede"><span class="en">Use this hub whenever you need help building your StoryQuest. You do not need to use every guide or follow them in order.</span><span class="es">Usa este centro siempre que necesites ayuda para crear tu StoryQuest. No necesitas usar todas las guías ni seguirlas en orden.</span></p>
+  <p class="hint-line"><span class="chip" aria-hidden="true">&rarr;</span><span class="en">Click any guide to open it.</span><span class="es">Haz clic en cualquier guía para abrirla.</span></p>
+</section>
+
+<!-- ======================================================= 1 · GETTING STARTED -->
+<section class="sec" id="getting-started">
+  <h2><span class="en">Getting Started with Your StoryQuest</span><span class="es">Comenzar con tu StoryQuest</span></h2>
+  <p class="seclede"><span class="en">Get your kit running, learn your way around Godot, and start building, saving, and sharing your work.</span><span class="es">Pon en marcha tu kit, aprende a moverte por Godot y empieza a crear, guardar y compartir tu trabajo.</span></p>
+  <div class="rows">
+
+    <a class="row" href="https://endlessm.github.io/learning-guides/storyquest-setup/">
+      <span class="num">02</span>
+      <span class="body"><span class="title"><span class="en">Setting up your StoryQuest kit</span><span class="es">Configurar tu kit de StoryQuest</span></span><span class="desc"><span class="en">Get your project ready to start building.</span><span class="es">Prepara tu proyecto para empezar a construir.</span></span></span>
+      <span class="go" aria-hidden="true"></span>
+    </a>
+
+    <a class="row" href="#">
+      <span class="num">05</span>
+      <span class="body"><span class="title"><span class="en">Introduction to Godot</span><span class="es">Introducción a Godot</span></span></span>
+      <span class="go" aria-hidden="true"></span>
+    </a>
+
+    <a class="row" href="#">
+      <span class="num">06</span>
+      <span class="body"><span class="title"><span class="en">Setting up a new scene in Godot</span><span class="es">Crear una nueva escena en Godot</span></span></span>
+      <span class="go" aria-hidden="true"></span>
+    </a>
+
+    <a class="row" href="#">
+      <span class="num">03</span>
+      <span class="body"><span class="title"><span class="en">Developing your StoryQuest using Backstitch</span><span class="es">Desarrollar tu StoryQuest con Backstitch</span></span><span class="desc"><span class="en">Save versions, create branches, and collaborate.</span><span class="es">Guarda versiones, crea ramas y colabora.</span></span></span>
+      <span class="go" aria-hidden="true"></span>
+    </a>
+
+    <a class="row" href="#">
+      <span class="num">04</span>
+      <span class="body"><span class="title"><span class="en">How to share your project using Backstitch</span><span class="es">Cómo compartir tu proyecto con Backstitch</span></span><span class="desc"><span class="en">Create a playable version others can open in a browser.</span><span class="es">Crea una versión jugable que otros puedan abrir en un navegador.</span></span></span>
+      <span class="go" aria-hidden="true"></span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ======================================================= 2 · DESIGN CHALLENGES -->
+<section class="sec" id="challenges">
+  <h2><span class="en">Design Challenges</span><span class="es">Retos de diseño</span></h2>
+  <p class="seclede"><span class="en">Practice by remixing and experimenting with existing Threadbare mechanics.</span><span class="es">Practica remezclando y experimentando con mecánicas que ya existen en Threadbare.</span></p>
+  <div class="rows">
+
+    <a class="row" href="#">
+      <span class="num">09</span>
+      <span class="body"><span class="title"><span class="en">Teleporter</span><span class="es">Teletransportador</span></span></span>
+      <span class="go" aria-hidden="true"></span>
+    </a>
+
+    <a class="row" href="#">
+      <span class="num">10</span>
+      <span class="body"><span class="title"><span class="en">Void Chase</span><span class="es">Persecución en el vacío</span></span></span>
+      <span class="go" aria-hidden="true"></span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ======================================================= 3 · GODOT SKILLS & CONCEPTS -->
+<section class="sec" id="godot-skills">
+  <h2><span class="en">Godot Skills &amp; Concepts</span><span class="es">Habilidades y conceptos de Godot</span></h2>
+  <p class="seclede"><span class="en">Learn fundamental Godot ideas and techniques you can use across different projects.</span><span class="es">Aprende ideas y técnicas fundamentales de Godot que puedes usar en diferentes proyectos.</span></p>
+  <div class="rows">
+
+    <a class="row" href="#">
+      <span class="num">11</span>
+      <span class="body"><span class="title"><span class="en">Nodes, scripts, and game object communication</span><span class="es">Nodos, scripts y comunicación entre objetos del juego</span></span></span>
+      <span class="go" aria-hidden="true"></span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ======================================================= 4 · BUILDING WITH EXISTING THREADBARE FEATURES -->
+<section class="sec" id="building">
+  <h2><span class="en">Building with Existing Threadbare Features</span><span class="es">Construir con funciones que ya existen en Threadbare</span></h2>
+  <p class="seclede"><span class="en">Learn how to find, add, and set up characters, mechanics, objects, and systems that already exist in Threadbare so you can use them in your own StoryQuest.</span><span class="es">Aprende a encontrar, añadir y configurar personajes, mecánicas, objetos y sistemas que ya existen en Threadbare para usarlos en tu propia StoryQuest.</span></p>
+  <div class="rows">
+
+    <a class="row" href="#">
+      <span class="num">07</span>
+      <span class="body"><span class="title"><span class="en">Giving a new look to a character</span><span class="es">Dar un nuevo aspecto a un personaje</span></span></span>
+      <span class="go" aria-hidden="true"></span>
+    </a>
+
+    <a class="row" href="#">
+      <span class="num">08</span>
+      <span class="body"><span class="title"><span class="en">Working with dialogue and narrative text</span><span class="es">Trabajar con diálogos y texto narrativo</span></span></span>
+      <span class="go" aria-hidden="true"></span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ======================================================= 5 · PLANNING & MANAGING -->
+<section class="sec" id="planning">
+  <h2><span class="en">Planning and Managing Your Project</span><span class="es">Planificar y gestionar tu proyecto</span></h2>
+  <p class="seclede"><span class="en">Use these guides to organize your work and collaborate with your team.</span><span class="es">Usa estas guías para organizar tu trabajo y colaborar con tu equipo.</span></p>
+  <div class="rows">
+
+    <a class="row" href="https://endlessm.github.io/learning-guides/Welcome-To-Your-StoryQuest-Project-Board/">
+      <span class="num">01</span>
+      <span class="body"><span class="title"><span class="en">Welcome to your project board</span><span class="es">Bienvenido a tu tablero de proyecto</span></span></span>
+      <span class="go" aria-hidden="true"></span>
+    </a>
+
+  </div>
+</section>
+
+</main>
+
+<script>
+/* Language toggle (EN/ES) — flips the data-lang on <html>; the CSS shows the
+   matching .en / .es spans. */
+(function () {
+  var root = document.documentElement;
+  var en = document.getElementById('langEn');
+  var es = document.getElementById('langEs');
+  function set(lang) {
+    root.setAttribute('data-lang', lang);
+    root.setAttribute('lang', lang);
+    var isEn = lang === 'en';
+    en.classList.toggle('on', isEn);
+    es.classList.toggle('on', !isEn);
+    en.setAttribute('aria-pressed', String(isEn));
+    es.setAttribute('aria-pressed', String(!isEn));
+  }
+  en.addEventListener('click', function () { set('en'); });
+  es.addEventListener('click', function () { set('es'); });
+})();
+
+/* Flag any row that still points at "#" (or has no href) as "link pending",
+   and stop it from navigating. As soon as a real URL is dropped into href,
+   the row becomes live automatically — no other change needed. */
+(function () {
+  document.querySelectorAll('a.row').forEach(function (a) {
+    var href = a.getAttribute('href');
+    var live = href && href !== '#' && href.trim() !== '';
+    if (!live) {
+      a.classList.add('pending');
+      a.setAttribute('aria-disabled', 'true');
+      a.addEventListener('click', function (e) { e.preventDefault(); });
+    }
+  });
+})();
+</script>
+</body>
+</html>

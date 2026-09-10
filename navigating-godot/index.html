@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- A Quick Tour Of Godot — a supplemental tour in the Threadbare StoryQuest guide series. Published build. -->
+<!-- A quick tour of Godot — a supplemental tour in the Threadbare StoryQuest guide series. Published build. -->
 <html lang="en" data-lang="en" data-guide="godot-editor-tour">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Quick Tour Of Godot</title>
+<title>A quick tour of Godot</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -153,6 +153,11 @@ figcaption{margin-top:10px;font-size:13px;color:var(--ink-faint);display:flex;al
 .stepguides a{display:inline-flex;align-items:baseline;gap:8px;font:600 14.5px Inter,sans-serif;color:var(--accent-text);text-decoration:none;border-bottom:1px solid rgba(194,65,12,.32);padding-bottom:2px}
 .stepguides a::before{content:"\2192";color:var(--coin);font-weight:700}
 .stepguides a:hover{border-bottom-color:var(--coin)}
+/* cross-guide link whose target guide is not published yet (resolved at build time) */
+.stepguides a.soon{color:var(--ink-faint);border-bottom-color:transparent;cursor:default;pointer-events:none}
+.stepguides a.soon::before{color:var(--ink-faint)}
+.stepguides a.soon::after{content:"coming soon";margin-left:8px;font:700 8.5px ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-deep);background:var(--coin-soft);border:1px solid #f6c9a8;border-radius:100px;padding:2px 8px;vertical-align:1px}
+[data-lang="es"] .stepguides a.soon::after{content:"próximamente"}
 .placeholder-tag{display:inline-block;margin-left:8px;font:700 9.5px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);border:1px solid var(--hairline);border-radius:100px;padding:2px 7px;vertical-align:middle}
 
 footer{max-width:760px;margin:66px auto 0;padding:22px 20px;border-top:1px solid var(--hairline);font-size:13px;color:var(--ink-faint)}
@@ -177,7 +182,7 @@ footer{max-width:760px;margin:66px auto 0;padding:22px 20px;border-top:1px solid
   <div class="topbar-inner">
     <div class="tb-left">
       <a class="hublink" href="../"><span class="arw" aria-hidden="true">&larr;</span><span class="en">Guide Hub</span><span class="es">Centro de guías</span></a>
-      <div class="brand"><span class="en">A Quick Tour Of Godot</span><span class="es">Un recorrido rápido por Godot</span></div>
+      <div class="brand"><span class="en">A quick tour of Godot</span><span class="es">Un recorrido rápido por Godot</span></div>
     </div>
     <div class="lang" role="group" aria-label="Language / Idioma">
       <button id="langEn" class="on" type="button" aria-pressed="true">EN</button>
@@ -190,7 +195,7 @@ footer{max-width:760px;margin:66px auto 0;padding:22px 20px;border-top:1px solid
 <!-- HERO -->
 <section class="hero">
   <p data-copy="hero-eyebrow1" class="eyebrow"><span class="en">Guided Interface tour</span><span class="es">Recorrido guiado por la interfaz</span></p>
-  <h1 data-copy="hero-title1"><span class="en">A Quick Tour Of Godot</span><span class="es">Un recorrido rápido por Godot</span></h1>
+  <h1 data-copy="hero-title1"><span class="en">A quick tour of Godot</span><span class="es">Un recorrido rápido por Godot</span></h1>
   <p data-copy="hero-lede1" class="lede"><span class="en">Hello! My name is Phoenix, and I'd like to give you a guided tour on using the game engine Godot! In 20 minutes or less, you will understand the Filesystem, Scenes, the Inspector, Resources, and playing your game!</span><span class="es">¡Hola! Me llamo Phoenix y me gustaría darte un recorrido guiado por el uso del motor de juego Godot. En 20 minutos o menos, entenderás el Filesystem, las escenas, el Inspector, los recursos y cómo ejecutar tu juego.</span></p>
 
   <nav class="covered" aria-label="What this guide covers">
@@ -396,7 +401,7 @@ footer{max-width:760px;margin:66px auto 0;padding:22px 20px;border-top:1px solid
   <p data-copy="fr-item2"><span class="en">You've seen the main parts of the Godot editor. Next, try setting up a simple scene of your own so you can get comfortable building and experimenting.</span><span class="es">Ya has visto las partes principales del editor de Godot. A continuación, intenta crear una escena sencilla propia para ganar confianza construyendo y experimentando.</span></p>
   <div class="stepguides">
     <ul>
-      <li><a href="#" data-copy="fr-item1"><span class="en">Setting Up a New Scene from Scratch</span><span class="es">Crear una nueva escena desde cero</span></a></li>
+      <li><a data-guide-ref="06" data-copy="fr-item1" href="https://endlessm.github.io/learning-guides/compose-a-scene/"><span class="en">Setting up a new scene from scratch</span><span class="es">Preparar una escena nueva desde cero</span></a></li>
     </ul>
   </div>
   <p data-copy="fr-item3"><span class="en">You don't need to make a finished StoryQuest. The next guide will help you make a basic playable space with some ground and a player to move around.</span><span class="es">No necesitas hacer una StoryQuest terminada. La siguiente guía te ayudará a crear un espacio jugable básico con algo de suelo y un jugador para moverse.</span></p>
@@ -405,7 +410,7 @@ footer{max-width:760px;margin:66px auto 0;padding:22px 20px;border-top:1px solid
 
 </main>
 
-<footer><span class="en">A Quick Tour Of Godot · a supplemental tour in the Threadbare StoryQuest guide series.</span><span class="es">Un recorrido rápido por Godot · un recorrido complementario de la serie de guías StoryQuest de Threadbare.</span></footer>
+<footer><span class="en">A quick tour of Godot · a supplemental tour in the Threadbare StoryQuest guide series.</span><span class="es">Un recorrido rápido por Godot · un recorrido complementario de la serie de guías StoryQuest de Threadbare.</span></footer>
 
 <script>
 const root = document.documentElement;
@@ -417,7 +422,7 @@ const root = document.documentElement;
   var LANG_KEY="godot-guide-lang";
   function setLang(lang){
     root.setAttribute("data-lang",lang); root.setAttribute("lang",lang);
-    document.title = lang==="es" ? "Un recorrido rápido por Godot" : "A Quick Tour Of Godot";
+    document.title = lang==="es" ? "Un recorrido rápido por Godot" : "A quick tour of Godot";
     var isEn=lang==="en";
     en.classList.toggle("on",isEn); es.classList.toggle("on",!isEn);
     en.setAttribute("aria-pressed",String(isEn)); es.setAttribute("aria-pressed",String(!isEn));

@@ -11,7 +11,7 @@
 <style>
 /* ============================================================================
    Core Threadbare Guide Hub — a simple index that links out to every guide.
-   Same paper/ink/coin palette and type as the guide family (LEARNER-GUIDES v14),
+   Same paper/ink/coin palette and type as the guide family,
    stripped down to link rows grouped under sections. Bilingual EN/ES.
    ============================================================================ */
 
@@ -100,6 +100,17 @@ main{max-width:820px;margin:0 auto;padding:0 20px 96px}
 }
 [data-lang="es"] .row.pending .body::after{content:"enlace pendiente"}
 
+/* ---------- intro secondary link (small, not a section) ---------- */
+.subnote{margin:14px 0 0;font:400 14.5px/1.5 Inter,sans-serif;color:var(--ink-faint)}
+.subnote a{color:var(--accent-text);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.subnote a:hover{color:var(--coin)}
+
+/* ---------- resource-hub card: a companion hub, not a step-by-step guide.
+   Distinguished subtly by a small "RESOURCE HUB" tag and an up-right arrow
+   (it opens in a new tab). Otherwise fits the normal card system. ---------- */
+.row .tag{align-self:flex-start;margin-bottom:5px;font:700 8.5px ui-monospace,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--accent-deep);background:var(--coin-soft);border:1px solid #f6c9a8;border-radius:100px;padding:2px 8px}
+.row.resource .go::before{content:"\2197"}   /* up-right arrow: opens the companion hub */
+
 @media(prefers-reduced-motion:reduce){.row,.row .go{transition:none}}
 @media print{
   .topbar{position:static}
@@ -129,6 +140,7 @@ main{max-width:820px;margin:0 auto;padding:0 20px 96px}
   <p class="eyebrow"><span class="en">Guide Hub</span><span class="es">Centro de guías</span></p>
   <h1><span class="en">Core Threadbare <span class="ac">Guides</span></span><span class="es"><span class="ac">Guías</span> de Core Threadbare</span></h1>
   <p class="lede"><span class="en">Use this hub whenever you need help building your StoryQuest. You do not need to use every guide or follow them in order.</span><span class="es">Usa este centro siempre que necesites ayuda para crear tu StoryQuest. No necesitas usar todas las guías ni seguirlas en orden.</span></p>
+  <p class="subnote"><span class="en">Looking for gameplay you can reuse or build on? <a href="https://endlessm.github.io/learning-guides/gameplay-elements/" target="_blank" rel="noopener">Explore Threadbare Gameplay Elements</a>.</span><span class="es">¿Buscas mecánicas que puedas reutilizar o ampliar? <a href="https://endlessm.github.io/learning-guides/gameplay-elements/" target="_blank" rel="noopener">Explora los Elementos de juego de Threadbare</a>.</span></p>
   <p class="hint-line"><span class="chip" aria-hidden="true">&rarr;</span><span class="en">Click any guide to open it.</span><span class="es">Haz clic en cualquier guía para abrirla.</span></p>
 </section>
 
@@ -222,6 +234,11 @@ main{max-width:820px;margin:0 auto;padding:0 20px 96px}
 
     <a class="row" href="https://endlessm.github.io/learning-guides/doors-and-levers/">
       <span class="body"><span class="title"><span class="en">Use Doors and Levers</span><span class="es">Usa puertas y palancas</span></span><span class="desc"><span class="en">Reuse the door and lever gameplay elements to control where the player can go.</span><span class="es">Reutiliza los elementos de puertas y palancas para controlar por dónde puede ir el jugador.</span></span></span>
+      <span class="go" aria-hidden="true"></span>
+    </a>
+
+    <a class="row resource" href="https://endlessm.github.io/learning-guides/gameplay-elements/" target="_blank" rel="noopener">
+      <span class="body"><span class="tag"><span class="en">Resource hub</span><span class="es">Recursos</span></span><span class="title"><span class="en">Explore Threadbare Gameplay Elements</span><span class="es">Explora los Elementos de juego de Threadbare</span></span><span class="desc"><span class="en">See playable examples and find working Threadbare elements in your StoryQuest Kit.</span><span class="es">Consulta ejemplos jugables y encuentra elementos de Threadbare listos para usar en tu kit de StoryQuest.</span></span></span>
       <span class="go" aria-hidden="true"></span>
     </a>
 

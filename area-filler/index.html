@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Area Filler — Threadbare learner guide. Add environmental elements with the AreaFiller node. -->
+<!-- Add Environmental Elements with Area Filler · Threadbare StoryQuest guide -->
 <html lang="en" data-lang="en" data-guide="area-filler">
 <head>
 <meta charset="UTF-8">
@@ -44,6 +44,7 @@
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+html{scroll-padding-top:80px} /* GUIDE-CHROME v2 §5: section links land on the header, not under the sticky bar */
 body{
   margin:0;
   background:var(--paper);
@@ -83,7 +84,7 @@ h1,h2,h3{
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 .topbar .brand b{color:var(--ink);font-weight:700}
-/* the standing Guide Hub back-link (GUIDE-CHROME v1) */
+/* the standing Guide Hub back-link (GUIDE-CHROME v2) */
 .tb-left{display:flex;align-items:center;gap:12px;min-width:0}
 .hublink{
   flex:none;display:inline-flex;align-items:center;gap:6px;
@@ -179,12 +180,15 @@ main{max-width:760px;margin:0 auto;padding:0 20px 90px}
 .sec > .secbody > p,.sec > p{margin:16px 0 0;font-size:17px}
 
 /* every workflow section is an accordion; the whole heading row toggles it */
+/* GUIDE-CHROME v4 §6: header is a flex row — title flexes/wraps, controls (copy + chevron) are fixed-size and can't overlap */
 .sec.sec-collapse > h2{
   position:relative;cursor:pointer;
-  margin-left:-12px;padding-left:12px;padding-right:52px;
+  margin-left:-12px;padding-left:12px;padding-right:12px;
   border-radius:12px 12px 0 0;
   transition:background .15s ease-out;
+  display:flex;align-items:center;gap:10px;
 }
+.sec.sec-collapse > h2 > span.en,.sec.sec-collapse > h2 > span.es{flex:1 1 auto;min-width:0}
 body:not(.editing) .sec.sec-collapse > h2{user-select:none}
 body:not(.editing) .sec-collapse > h2:hover{background:var(--coin-soft)}
 body.editing .sec.sec-collapse > h2{cursor:text}
@@ -192,14 +196,17 @@ body.editing .sec-collapse > h2 .chev{cursor:pointer}
 .sec-collapse > h2:focus-visible{outline:2px solid var(--coin);outline-offset:3px;border-radius:12px}
 .sec-collapse[data-open="false"] > h2{color:var(--ink-soft)}
 .sec-collapse[data-open="false"] > .secbody{display:none}
+.sec-controls{flex:none;display:inline-flex;align-items:center;gap:8px;margin-left:4px}
+.chev span.txt{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
 .chev{
-  position:absolute;right:8px;top:2px;
+  flex:none;padding:0;cursor:pointer;font:inherit;
   display:inline-flex;align-items:center;justify-content:center;
   width:28px;height:28px;
   border-radius:9px;background:var(--coin-soft);
   border:1.5px solid var(--coin);color:var(--accent-text);
   transition:transform .2s ease-out,background .15s ease-out,color .15s ease-out;
 }
+.chev:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
 .chev::before{
   content:"";display:block;width:0;height:0;margin-top:2px;
   border-left:5px solid transparent;border-right:5px solid transparent;
@@ -207,6 +214,11 @@ body.editing .sec-collapse > h2 .chev{cursor:pointer}
 }
 .sec-collapse[data-open="false"] > h2 .chev{transform:rotate(-90deg)}
 .sec-collapse > h2:hover .chev{background:var(--coin);color:#fff;border-color:var(--coin)}
+.seclink{flex:none;display:inline-flex;align-items:center;gap:6px;font:600 11.5px Inter,sans-serif;color:var(--accent-text);background:#fff;border:1.5px solid var(--hairline);border-radius:100px;padding:4px 11px 4px 9px;cursor:pointer;white-space:nowrap;line-height:1;transition:border-color .15s,background .15s,color .15s}
+.seclink .lnk-ic{flex:none;display:block}
+.seclink:hover,.seclink.copied{border-color:var(--coin);background:var(--coin-soft);color:var(--accent-deep)}
+.seclink:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
+@media(max-width:560px){ .seclink .lnk-t{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0} .seclink{padding:5px 8px} }
 @media(prefers-reduced-motion:reduce){.sec-collapse > h2,.chev{transition:none}}
 
 .steps-label{
@@ -557,8 +569,8 @@ footer{
 
 <!-- ======================================================= STEP 1 · MARK THE AREA -->
 <section class="sec sec-collapse" id="s-area" data-open="true">
-  <h2 role="button" tabindex="0" aria-expanded="true"><span class="en">Mark the area you want to fill</span><span class="es">Marca el área que quieres rellenar</span><span class="chev" aria-hidden="true"></span></h2>
-  <div class="secbody">
+  <h2><span class="en">Mark the area you want to fill</span><span class="es">Marca el área que quieres rellenar</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-s-area"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>
+  <div class="secbody" id="body-s-area">
     <p class="steps-label"><span class="en">Step 1</span><span class="es">Paso 1</span></p>
     <div class="steps">
       <p class="done-legend"><span class="demo-num" aria-hidden="true"></span><span class="en">Click a number when you finish that step.</span><span class="es">Haz clic en un número cuando termines ese paso.</span></p>
@@ -602,8 +614,8 @@ footer{
 
 <!-- ======================================================= STEP 2 · CHOOSE -->
 <section class="sec sec-collapse" id="s-choose" data-open="true">
-  <h2 role="button" tabindex="0" aria-expanded="true"><span class="en">Add Area Filler and choose what appears</span><span class="es">Añade Area Filler y elige qué aparece</span><span class="chev" aria-hidden="true"></span></h2>
-  <div class="secbody">
+  <h2><span class="en">Add Area Filler and choose what appears</span><span class="es">Añade Area Filler y elige qué aparece</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-s-choose"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>
+  <div class="secbody" id="body-s-choose">
     <p class="steps-label"><span class="en">Step 2</span><span class="es">Paso 2</span></p>
     <div class="steps">
       <div class="step">
@@ -643,8 +655,8 @@ footer{
 
 <!-- ======================================================= STEPS 3-4 · FILL & ADJUST -->
 <section class="sec sec-collapse" id="s-fill" data-open="true">
-  <h2 role="button" tabindex="0" aria-expanded="true"><span class="en">Fill the area, then adjust it</span><span class="es">Rellena el área y luego ajústala</span><span class="chev" aria-hidden="true"></span></h2>
-  <div class="secbody">
+  <h2><span class="en">Fill the area, then adjust it</span><span class="es">Rellena el área y luego ajústala</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-s-fill"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>
+  <div class="secbody" id="body-s-fill">
     <p class="steps-label"><span class="en">Steps 3&ndash;4</span><span class="es">Pasos 3&ndash;4</span></p>
     <div class="steps">
       <div class="step">
@@ -674,8 +686,8 @@ footer{
 
 <!-- ======================================================= STEP 5 · LAYERING -->
 <section class="sec sec-collapse" id="s-layer" data-open="true">
-  <h2 role="button" tabindex="0" aria-expanded="true"><span class="en">Check how everything looks when you play</span><span class="es">Comprueba cómo se ve todo al jugar</span><span class="chev" aria-hidden="true"></span></h2>
-  <div class="secbody">
+  <h2><span class="en">Check how everything looks when you play</span><span class="es">Comprueba cómo se ve todo al jugar</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-s-layer"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>
+  <div class="secbody" id="body-s-layer">
     <p class="steps-label"><span class="en">Step 5</span><span class="es">Paso 5</span></p>
     <div class="steps">
       <div class="step">
@@ -826,6 +838,7 @@ document.querySelectorAll(".step").forEach(step => {
   const h3 = step.querySelector("h3");
   if(h3) h3.addEventListener("click", e => {
     if(e.target.closest(".term")) return;
+    if(document.body.classList.contains("editing")) return;
     toggle();
   });
 });
@@ -979,19 +992,24 @@ function closeDef(){
   defOpener = null;
 }
 
-/* ---------- 4. section accordions ----------
-   The whole heading row toggles the chapter open/shut; the chevron chip is the
-   visible affordance. Enter/Space are wired by hand. */
+/* ---------- 4. section accordions (GUIDE-CHROME v4 §6) ----------
+   The <h2> is a plain heading (its text is editable in the review layer, and
+   an editable region inside a button does not work). The chevron is the real
+   toggle <button> — it carries keyboard focus and aria-expanded, so Enter/Space
+   fire a native click that the delegated handler catches. No separate keydown
+   toggle (that would double-fire). The copy-link button never toggles. */
 function toggleSec(sec){
   const open = sec.getAttribute("data-open") === "true";
   sec.setAttribute("data-open", open ? "false" : "true");
-  const head = sec.querySelector("h2");
-  if(head) head.setAttribute("aria-expanded", open ? "false" : "true");
+  const chev = sec.querySelector(".chev");
+  if(chev) chev.setAttribute("aria-expanded", open ? "false" : "true");
 }
 function secHeadFrom(t){
   const head = t.closest && t.closest("h2");
   if(!head || !head.parentElement.classList.contains("sec-collapse")) return null;
   if(t.closest(".term")) return null;
+  if(t.closest(".seclink")) return null;                 // copy button: never toggle
+  if(document.body.classList.contains("editing") && !t.closest(".chev")) return null;
   return head;
 }
 document.addEventListener("click", e => {
@@ -1011,10 +1029,8 @@ document.querySelectorAll(".mt-poster").forEach(function(t){
 });
 document.addEventListener("keydown", e => {
   if(e.key === "Escape" || e.key === "Esc") closeDef();
-  const head = secHeadFrom(e.target);
-  if(head && (e.key === "Enter" || e.key === " ")){
-    e.preventDefault(); toggleSec(head.parentElement);
-  }
+  /* the chevron is a real <button> — Enter/Space fire a native click that the
+     delegated click handler catches, so no keydown toggle here (would double-fire) */
 });
 
 /* ---------- 5. same-page anchor links ---------- */
@@ -1037,6 +1053,42 @@ addEventListener("scroll", () => {
   const max = doc.scrollHeight - doc.clientHeight;
   progress.style.width = (max > 0 ? (doc.scrollTop / max) * 100 : 0) + "%";
 }, { passive: true });
+
+/* ---------- section copy-link (GUIDE-CHROME v4 §6) — stays in the publish build ----------
+   Copies a deep link to the section, flashes Copied/Copiado, updates the address bar,
+   and stopPropagations so it never toggles. Sits BEFORE the edit-layer block so the
+   publish strip (which cuts from the edit-layer comment onward) leaves it intact. */
+(function(){
+  document.addEventListener("click", function(e){
+    const btn = e.target.closest(".seclink");
+    if(!btn) return;
+    e.preventDefault(); e.stopPropagation();
+    const sec = btn.closest("section[id]");
+    if(!sec) return;
+    const url = location.href.split("#")[0] + "#" + sec.id;
+    const t = btn.querySelector(".lnk-t");
+    const flash = function(){
+      btn.classList.add("copied");
+      let saved = null;
+      if(t){ saved = t.innerHTML; t.innerHTML = '<span class="en">Copied</span><span class="es">Copiado</span>'; }
+      if(history.replaceState) history.replaceState(null, "", "#" + sec.id);
+      setTimeout(function(){
+        btn.classList.remove("copied");
+        if(t && saved !== null) t.innerHTML = saved;
+      }, 1400);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(flash, flash);
+    } else {
+      const ta = document.createElement("textarea");
+      ta.value = url; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); } catch(_){}
+      document.body.removeChild(ta);
+      flash();
+    }
+  });
+})();
 
 </script>
 </body>

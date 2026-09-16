@@ -20,7 +20,7 @@
   --radius:24px; --radius-card:32px;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.65 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
 h1,h2,h3{font-family:Figtree,Inter,system-ui,sans-serif;color:var(--ink-strong);line-height:1.15;margin:0}
 .mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
@@ -61,34 +61,36 @@ main{max-width:760px;margin:0 auto;padding:0 20px 90px}
 
 /* chapters */
 .chapter{margin-top:72px;position:relative}
-.ch-head{position:relative;display:flex;align-items:baseline;gap:16px;border-bottom:2px solid var(--ink);padding-bottom:12px;padding-right:44px}
-.ch-head h2{font-size:clamp(23px,4vw,31px);font-weight:700}
+.ch-head{position:relative;display:flex;align-items:center;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:12px}
+.ch-head > h2{flex:1 1 auto;min-width:0;font-size:clamp(23px,4vw,31px);font-weight:700}
 
-/* accordion chapters (v14): the whole heading row toggles, with a round chevron chip */
-.ch-collapse > .ch-head{cursor:pointer;padding-right:52px;border-radius:10px 10px 0 0;transition:background .15s ease-out}
-.ch-collapse.has-mode > .ch-head{padding-right:84px}
-body:not(.editing) .ch-collapse > .ch-head{user-select:none}
-body:not(.editing) .ch-collapse > .ch-head:hover{background:var(--coin-soft)}
-body.editing .ch-collapse > .ch-head{cursor:text}
-body.editing .ch-collapse > .ch-head .chev{cursor:pointer}
-.ch-collapse > .ch-head:focus-visible{outline:2px solid var(--coin);outline-offset:3px;border-radius:10px}
-.ch-collapse[data-open="false"] > .ch-head h2{color:var(--ink-soft)}
+/* section-header layout (GUIDE-CHROME v4): title · mode marker · controls (copy link + chevron) */
+.ch-collapse[data-open="false"] > .ch-head > h2{color:var(--ink-soft)}
 .ch-collapse[data-open="false"] > .chbody{display:none}
-.chev{position:absolute;right:8px;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9px;background:var(--coin-soft);border:1.5px solid var(--coin);color:var(--accent-text);transition:transform .2s ease-out,background .15s ease-out,color .15s ease-out}
+body:not(.editing) .ch-collapse > .ch-head > h2{cursor:pointer;user-select:none}
+body.editing .ch-collapse > .ch-head > h2{cursor:text}
+/* mode marker — a category icon (real project asset), not a control */
+.mode{flex:none;display:inline-flex;align-items:center;margin:0}
+.mode .modeimg{flex:none;width:30px;height:30px;display:block;background:center/contain no-repeat}
+.mode-play .modeimg{background-image:url("data:image/png;base64,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")}
+.mode .txt,.chev .txt{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+/* controls: copy-link button + chevron toggle button */
+.sec-controls{flex:none;display:inline-flex;align-items:center;gap:8px;margin-left:4px}
+.seclink{flex:none;display:inline-flex;align-items:center;gap:6px;font:600 11.5px Inter,sans-serif;color:var(--accent-text);background:#fff;border:1.5px solid var(--hairline);border-radius:100px;padding:4px 11px 4px 9px;cursor:pointer;white-space:nowrap;line-height:1;transition:border-color .15s,background .15s,color .15s}
+.seclink .lnk-ic{flex:none;display:block}
+.seclink:hover,.seclink.copied{border-color:var(--coin);background:var(--coin-soft);color:var(--accent-deep)}
+.seclink:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
+.chev{flex:none;padding:0;cursor:pointer;font:inherit;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9px;background:var(--coin-soft);border:1.5px solid var(--coin);color:var(--accent-text);transition:transform .2s ease-out,background .15s ease-out,color .15s ease-out}
+.chev:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
 .chev::before{content:"";display:block;width:0;height:0;margin-top:2px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid currentColor}
-.ch-collapse[data-open="false"] > .ch-head .chev{transform:translateY(-50%) rotate(-90deg)}
-.ch-collapse > .ch-head:hover .chev{background:var(--coin);color:#fff;border-color:var(--coin)}
-/* a chapter that also carries a pedagogy icon: park the icon left of the chevron */
-.ch-collapse.has-mode > .mode{right:46px}
-@media(prefers-reduced-motion:reduce){.ch-collapse > .ch-head,.chev{transition:none}}
+.chev:hover{background:var(--coin);color:#fff;border-color:var(--coin)}
+.ch-collapse[data-open="false"] > .ch-head .chev{transform:rotate(-90deg)}
+@media(max-width:560px){.seclink .lnk-t{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}.seclink{padding:5px 8px}}
+@media(prefers-reduced-motion:reduce){.chev{transition:none}}
 .chapter p{font-size:17px;margin:18px 0 0}
 .chapter p b{color:var(--ink-strong)}
 .chapter ul.body-list{margin:16px 0 0;padding-left:20px;font-size:17px}
 .chapter ul.body-list li{margin:7px 0}
-.chapter > .mode{position:absolute;right:0;top:3px;margin:0;z-index:2}
-.mode img{width:30px;height:30px;display:block}
-.mode span{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
-@media print{.mode img{width:24px;height:24px}}
 @media print{.hublink,.progress,.replay{display:none!important}}
 
 /* NOTE callouts (verbatim) */
@@ -214,8 +216,8 @@ footer{max-width:760px;margin:66px auto 0;padding:22px 20px;border-top:1px solid
 
 <!-- OVERVIEW -->
 <section class="chapter ch-collapse" id="overview" data-open="true">
-  <div class="ch-head" role="button" tabindex="0" aria-expanded="true"><h2 data-copy="s1-title1"><span class="en">Overview</span><span class="es">Vistazo general</span></h2><span class="chev" aria-hidden="true"></span></div>
-  <div class="chbody">
+  <div class="ch-head"><h2 data-copy="s1-title1"><span class="en">Overview</span><span class="es">Vistazo general</span></h2><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-overview"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></div>
+  <div class="chbody" id="body-overview">
   <p data-copy="s1-p1"><span class="en">Godot is a game engine like Unity, Unreal, or Gamemaker. It's a program that makes it easier to work on games by giving us tools to work quicker and be more creative. Each game you work on is it's own folder. This folder contains all the resources, scenes, scripts, and settings for each project. A mouse is preferred when working with Godot!</span><span class="es">Godot es un motor de juego como Unity, Unreal o Gamemaker. Es un programa que facilita el trabajo en juegos al darnos herramientas para trabajar más rápido y ser más creativos. Cada juego en el que trabajas es su propia carpeta. Esta carpeta contiene todos los recursos, escenas, scripts y ajustes de cada proyecto. ¡Se recomienda usar un ratón al trabajar con Godot!</span></p>
 
   <figure class="shotcard">
@@ -229,8 +231,8 @@ footer{max-width:760px;margin:66px auto 0;padding:22px 20px;border-top:1px solid
 
 <!-- YOUR PROJECT -->
 <section class="chapter ch-collapse" id="your-project" data-open="true">
-  <div class="ch-head" role="button" tabindex="0" aria-expanded="true"><h2 data-copy="s2-title1"><span class="en">Your Project</span><span class="es">Tu proyecto</span></h2><span class="chev" aria-hidden="true"></span></div>
-  <div class="chbody">
+  <div class="ch-head"><h2 data-copy="s2-title1"><span class="en">Your Project</span><span class="es">Tu proyecto</span></h2><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-your-project"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></div>
+  <div class="chbody" id="body-your-project">
   <p data-copy="s2-p1"><span class="en">The first thing to notice when opening up a new project is all the different panels and buttons. For right now, let's focus on the bottom left panel, the <b>Filesystem</b>.</span><span class="es">Lo primero que notarás al abrir un proyecto nuevo son todos los distintos paneles y botones. Por ahora, centrémonos en el panel de abajo a la izquierda, el <b>Filesystem</b>.</span></p>
 
   <figure class="shotcard">
@@ -256,8 +258,8 @@ footer{max-width:760px;margin:66px auto 0;padding:22px 20px;border-top:1px solid
 
 <!-- VIEWING A SCENE -->
 <section class="chapter ch-collapse" id="viewing-a-scene" data-open="true">
-  <div class="ch-head" role="button" tabindex="0" aria-expanded="true"><h2 data-copy="s3-title1"><span class="en">Viewing a Scene</span><span class="es">Ver una escena</span></h2><span class="chev" aria-hidden="true"></span></div>
-  <div class="chbody">
+  <div class="ch-head"><h2 data-copy="s3-title1"><span class="en">Viewing a Scene</span><span class="es">Ver una escena</span></h2><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-viewing-a-scene"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></div>
+  <div class="chbody" id="body-viewing-a-scene">
   <p data-copy="s3-p1"><span class="en">The main way you'll be working on your game is by editing Scenes. Your game can be built from different scenes put together. They can be Levels, Characters, Tools; really anything you'd like!</span><span class="es">La forma principal en que trabajarás en tu juego es editando escenas. Tu juego se puede construir juntando distintas escenas. Pueden ser niveles, personajes, herramientas; ¡realmente lo que quieras!</span></p>
   <p data-copy="s3-p2"><span class="en">You can open up a scene from your filesystem by double clicking it. When you open up a new scene, you'll see a lot of new options. For right now, focus on the top middle, called your <b>Workspaces</b>. There is <b>2D</b>, <b>3D</b>, <b>Script</b>, and <b>Game</b>. (You can ignore the Asset Store).</span><span class="es">Puedes abrir una escena desde tu filesystem haciendo doble clic en ella. Cuando abres una escena nueva, verás muchas opciones nuevas. Por ahora, céntrate en la parte superior central, llamada los <b>Workspaces</b>. Están <b>2D</b>, <b>3D</b>, <b>Script</b> y <b>Game</b>. (Puedes ignorar la Asset Store).</span></p>
   <p data-copy="s3-p3"><span class="en">The 2d and 3d workspaces are the main views of your scene. When editing the code for your game, you'll be using the script tab, and when playtesting you'll be using the game tab.</span><span class="es">Los workspaces 2d y 3d son las vistas principales de tu escena. Cuando editas el código de tu juego, usarás la pestaña script, y cuando lo pruebes jugando, usarás la pestaña game.</span></p>
@@ -308,8 +310,8 @@ footer{max-width:760px;margin:66px auto 0;padding:22px 20px;border-top:1px solid
 
 <!-- BUILDING A SCENE -->
 <section class="chapter ch-collapse" id="building-a-scene" data-open="true">
-  <div class="ch-head" role="button" tabindex="0" aria-expanded="true"><h2 data-copy="s4-title1"><span class="en">Building a Scene</span><span class="es">Construir una escena</span></h2><span class="chev" aria-hidden="true"></span></div>
-  <div class="chbody">
+  <div class="ch-head"><h2 data-copy="s4-title1"><span class="en">Building a Scene</span><span class="es">Construir una escena</span></h2><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-building-a-scene"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></div>
+  <div class="chbody" id="body-building-a-scene">
   <p data-copy="s4-p1"><span class="en">The building block of Godot is <b>Nodes</b>: pre-built components that do things like play sounds or display an image. Every scene is built from many different nodes that work with eachother to make something more complex. Each node also has many different <b>Properties</b> that change how they behave!</span><span class="es">El bloque de construcción de Godot son los <b>Nodos</b>: componentes prefabricados que hacen cosas como reproducir sonidos o mostrar una imagen. Cada escena se construye a partir de muchos nodos distintos que trabajan entre sí para crear algo más complejo. ¡Cada nodo también tiene muchas <b>Propiedades</b> distintas que cambian su comportamiento!</span></p>
 
     <figure class="shotcard">
@@ -380,10 +382,9 @@ footer{max-width:760px;margin:66px auto 0;padding:22px 20px;border-top:1px solid
 </section>
 
 <!-- TESTING YOUR GAME -->
-<section class="chapter ch-collapse has-mode" id="testing-your-game" data-open="true">
-  <p class="mode mode-play"><img data-copy="s5-x1" src="data:image/png;base64,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" alt="" width="30" height="30"><span class="en">Play</span><span class="es">Jugar</span></p>
-  <div class="ch-head" role="button" tabindex="0" aria-expanded="true"><h2 data-copy="s5-title1"><span class="en">Testing your Game</span><span class="es">Probar tu juego</span></h2><span class="chev" aria-hidden="true"></span></div>
-  <div class="chbody">
+<section class="chapter ch-collapse" id="testing-your-game" data-open="true">
+  <div class="ch-head"><h2 data-copy="s5-title1"><span class="en">Testing your Game</span><span class="es">Probar tu juego</span></h2><span class="mode mode-play"><span class="modeimg" aria-hidden="true"></span><span class="txt en">Play</span><span class="txt es">Jugar</span></span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-testing-your-game"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></div>
+  <div class="chbody" id="body-testing-your-game">
   <p data-copy="s5-p1"><span class="en">After making edits to a scene, you'll want to playtest your game. On the top right, you can see all the options to start and stop your game. To play the "main scene", you can press the triangle play button, although you'll usually be playing individual scenes first. To stop the game you can press the square stop button. To play just the current scene open, you can press the movie clapper with the triangle play button.</span><span class="es">Después de hacer cambios en una escena, querrás probar tu juego jugando. Arriba a la derecha, puedes ver todas las opciones para iniciar y detener tu juego. Para ejecutar la "escena principal", puedes pulsar el botón de reproducción con forma de triángulo, aunque normalmente primero jugarás escenas individuales. Para detener el juego puedes pulsar el botón cuadrado de stop. Para ejecutar solo la escena que tienes abierta, puedes pulsar la claqueta de cine con el botón de reproducción triangular.</span></p>
 
   <figure class="shotcard">
@@ -397,7 +398,7 @@ footer{max-width:760px;margin:66px auto 0;padding:22px 20px;border-top:1px solid
 
 <!-- FURTHER READING -->
 <section class="chapter" id="further-reading">
-  <div class="ch-head"><h2 data-copy="fr-title1"><span class="en">Ready to try it yourself?</span><span class="es">¿Te animas a probarlo por tu cuenta?</span></h2></div>
+  <div class="ch-head"><h2 data-copy="fr-title1"><span class="en">Ready to try it yourself?</span><span class="es">¿Te animas a probarlo por tu cuenta?</span></h2><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button></span></div>
   <p data-copy="fr-item2"><span class="en">You've seen the main parts of the Godot editor. Next, try setting up a simple scene of your own so you can get comfortable building and experimenting.</span><span class="es">Ya has visto las partes principales del editor de Godot. A continuación, intenta crear una escena sencilla propia para ganar confianza construyendo y experimentando.</span></p>
   <div class="stepguides">
     <ul>
@@ -505,13 +506,13 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
-/* accordion chapters: a chapter heading (or its chevron) opens/closes the body;
-   Enter/Space on a focused heading toggles it. */
+/* accordion chapters: click the title or the chevron button to open/close; the chevron
+   <button> carries keyboard focus and aria-expanded. */
 function toggleCh(chap){
   const open = chap.getAttribute("data-open") === "true";
   chap.setAttribute("data-open", open ? "false" : "true");
-  const head = chap.querySelector(".ch-head");
-  if(head) head.setAttribute("aria-expanded", open ? "false" : "true");
+  const chev = chap.querySelector(".chev");
+  if(chev) chev.setAttribute("aria-expanded", open ? "false" : "true");
 }
 function chHeadFrom(t){
   if(!t || !t.closest) return null;
@@ -519,18 +520,12 @@ function chHeadFrom(t){
   if(!head) return null;
   const chap = head.parentElement;
   if(!chap.classList.contains("ch-collapse")) return null;
-  if(t.closest("a") || t.closest(".shotlink")) return null;
+  if(t.closest("a") || t.closest(".shotlink") || t.closest(".seclink")) return null;
   return head;
 }
 document.addEventListener("click", e => {
   const head = chHeadFrom(e.target);
   if(head){ e.preventDefault(); toggleCh(head.parentElement); }
-});
-document.addEventListener("keydown", e => {
-  if(e.key === "Enter" || e.key === " "){
-    const head = chHeadFrom(e.target);
-    if(head){ e.preventDefault(); toggleCh(head.parentElement); }
-  }
 });
 
 /* progress bar */
@@ -540,6 +535,34 @@ addEventListener("scroll", () => {
   const max = doc.scrollHeight - doc.clientHeight;
   progress.style.width = (max > 0 ? (doc.scrollTop / max) * 100 : 0) + "%";
 }, { passive: true });
+
+/* per-section copy-link (GUIDE-CHROME v4): copies a deep link to the section; never toggles */
+(function(){
+  function fallbackCopy(text){
+    try{ const ta=document.createElement("textarea"); ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
+      document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); }catch(e){}
+  }
+  document.querySelectorAll("button.seclink[data-seclink]").forEach(btn => {
+    const sec = btn.closest("section[id]");
+    if(!sec) return;
+    const t = btn.querySelector(".lnk-t");
+    const en = t && t.querySelector(".en"), es = t && t.querySelector(".es");
+    btn.addEventListener("click", e => {
+      e.preventDefault(); e.stopPropagation();
+      const url = location.href.split("#")[0] + "#" + sec.id;
+      const flash = () => {
+        btn.classList.add("copied");
+        if(history.replaceState) history.replaceState(null, "", "#" + sec.id);
+        const oe = en ? en.textContent : "", os = es ? es.textContent : "";
+        if(en) en.textContent = "Copied"; if(es) es.textContent = "Copiado";
+        setTimeout(() => { btn.classList.remove("copied"); if(en) en.textContent = oe; if(es) es.textContent = os; }, 1400);
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(flash).catch(() => { fallbackCopy(url); flash(); });
+      } else { fallbackCopy(url); flash(); }
+    });
+  });
+})();
 
 </script>
 </body>

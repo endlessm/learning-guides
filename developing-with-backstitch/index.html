@@ -47,7 +47,7 @@
 }
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
 body{
   margin:0;
   background:var(--paper);
@@ -148,11 +148,11 @@ main{max-width:760px;margin:0 auto;padding:0 20px 90px}
 .ch-head{display:flex;align-items:center;gap:16px;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:12px}
 .chapter:not(.reference) .ch-head{cursor:pointer}
 .chapter:not(.reference) .ch-head:focus-visible{outline:2px solid var(--coin);outline-offset:4px;border-radius:6px}
-.ch-head h2{font-size:clamp(24px,4vw,32px);font-weight:700}
+.ch-head h2{font-size:clamp(24px,4vw,32px);font-weight:700;flex:1 1 auto;min-width:0}
 /* chapters are accordions — round chevron chip pinned right, no header number */
 .ch-chev{
   flex:none;display:inline-flex;align-items:center;justify-content:center;
-  width:28px;height:28px;border-radius:9px;   /* a rounded square, not a circle */
+  width:28px;height:28px;border-radius:9px;padding:0;font:inherit;cursor:pointer;
   background:var(--coin-soft);border:1.5px solid var(--coin);color:var(--accent-text);
   transition:transform .2s ease-out,background .15s ease-out,color .15s ease-out;
 }
@@ -163,6 +163,14 @@ main{max-width:760px;margin:0 auto;padding:0 20px 90px}
 }
 .chapter:not(.reference) .ch-head:hover .ch-chev{background:var(--coin);color:#fff;border-color:var(--coin)}
 .chapter[data-open="false"] .ch-chev{transform:rotate(-90deg)}
+.ch-chev .txt{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+.ch-chev:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
+.sec-controls{flex:none;display:inline-flex;align-items:center;gap:8px;margin-left:4px}
+.seclink{flex:none;display:inline-flex;align-items:center;gap:6px;font:600 11.5px Inter,sans-serif;color:var(--accent-text);background:#fff;border:1.5px solid var(--hairline);border-radius:100px;padding:4px 11px 4px 9px;cursor:pointer;white-space:nowrap;line-height:1;transition:border-color .15s,background .15s,color .15s}
+.seclink .lnk-ic{flex:none;display:block}
+.seclink:hover,.seclink.copied{border-color:var(--coin);background:var(--coin-soft);color:var(--accent-deep)}
+.seclink:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
+@media(max-width:560px){.seclink .lnk-t{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}.seclink{padding:5px 8px}}
 .chbody{display:grid;grid-template-rows:1fr;transition:grid-template-rows .25s ease-out}
 .chbody-inner{min-height:0;overflow:hidden}
 .chapter[data-open="false"] .chbody{grid-template-rows:0fr}
@@ -827,8 +835,8 @@ footer{
 
 <!-- ===================== SAVE YOUR WORK ===================== -->
 <section class="chapter" id="ch3" data-open="true">
-  <div class="ch-head" role="button" tabindex="0" aria-expanded="true"><h2><span class="en">Save your work</span><span class="es">Guarda tu trabajo</span></h2> <span class="ch-chev" aria-hidden="true"></span></div>
-  <div class="chbody"><div class="chbody-inner">
+  <div class="ch-head"><h2><span class="en">Save your work</span><span class="es">Guarda tu trabajo</span></h2> <span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="ch-chev" type="button" aria-expanded="true" aria-controls="body-ch3"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></div>
+  <div class="chbody" id="body-ch3"><div class="chbody-inner">
   <p class="ch-intro">
     <span class="en">Good news, this part is not new! You save your project normally in Godot with <b>Ctrl+S</b> or <b>Scene → Save Scene</b>. Backstitch will automatically save your work as well. Always look for the green checkmark in Backstitch that indicates it has saved your work online, too.</span><span class="es">Buenas noticias, ¡esta parte no es nueva! Guardas tu proyecto normalmente en Godot con <b>Ctrl+S</b> o <b>Scene → Save Scene</b>. Backstitch también guardará tu trabajo automáticamente. Busca siempre la marca verde en Backstitch que indica que también guardó tu trabajo en línea.</span>
   </p>
@@ -862,8 +870,8 @@ footer{
 
 <!-- ===================== TRACK YOUR CHANGES ===================== -->
 <section class="chapter" id="ch-track" data-open="true">
-  <div class="ch-head" role="button" tabindex="0" aria-expanded="true"><h2><span class="en">Track your changes</span><span class="es">Sigue tus cambios</span></h2> <span class="ch-chev" aria-hidden="true"></span></div>
-  <div class="chbody"><div class="chbody-inner">
+  <div class="ch-head"><h2><span class="en">Track your changes</span><span class="es">Sigue tus cambios</span></h2> <span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="ch-chev" type="button" aria-expanded="true" aria-controls="body-ch-track"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></div>
+  <div class="chbody" id="body-ch-track"><div class="chbody-inner">
   <p class="ch-intro">
     <span class="en">Backstitch keeps a <b>History</b> of your saved changes, with the newest at the top.</span><span class="es">Backstitch mantiene un <b>Historial</b> de tus cambios guardados, con lo más nuevo arriba.</span>
   </p>
@@ -885,8 +893,8 @@ footer{
 
 <!-- ===================== UNDO CHANGES ===================== -->
 <section class="chapter" id="ch-undo" data-open="true">
-  <div class="ch-head" role="button" tabindex="0" aria-expanded="true"><h2><span class="en">Undo changes</span><span class="es">Deshacer cambios</span></h2> <span class="ch-chev" aria-hidden="true"></span></div>
-  <div class="chbody"><div class="chbody-inner">
+  <div class="ch-head"><h2><span class="en">Undo changes</span><span class="es">Deshacer cambios</span></h2> <span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="ch-chev" type="button" aria-expanded="true" aria-controls="body-ch-undo"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></div>
+  <div class="chbody" id="body-ch-undo"><div class="chbody-inner">
   <p class="ch-intro">
     <span class="en">Backstitch also gives you a way to return to an earlier version of your work.</span><span class="es">Backstitch también te da una forma de volver a una versión anterior de tu trabajo.</span>
   </p>
@@ -964,8 +972,8 @@ footer{
 
 <!-- ===================== WHAT A BRANCH IS ===================== -->
 <section class="chapter" id="ch1" data-open="true">
-  <div class="ch-head" role="button" tabindex="0" aria-expanded="true"><h2><span class="en">Working with branches</span><span class="es">Trabajar con ramas</span></h2> <span class="ch-chev" aria-hidden="true"></span></div>
-  <div class="chbody"><div class="chbody-inner">
+  <div class="ch-head"><h2><span class="en">Working with branches</span><span class="es">Trabajar con ramas</span></h2> <span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="ch-chev" type="button" aria-expanded="true" aria-controls="body-ch1"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></div>
+  <div class="chbody" id="body-ch1"><div class="chbody-inner">
   <p class="ch-intro">
     <span class="en">Every project starts with a <button class="term" data-t="branch">branch</button> called <button class="term" data-t="main">main</button>. Think of <b>main</b> as the starting version of the project. While you're learning Backstitch, it's useful to leave <b>main</b> unchanged so you always have a clean version of the StoryQuest Kit to start from in case things get messy as you work. And they will very likely get messy!</span><span class="es">Cada proyecto empieza con una <button class="term" data-t="branch">rama</button> llamada <button class="term" data-t="main">main</button>. Piensa en <b>main</b> como la versión inicial del proyecto. Mientras aprendes Backstitch, es útil dejar <b>main</b> sin cambios para tener siempre una versión limpia del StoryQuest Kit desde la cual empezar por si las cosas se complican mientras trabajas. ¡Y muy probablemente se complicarán!</span>
   </p>
@@ -995,8 +1003,8 @@ footer{
 
 <!-- ===================== MAKE A NEW BRANCH ===================== -->
 <section class="chapter" id="ch2" data-open="true">
-  <div class="ch-head" role="button" tabindex="0" aria-expanded="true"><h2><span class="en">Make a new branch</span><span class="es">Crea una rama nueva</span></h2> <span class="ch-chev" aria-hidden="true"></span></div>
-  <div class="chbody"><div class="chbody-inner">
+  <div class="ch-head"><h2><span class="en">Make a new branch</span><span class="es">Crea una rama nueva</span></h2> <span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="ch-chev" type="button" aria-expanded="true" aria-controls="body-ch2"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></div>
+  <div class="chbody" id="body-ch2"><div class="chbody-inner">
 
   <p class="steps-label"><span class="lbl"><span class="en">Steps 1–3</span><span class="es">Pasos 1–3</span></span></p>
   <div class="steps">
@@ -1133,8 +1141,8 @@ footer{
 
 <!-- ===================== MERGE ===================== -->
 <section class="chapter" id="ch5" data-open="true">
-  <div class="ch-head" role="button" tabindex="0" aria-expanded="true"><h2><span class="en">Merge your work back together</span><span class="es">Fusiona tu trabajo</span></h2> <span class="ch-chev" aria-hidden="true"></span></div>
-  <div class="chbody"><div class="chbody-inner">
+  <div class="ch-head"><h2><span class="en">Merge your work back together</span><span class="es">Fusiona tu trabajo</span></h2> <span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="ch-chev" type="button" aria-expanded="true" aria-controls="body-ch5"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></div>
+  <div class="chbody" id="body-ch5"><div class="chbody-inner">
   <p class="ch-intro">
     <span class="en">Branches let you separate your work while you're developing. When you want the changes from one branch to become part of the parent branch, you can <button class="term" data-t="merge">merge</button> them back into whatever branch you originally split from in order to do your work.</span><span class="es">Las ramas te permiten separar tu trabajo mientras desarrollas. Cuando quieras que los cambios de una rama pasen a formar parte de la rama madre, puedes <button class="term" data-t="merge">fusionarlos</button> de vuelta en la rama de la que originalmente te separaste para hacer tu trabajo.</span>
   </p>
@@ -1241,8 +1249,8 @@ footer{
 
 <!-- ===================== WORKING IN A GROUP ===================== -->
 <section class="chapter" id="ch4" data-open="true">
-  <div class="ch-head" role="button" tabindex="0" aria-expanded="true"><h2><span class="en">Working in a group</span><span class="es">Trabajar en grupo</span></h2> <span class="ch-chev" aria-hidden="true"></span></div>
-  <div class="chbody"><div class="chbody-inner">
+  <div class="ch-head"><h2><span class="en">Working in a group</span><span class="es">Trabajar en grupo</span></h2> <span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="ch-chev" type="button" aria-expanded="true" aria-controls="body-ch4"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></div>
+  <div class="chbody" id="body-ch4"><div class="chbody-inner">
   <p class="ch-intro">
     <span class="en">When several people are building the same project, branches give each person a separate place to work. Your team can start from a shared branch, create smaller branches for different parts of the StoryQuest, and merge that work back together when it's ready.</span><span class="es">Cuando varias personas construyen el mismo proyecto, las ramas le dan a cada una un lugar separado para trabajar. Tu equipo puede empezar desde una rama compartida, crear ramas más pequeñas para diferentes partes del StoryQuest, y volver a unir ese trabajo cuando esté listo.</span>
   </p>
@@ -1293,6 +1301,7 @@ footer{
 <section class="chapter reference" id="ref">
   <div class="ch-head">
     <h2><span class="en">Quick reference</span><span class="es">Referencia rápida</span></h2>
+    <span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button></span>
   </div>
 
   <h3 style="margin-top:30px;font-size:20px"><span class="en">The Backstitch buttons</span><span class="es">Los botones de Backstitch</span></h3>
@@ -1401,36 +1410,29 @@ function labelStepButtons(lang){
 }
 labelStepButtons(root.dataset.lang);
 
-/* ---------- 2b. chapters are accordions (v10) ----------
-   One editing-aware helper drives both click and keydown. It bails whenever the
-   event starts inside editable text, so a Space typed while editing a title types
-   a space instead of collapsing the chapter (never eat the spacebar mid-edit). */
-function toggleChapter(head){
-  const sec = head.closest(".chapter");
+/* ---------- 2b. chapters are accordions ----------
+   Title or chevron toggles the section; the copy-link and terms never do. */
+function toggleChapter(sec){
   const open = sec.getAttribute("data-open") !== "false";
   sec.setAttribute("data-open", open ? "false" : "true");
-  head.setAttribute("aria-expanded", String(!open));
+  const chev = sec.querySelector(".ch-chev");
+  if(chev) chev.setAttribute("aria-expanded", String(!open));
 }
-document.querySelectorAll(".chapter:not(.reference) .ch-head").forEach(head => {
-  head.setAttribute("role", "button");
-  head.tabIndex = 0;
-  head.setAttribute("aria-expanded", "true");
-  const activate = e => {
-    if(e.type === "keydown"){
-      if(e.key !== "Enter" && e.key !== " ") return;
-      e.preventDefault();
-    }
-    toggleChapter(head);
-  };
-  head.addEventListener("click", activate);
-  head.addEventListener("keydown", activate);
+/* Title or chevron toggles; the copy-link and terms never do. The chevron is a real
+   <button>, so keyboard (Enter/Space) fires a native click the delegated handler catches. */
+function chapSecFrom(t){
+  const head = t.closest && t.closest(".ch-head");
+  if(!head) return null;
+  const sec = head.closest(".chapter");
+  if(!sec || sec.classList.contains("reference")) return null;
+  if(t.closest(".term")) return null;
+  if(t.closest(".seclink")) return null;
+  return sec;
+}
+document.addEventListener("click", e => {
+  const sec = chapSecFrom(e.target);
+  if(sec){ e.preventDefault(); toggleChapter(sec); }
 });
-function labelChapterHeads(lang){
-  const label = lang === "es" ? "Abrir o cerrar este capítulo" : "Open or close this chapter";
-  document.querySelectorAll(".chapter:not(.reference) .ch-head")
-    .forEach(hd => hd.setAttribute("aria-label", label));
-}
-labelChapterHeads(root.dataset.lang);
 
 /* ---------- 3. figures ---------- */
 const io = new IntersectionObserver(entries => {
@@ -1532,6 +1534,35 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     if(history.pushState) history.pushState(null, "", "#" + id);
   });
 });
+
+/* ---------- per-section Copy link ---------- */
+(function(){
+  document.querySelectorAll("button.seclink[data-seclink]").forEach(function(btn){
+    const t = btn.querySelector(".lnk-t");
+    const orig = t ? t.innerHTML : "";
+    btn.addEventListener("click", function(e){
+      e.preventDefault(); e.stopPropagation();
+      const sec = btn.closest(".chapter");
+      if(!sec || !sec.id) return;
+      const url = location.href.split("#")[0] + "#" + sec.id;
+      const flash = function(){
+        btn.classList.add("copied");
+        if(t) t.innerHTML = '<span class="en">Copied</span><span class="es">Copiado</span>';
+        try{ history.replaceState(null, "", "#" + sec.id); }catch(_){}
+        setTimeout(function(){ btn.classList.remove("copied"); if(t) t.innerHTML = orig; }, 1400);
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(flash, flash);
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = url; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.focus(); ta.select();
+        try{ document.execCommand("copy"); }catch(_){}
+        document.body.removeChild(ta); flash();
+      }
+    });
+  });
+})();
 
 /* ---------- 6. scroll progress bar ---------- */
 const progress = document.getElementById("progress");

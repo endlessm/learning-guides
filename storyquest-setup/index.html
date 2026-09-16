@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Guide: storyquest-setup · style: LEARNER-GUIDES.md · media: external clips -->
+<!-- Guide: storyquest-setup · style: LEARNER-GUIDES.md · chrome: GUIDE-CHROME-v4 · media: external clips -->
 <html lang="en" data-lang="en" data-guide="storyquest-setup">
 <head>
 <meta charset="UTF-8">
@@ -41,7 +41,7 @@
 }
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
 body{
   margin:0;
   background:var(--paper);
@@ -144,10 +144,13 @@ main{counter-reset:step}
   position:relative;
   font-size:clamp(23px,3.8vw,30px);font-weight:700;
   border-bottom:2px solid var(--ink);padding-bottom:12px;
+  display:flex;align-items:center;gap:10px;
 }
+.sec > h2 > span.en,.sec > h2 > span.es{flex:1 1 auto;min-width:0}
+.sec-controls{flex:none;display:inline-flex;align-items:center;gap:8px;margin-left:4px}
 .sec.sec-collapse > h2{
   cursor:pointer;
-  margin-left:-12px;padding-left:12px;padding-right:60px;
+  margin-left:-12px;padding-left:12px;
   border-radius:12px 12px 0 0;
   transition:background .15s ease-out;
 }
@@ -155,11 +158,12 @@ body:not(.editing) .sec.sec-collapse > h2{user-select:none}
 body:not(.editing) .sec-collapse > h2:hover{background:var(--coin-soft)}
 body.editing .sec.sec-collapse > h2{cursor:text}
 body.editing .sec-collapse > h2 .chev{cursor:pointer}
-.sec-collapse > h2:focus-visible{outline:2px solid var(--coin);outline-offset:3px;border-radius:12px}
+.chev:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
+.chev span.txt{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
 .sec-collapse[data-open="false"] > h2{color:var(--ink-soft)}
 .sec-collapse[data-open="false"] > .secbody{display:none}
 .chev{
-  position:absolute;right:12px;top:6px;
+  flex:none;padding:0;cursor:pointer;font:inherit;
   display:inline-flex;align-items:center;justify-content:center;
   width:28px;height:28px;
   border-radius:9px;background:var(--coin-soft);
@@ -173,6 +177,11 @@ body.editing .sec-collapse > h2 .chev{cursor:pointer}
 }
 .sec-collapse[data-open="false"] > h2 .chev{transform:rotate(-90deg)}
 .sec-collapse > h2:hover .chev{background:var(--coin);color:#fff;border-color:var(--coin)}
+.seclink{flex:none;display:inline-flex;align-items:center;gap:6px;font:600 11.5px Inter,sans-serif;color:var(--accent-text);background:#fff;border:1.5px solid var(--hairline);border-radius:100px;padding:4px 11px 4px 9px;cursor:pointer;white-space:nowrap;line-height:1;transition:border-color .15s,background .15s,color .15s}
+.seclink .lnk-ic{flex:none;display:block}
+.seclink:hover,.seclink.copied{border-color:var(--coin);background:var(--coin-soft);color:var(--accent-deep)}
+.seclink:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
+@media(max-width:560px){ .seclink .lnk-t{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0} .seclink{padding:5px 8px} }
 @media(prefers-reduced-motion:reduce){.sec-collapse > h2,.chev{transition:none}}
 
 .ch-goal{margin:14px 0 0;color:var(--ink-soft);font-size:16px}
@@ -485,8 +494,8 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 
 <!-- ======================================================= CH 1 -->
 <section id="ch1" class="sec sec-stage sec-collapse" data-open="true">
-  <h2 role="button" tabindex="0" aria-expanded="true"><span class="en">Get the StoryQuest kit onto your computer</span><span class="es">Mete el kit de StoryQuest en tu ordenador</span><span class="chev" aria-hidden="true"></span></h2>
-  <div class="secbody">
+  <h2><span class="en">Get the StoryQuest kit onto your computer</span><span class="es">Mete el kit de StoryQuest en tu ordenador</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-ch1"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>
+  <div class="secbody" id="body-ch1">
   <p class="ch-goal"><span class="en">Download the kit, unzip it, and put the folder somewhere easy to find.</span><span class="es">Descarga el kit, descomprímelo y pon la carpeta en un sitio fácil de encontrar.</span></p>
 
   <p class="steps-label"><span class="en">Steps 1–2</span><span class="es">Pasos 1–2</span></p>
@@ -533,8 +542,8 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 
 <!-- ======================================================= CH 2 -->
 <section id="ch2" class="sec sec-stage sec-collapse" data-open="true">
-  <h2 role="button" tabindex="0" aria-expanded="true"><span class="en">Use the Backstitch launcher to open your kit in Godot</span><span class="es">Usa el lanzador de Backstitch para abrir tu kit en Godot</span><span class="chev" aria-hidden="true"></span></h2>
-  <div class="secbody">
+  <h2><span class="en">Use the Backstitch launcher to open your kit in Godot</span><span class="es">Usa el lanzador de Backstitch para abrir tu kit en Godot</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-ch2"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>
+  <div class="secbody" id="body-ch2">
   <h3 style="font-size:19px;margin:18px 0 0"><span class="en">Why are we opening Godot this way?</span><span class="es">¿Por qué abrimos Godot de esta manera?</span></h3>
   <p class="ch-goal"><span class="en">This next step is a little different from how you would normally download and open Godot. The StoryQuest Kit comes with Godot, your project files, and an extra collaboration tool called Backstitch, so you'll use the Backstitch launcher to open them together.</span><span class="es">Este siguiente paso es un poco diferente de cómo descargarías y abrirías Godot normalmente. El kit de StoryQuest incluye Godot, tus archivos de proyecto y una herramienta de colaboración extra llamada Backstitch, así que usarás el lanzador de Backstitch para abrirlos juntos.</span></p>
 
@@ -583,7 +592,7 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 
 <!-- ======================================================= WHAT IS BACKSTITCH -->
 <section id="backstitch" class="sec">
-  <h2><span class="en">So, what is Backstitch?</span><span class="es">Entonces, ¿qué es Backstitch?</span></h2>
+  <h2><span class="en">So, what is Backstitch?</span><span class="es">Entonces, ¿qué es Backstitch?</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button></span></h2>
   <p><span class="en">Backstitch is a tool that works alongside Godot while you build your StoryQuest. It keeps a history of your changes, lets you return to earlier versions, helps teammates work on separate branches (versions of the project) and bring their work back together. With Backstitch, you can also create playable web links for sharing and testing as you build. This image below shows you what Godot looks like with Backstitch running inside the engine. Other than this extra feature you are using a regular copy of Godot.</span><span class="es">Backstitch es una herramienta que funciona junto a Godot mientras construyes tu StoryQuest. Guarda un historial de tus cambios, te permite volver a versiones anteriores, y ayuda a que los compañeros trabajen en ramas separadas (versiones del proyecto) y junten su trabajo. Con Backstitch, también puedes crear enlaces web jugables para compartir y probar mientras construyes. La imagen de abajo te muestra cómo se ve Godot con Backstitch funcionando dentro del motor. Aparte de esta función extra, estás usando una copia normal de Godot.</span></p>
 
   <figure class="inlinefig">
@@ -599,8 +608,8 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 
 <!-- ======================================================= CH 3 -->
 <section id="ch3" class="sec sec-stage sec-collapse" data-open="true">
-  <h2 role="button" tabindex="0" aria-expanded="true"><span class="en">Create a project in Backstitch</span><span class="es">Crea un proyecto en Backstitch</span><span class="chev" aria-hidden="true"></span></h2>
-  <div class="secbody">
+  <h2><span class="en">Create a project in Backstitch</span><span class="es">Crea un proyecto en Backstitch</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-ch3"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>
+  <div class="secbody" id="body-ch3">
   <p class="ch-goal"><span class="en">You'll want to create a new project in Backstitch so your work can also be saved online.</span><span class="es">Querrás crear un proyecto nuevo en Backstitch para que tu trabajo también se guarde en línea.</span></p>
 
   <p class="steps-label"><span class="en">Steps 4–6</span><span class="es">Pasos 4–6</span></p>
@@ -662,7 +671,7 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 
 <!-- ======================================================= MORE PROJECTS -->
 <section class="sec" id="more-projects">
-  <h2><span class="en">Making more than one StoryQuest project?</span><span class="es">¿Hacer más de un proyecto de StoryQuest?</span></h2>
+  <h2><span class="en">Making more than one StoryQuest project?</span><span class="es">¿Hacer más de un proyecto de StoryQuest?</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button></span></h2>
     <p><span class="en">Each StoryQuest project should have its own copy of the kit in a separate folder. To start another project, extract the files from the .zip again into a new folder and give it a clearly different name. This keeps your projects separate from one another.</span><span class="es">Cada proyecto de StoryQuest debería tener su propia copia del kit en una carpeta separada. Para empezar otro proyecto, extrae los archivos del .zip de nuevo en una carpeta nueva y dale un nombre claramente distinto. Así mantienes tus proyectos separados unos de otros.</span></p>
     <figure class="inlinefig">
       <button class="hlfig" data-t="two kit folders" aria-label="Enlarge: two StoryQuest kit folders">
@@ -677,7 +686,7 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 
 <!-- ======================================================= JOINING -->
 <section class="sec" id="joining">
-  <h2><span class="en">Joining someone else's project</span><span class="es">Unirse al proyecto de otra persona</span></h2>
+  <h2><span class="en">Joining someone else's project</span><span class="es">Unirse al proyecto de otra persona</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button></span></h2>
     <p><span class="en">Once you've set up a second folder and copy of the StoryQuest kit on your computer, go ahead and open that new folder the same way you opened your first project: double-click the Backstitch launcher to open it in Godot.</span><span class="es">Una vez que hayas preparado una segunda carpeta y copia del kit de StoryQuest en tu ordenador, abre esa carpeta nueva de la misma forma en que abriste tu primer proyecto: haz doble clic en el lanzador de Backstitch para abrirla en Godot.</span></p>
     <p><span class="en">In Godot, open the <button class="term" data-t="backstitch">Backstitch</button> plugin on the right and this time choose <b>Load Existing Project</b> instead of Create New Project. Paste in the <button class="term" data-t="project id">Project ID</button> your teammate shares with you. That folder is now connected to your team's Backstitch project. Try and give Backstitch a moment to load this new project it may take a few seconds.</span><span class="es">En Godot, abre el plugin de <button class="term" data-t="backstitch">Backstitch</button> a la derecha y esta vez elige <b>Load Existing Project</b> en vez de Create New Project. Pega el <button class="term" data-t="project id">Project ID</button> que tu compañero comparta contigo. Esa carpeta ya está conectada al proyecto de Backstitch de tu equipo. Dale a Backstitch un momento para cargar este proyecto nuevo, puede tardar unos segundos.</span></p>
     <button class="mediathumb" data-t="clip join project" data-badge="play">
@@ -689,7 +698,7 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 
 <!-- ======================================================= WHEN YOU'RE READY TO BUILD (come back later) -->
 <section class="sec" id="folders">
-  <h2><span class="en">Create your StoryQuest folders</span><span class="es">Crea las carpetas de tu StoryQuest</span></h2>
+  <h2><span class="en">Create your StoryQuest folders</span><span class="es">Crea las carpetas de tu StoryQuest</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button></span></h2>
   <p class="ch-goal"><span class="en">Once you have a team, or you're ready to start building your StoryQuest, use the template tool to create your StoryQuest folders and starter scenes.</span><span class="es">Cuando tengas un equipo, o estés listo para empezar a construir tu StoryQuest, usa la herramienta de plantillas para crear las carpetas y las escenas iniciales de tu StoryQuest.</span></p>
   <p><span class="en">If you're still exploring the kit or working through design challenges, you don't need to do this yet. Come back when you're ready to begin your StoryQuest.</span><span class="es">Si todavía estás explorando el kit o trabajando en los retos de diseño, aún no necesitas hacer esto. Vuelve cuando estés listo para empezar tu StoryQuest.</span></p>
   <p><span class="en">You'll need to give your StoryQuest a name. A working title is completely fine, just choose something that gives an idea of what you're planning to build. For example, a StoryQuest about a knight and dragons could start as Dragon Knight even if the final title changes later.</span><span class="es">Tendrás que darle un nombre a tu StoryQuest. Un título provisional está perfectamente bien, solo elige algo que dé una idea de lo que piensas construir. Por ejemplo, un StoryQuest sobre un caballero y dragones podría empezar como Dragon Knight aunque el título final cambie más adelante.</span></p>
@@ -718,8 +727,8 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 </section>
 
 <!-- ======================================================= REFERENCE -->
-<section class="sec reference">
-  <h2><span class="en">If you get stuck</span><span class="es">Si te atascas</span></h2>
+<section class="sec reference" id="stuck">
+  <h2><span class="en">If you get stuck</span><span class="es">Si te atascas</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button></span></h2>
   <div class="note">
     <p class="note-kicker"><span class="en">quick answers</span><span class="es">respuestas rápidas</span></p>
     <p><span class="en"><strong>Backstitch is missing or the project doesn't look right.</strong> Close Godot and reopen it using the launcher inside your StoryQuest kit folder.</span><span class="es"><strong>Falta Backstitch o el proyecto no se ve bien.</strong> Cierra Godot y vuelve a abrirlo con el lanzador de dentro de tu carpeta del kit de StoryQuest.</span></p>
@@ -730,8 +739,8 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 </section>
 
 <!-- ======================================================= WHAT'S NEXT -->
-<section class="sec">
-  <h2><span class="en">What's next</span><span class="es">Qué sigue</span></h2>
+<section class="sec" id="whats-next">
+  <h2><span class="en">What's next</span><span class="es">Qué sigue</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button></span></h2>
   <p class="ch-goal"><span class="en">Your StoryQuest Kit is ready. If you're new to Godot, start with <b>A quick tour of Godot</b> to get familiar with the editor and the parts you'll use most.</span><span class="es">Tu kit de StoryQuest está listo. Si Godot es nuevo para ti, empieza con <b>Un recorrido rápido por Godot</b> para familiarizarte con el editor y las partes que más usarás.</span></p>
   <div class="stepguides">
     <p class="sg-label"><span class="en">Keep going · related guides</span><span class="es">Sigue adelante · guías relacionadas</span></p>
@@ -1109,26 +1118,20 @@ document.addEventListener("keydown", e => {
 function toggleSec(sec){
   const open = sec.getAttribute("data-open") === "true";
   sec.setAttribute("data-open", open ? "false" : "true");
-  const head = sec.querySelector("h2");
-  if(head) head.setAttribute("aria-expanded", open ? "false" : "true");
+  const chev = sec.querySelector(".chev");
+  if(chev) chev.setAttribute("aria-expanded", open ? "false" : "true");
 }
 function secHeadFrom(t){
   const head = t.closest && t.closest("h2");
   if(!head || !head.parentElement.classList.contains("sec-collapse")) return null;
   if(t.closest(".term")) return null;
+  if(t.closest(".seclink")) return null;
   return head;
 }
 document.addEventListener("click", e => {
   const head = secHeadFrom(e.target);
   if(head){ e.preventDefault(); toggleSec(head.parentElement); }
 });
-document.addEventListener("keydown", e => {
-  const head = secHeadFrom(e.target);
-  if(head && (e.key === "Enter" || e.key === " ")){
-    e.preventDefault(); toggleSec(head.parentElement);
-  }
-});
-
 /* ---------- 4. fill each media thumbnail's poster from its TERMS entry ----------
    One embedded copy per asset: the tile draws the same poster (or first slide)
    the modal uses. */
@@ -1165,6 +1168,42 @@ addEventListener("scroll", () => {
   const max = doc.scrollHeight - doc.clientHeight;
   progress.style.width = (max > 0 ? (doc.scrollTop / max) * 100 : 0) + "%";
 }, { passive: true });
+
+/* ---------- 6b. per-section copy-link buttons (GUIDE-CHROME v4 §6) ---------- */
+(function(){
+  document.querySelectorAll(".seclink").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.stopPropagation();                       // copy link must never toggle the section
+      const sec = btn.closest("section[id]");
+      if(!sec) return;
+      const url = location.href.split("#")[0] + "#" + sec.id;
+      const flash = () => {
+        const t = btn.querySelector(".lnk-t");
+        btn.classList.add("copied");
+        if(t && !t.dataset.orig){
+          t.dataset.orig = t.innerHTML;
+          t.innerHTML = '<span class="en">Copied</span><span class="es">Copiado</span>';
+        }
+        if(history.replaceState) history.replaceState(null, "", "#" + sec.id);
+        clearTimeout(btn._t);
+        btn._t = setTimeout(() => {
+          btn.classList.remove("copied");
+          if(t && t.dataset.orig){ t.innerHTML = t.dataset.orig; delete t.dataset.orig; }
+        }, 1400);
+      };
+      const canClip = navigator.clipboard && navigator.clipboard.writeText;
+      (canClip ? navigator.clipboard.writeText(url) : Promise.reject()).then(flash).catch(() => {
+        const ta = document.createElement("textarea");
+        ta.value = url; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); } catch(_) {}
+        document.body.removeChild(ta);
+        flash();
+      });
+    });
+  });
+})();
+
 </script>
 </body>
 </html>

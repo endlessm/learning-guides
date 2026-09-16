@@ -44,6 +44,7 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+html{scroll-padding-top:80px}
 body{
   margin:0;background:var(--paper);color:var(--ink);
   font:400 17px/1.65 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
@@ -95,7 +96,7 @@ main{max-width:760px;margin:0 auto;padding:0 20px 90px;counter-reset:step}
 
 /* ---------- chapters ---------- */
 .chapter{margin-top:84px}
-.ch-head{display:flex;align-items:baseline;gap:14px;border-bottom:2px solid var(--ink);padding-bottom:12px;position:relative;cursor:pointer;padding-right:48px;border-radius:12px 12px 0 0;transition:background .15s ease-out}
+.ch-head{display:flex;align-items:center;gap:14px;border-bottom:2px solid var(--ink);padding-bottom:12px;position:relative;cursor:pointer;border-radius:12px 12px 0 0;transition:background .15s ease-out}
 /* section number: white numeral in a solid-primary coin — matches the teleporter build (LEARNER-GUIDES §6 ordinal-coin exception) */
 .ch-num{flex:none;font-family:Figtree,Inter,sans-serif;font-size:40px;font-weight:700;color:var(--coin);line-height:1}
 /* every chapter is an accordion — the whole heading row toggles it, with a chevron chip so the control is obvious (ported from the teleporter build; LEARNER-GUIDES §1) */
@@ -104,12 +105,20 @@ body:not(.editing) .ch-head:hover{background:var(--coin-soft)}
 .ch-head:focus-visible{outline:2px solid var(--coin);outline-offset:3px;border-radius:12px}
 .chapter[data-open="false"] .ch-head h2{color:var(--ink-soft)}
 .chapter[data-open="false"] .chbody{display:none}
-.chev{position:absolute;right:6px;top:6px;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9px;background:var(--coin-soft);border:1.5px solid var(--coin);color:var(--accent-text);transition:transform .2s ease-out,background .15s ease-out,color .15s ease-out}
+.chev{flex:none;padding:0;cursor:pointer;font:inherit;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9px;background:var(--coin-soft);border:1.5px solid var(--coin);color:var(--accent-text);transition:transform .2s ease-out,background .15s ease-out,color .15s ease-out}
+.chev:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
+.chev span.txt{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
 .chev::before{content:"";display:block;width:0;height:0;margin-top:2px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid currentColor}
 .chapter[data-open="false"] .ch-head .chev{transform:rotate(-90deg)}
 .ch-head:hover .chev{background:var(--coin);color:#fff;border-color:var(--coin)}
 @media(prefers-reduced-motion:reduce){.ch-head,.chev{transition:none}}
-.ch-head h2{font-size:clamp(23px,4vw,31px);font-weight:700}
+.ch-head h2{font-size:clamp(23px,4vw,31px);font-weight:700;flex:1 1 auto;min-width:0}
+.sec-controls{flex:none;display:inline-flex;align-items:center;gap:8px;margin-left:4px}
+.seclink{flex:none;display:inline-flex;align-items:center;gap:6px;font:600 11.5px Inter,sans-serif;color:var(--accent-text);background:#fff;border:1.5px solid var(--hairline);border-radius:100px;padding:4px 11px 4px 9px;cursor:pointer;white-space:nowrap;line-height:1;transition:border-color .15s,background .15s,color .15s}
+.seclink .lnk-ic{flex:none;display:block}
+.seclink:hover,.seclink.copied{border-color:var(--coin);background:var(--coin-soft);color:var(--accent-deep)}
+.seclink:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
+@media(max-width:560px){.seclink .lnk-t{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}.seclink{padding:5px 8px}}
 .ch-goal{margin:12px 0 0;color:var(--ink-soft);font-size:16px}
 .ch-intro{margin:18px 0 0;font-size:17px}
 .subhead{font-size:18px;font-weight:700;color:var(--ink-strong);margin:28px 0 0}
@@ -497,8 +506,8 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 
   <!-- ======================================================= CHAPTER 1 -->
   <section class="chapter" id="ch1" data-open="true">
-    <div class="ch-head" role="button" tabindex="0" aria-expanded="true"><h2 data-id="L014"><span class="en">Make an empty scene and give it a root node.</span><span class="es">Crea una escena vacía y dale un nodo raíz.</span></h2><span class="chev" aria-hidden="true"></span></div>
-    <div class="chbody">
+    <div class="ch-head"><h2 data-id="L014"><span class="en">Make an empty scene and give it a root node.</span><span class="es">Crea una escena vacía y dale un nodo raíz.</span></h2><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-ch1"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></div>
+    <div class="chbody" id="body-ch1">
     <p class="ch-intro" data-id="L016">
       <span class="en">Every scene is a small tree of <button class="term" data-t="node">nodes</button>, and it always starts the same way: one node at the top, with everything else added underneath it. That top node is the <button class="term" data-t="root">root</button>. Before you add anything or bring anything in, let's make that root node and save the file.</span><span class="es">Cada escena es un pequeño árbol de <button class="term" data-t="node">nodos</button>, y siempre empieza igual: un nodo arriba, con todo lo demás debajo. Ese nodo de arriba es la <button class="term" data-t="root">raíz</button>. Antes de añadir o traer nada, creamos ese nodo raíz y guardamos el archivo.</span>
     </p>
@@ -583,8 +592,8 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 
   <!-- ======================================================= CHAPTER 2 -->
   <section class="chapter" id="ch2" data-open="true">
-    <div class="ch-head" role="button" tabindex="0" aria-expanded="true"><h2 data-id="L037"><span class="en">Use TileMapLayers to build the ground and environment.</span><span class="es">Usa TileMapLayers para construir el suelo y el entorno.</span></h2><span class="chev" aria-hidden="true"></span></div>
-    <div class="chbody">
+    <div class="ch-head"><h2 data-id="L037"><span class="en">Use TileMapLayers to build the ground and environment.</span><span class="es">Usa TileMapLayers para construir el suelo y el entorno.</span></h2><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-ch2"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></div>
+    <div class="chbody" id="body-ch2">
     <p class="ch-intro" data-id="L038">
       <span class="en">To turn this empty scene into a playable area, you'll need some ground and an environment for the player to move through. In Threadbare, much of that world is built with <button class="term" data-t="tilemap layer">TileMapLayers</button>. A TileMapLayer lets you paint reusable tiles onto a grid to build part of the ground or environment.</span><span class="es">Para convertir esta escena vacía en un área jugable, necesitarás algo de suelo y un entorno por el que el jugador pueda moverse. En Threadbare, gran parte de ese mundo se construye con <button class="term" data-t="tilemap layer">TileMapLayers</button>. Una TileMapLayer te deja pintar tiles reutilizables sobre una cuadrícula para construir parte del suelo o el entorno.</span>
     </p>
@@ -688,8 +697,8 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 
   <!-- ======================================================= CHAPTER 3 -->
   <section class="chapter" id="ch3" data-open="true">
-    <div class="ch-head" role="button" tabindex="0" aria-expanded="true"><h2 data-id="L068"><span class="en">Add a character and a few decorative assets.</span><span class="es">Añade un personaje y algunos elementos decorativos.</span></h2><span class="chev" aria-hidden="true"></span></div>
-    <div class="chbody">
+    <div class="ch-head"><h2 data-id="L068"><span class="en">Add a character and a few decorative assets.</span><span class="es">Añade un personaje y algunos elementos decorativos.</span></h2><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-ch3"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></div>
+    <div class="chbody" id="body-ch3">
     <p class="ch-intro" data-id="L069">
       <span class="en">Here's an example of where a bigger scene starts being built from smaller ones. Parts of the game, like characters and decorative objects, can already exist as their own saved scenes. You can bring those scenes into your play area and reuse them instead of building everything again.</span><span class="es">Aquí tienes un ejemplo de cómo una escena más grande empieza a construirse a partir de otras más pequeñas. Partes del juego, como personajes y objetos decorativos, pueden existir ya como sus propias escenas guardadas. Puedes traer esas escenas a tu play area y reutilizarlas en vez de construir todo de nuevo.</span>
     </p>
@@ -762,8 +771,8 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 
   <!-- ======================================================= CHAPTER 4 -->
   <section class="chapter" id="ch4" data-open="true">
-    <div class="ch-head" role="button" tabindex="0" aria-expanded="true"><h2 data-id="L088"><span class="en">Save and run the scene.</span><span class="es">Guarda y ejecuta la escena.</span></h2><span class="chev" aria-hidden="true"></span></div>
-    <div class="chbody">
+    <div class="ch-head"><h2 data-id="L088"><span class="en">Save and run the scene.</span><span class="es">Guarda y ejecuta la escena.</span></h2><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-ch4"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></div>
+    <div class="chbody" id="body-ch4">
 
     <div class="steps-label" data-id="L089"><span class="en">Step 12</span><span class="es">Paso 12</span></div>
     <div class="steps">
@@ -993,21 +1002,17 @@ document.querySelectorAll(".ba-open, .s2-open").forEach(function(t){
 function toggleChapter(ch){
   const open = ch.getAttribute("data-open") === "true";
   ch.setAttribute("data-open", open ? "false" : "true");
-  const head = ch.querySelector(".ch-head");
-  if(head) head.setAttribute("aria-expanded", open ? "false" : "true");
+  const chev = ch.querySelector(".chev");
+  if(chev) chev.setAttribute("aria-expanded", open ? "false" : "true");
 }
 function chHeadFrom(t){
   const head = t.closest && t.closest(".ch-head");
   if(!head || !head.parentElement.classList.contains("chapter")) return null;
   if(t.closest(".term")) return null;                     // a term opens its pop-out
+  if(t.closest(".seclink")) return null;                 // copy button: never toggle
   return head;
 }
 document.addEventListener("click", e => {
-  const head = chHeadFrom(e.target);
-  if(head){ e.preventDefault(); toggleChapter(head.parentElement); }
-});
-document.addEventListener("keydown", e => {
-  if(e.key !== "Enter" && e.key !== " ") return;
   const head = chHeadFrom(e.target);
   if(head){ e.preventDefault(); toggleChapter(head.parentElement); }
 });
@@ -1118,6 +1123,35 @@ addEventListener("scroll", () => {
   const max = doc.scrollHeight - doc.clientHeight;
   progress.style.width = (max > 0 ? (doc.scrollTop / max) * 100 : 0) + "%";
 }, { passive: true });
+
+/* per-section copy-link buttons (GUIDE-CHROME v4 §6) — before the edit layer so publish keeps it */
+(function(){
+  document.querySelectorAll(".seclink").forEach(function(btn){
+    btn.addEventListener("click", function(e){
+      e.preventDefault(); e.stopPropagation();
+      const sec = btn.closest("section[id]"); if(!sec) return;
+      const url = location.href.split("#")[0] + "#" + sec.id;
+      const en = btn.querySelector(".lnk-t .en"), es = btn.querySelector(".lnk-t .es");
+      const oen = en ? en.textContent : "", oes = es ? es.textContent : "";
+      function flash(){
+        btn.classList.add("copied");
+        if(en) en.textContent = "Copied";
+        if(es) es.textContent = "Copiado";
+        try{ history.replaceState(null, "", "#" + sec.id); }catch(_){}
+        setTimeout(function(){ btn.classList.remove("copied"); if(en) en.textContent = oen; if(es) es.textContent = oes; }, 1400);
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(flash, flash);
+      } else {
+        const ta = document.createElement("textarea"); ta.value = url;
+        ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try{ document.execCommand("copy"); }catch(_){}
+        ta.remove(); flash();
+      }
+    });
+  });
+})();
 
 </script>
 </body>

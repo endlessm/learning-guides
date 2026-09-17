@@ -10,9 +10,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================================
-   Core Threadbare Guide Hub — a simple index that links out to every guide.
-   Same paper/ink/coin palette and type as the guide family (LEARNER-GUIDES v14),
-   stripped down to link rows grouped under sections. Bilingual EN/ES.
+   Core Threadbare Guide Hub — category-navigation version.
+   Same paper/ink/coin palette, type, and guide-card styling as the guide
+   family. The long linear list is replaced with a horizontal category
+   selector (a subtle inventory/menu strip); one category shows at a time.
+   Bilingual EN/ES.
    ============================================================================ */
 
 :root{
@@ -66,8 +68,41 @@ main{max-width:820px;margin:0 auto;padding:0 20px 96px}
 .hint-line{margin:16px 0 0;font:600 13px Inter,sans-serif;color:var(--ink-faint);display:flex;align-items:center;gap:8px}
 .hint-line .chip{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:6px;background:var(--coin-soft);border:1.5px solid var(--coin);color:var(--accent-text);font:700 11px/1 Inter,sans-serif}
 
-/* ---------- sections ---------- */
-.sec{margin-top:44px;scroll-margin-top:64px}
+/* ---------- category nav (the tab strip) ----------
+   A subtle "menu / inventory" tray of pill tabs. The active pill is white
+   with an orange border + accent text, so the selected category is obvious.
+   On narrow screens the tray scrolls horizontally instead of wrapping. */
+.catnav{margin:34px 0 0}
+.cattabs{
+  display:flex;gap:5px;padding:6px;
+  background:var(--paper-deep);
+  border:1px solid var(--hairline);
+  border-radius:14px;
+  box-shadow:inset 0 1px 2px rgba(2,6,24,.04);
+  overflow-x:auto;
+  scrollbar-width:none;                 /* Firefox */
+  -webkit-overflow-scrolling:touch;
+}
+.cattabs::-webkit-scrollbar{display:none}   /* WebKit */
+.cattab{
+  flex:0 0 auto;white-space:nowrap;
+  /* inactive tabs read as their own buttons: white fill + faint hairline,
+     neutral so the orange active tab still clearly wins */
+  border:1.5px solid var(--hairline);background:#fff;border-radius:10px;
+  padding:9px 11px;cursor:pointer;      /* trimmed from 15px so all six tabs fit one desktop row */
+  font:700 14px/1 Figtree,Inter,sans-serif;color:var(--ink-soft);
+  box-shadow:0 1px 1px rgba(2,6,24,.04);
+  transition:background .15s,color .15s,border-color .15s,box-shadow .15s,transform .12s ease-out;
+}
+.cattab:hover{background:var(--coin-soft);border-color:var(--coin);color:var(--accent-text);transform:translateY(-1px)}
+.cattab:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
+.cattab[aria-selected="true"]{
+  background:#fff;border-color:var(--coin);color:var(--accent-text);
+  box-shadow:0 1px 3px rgba(245,74,0,.18);transform:none;
+}
+
+/* ---------- sections (each is a tab panel) ---------- */
+.sec{margin-top:30px;scroll-margin-top:64px}
 .sec > h2{font-size:clamp(20px,3.2vw,26px);font-weight:700;border-bottom:2px solid var(--ink);padding-bottom:10px}
 .seclede{margin:12px 0 0;font-size:14.5px;color:var(--ink-faint)}
 
@@ -87,6 +122,14 @@ main{max-width:820px;margin:0 auto;padding:0 20px 96px}
 .row .go{flex:none;display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--coin-soft);border:1.5px solid var(--coin);color:var(--accent-text);font:700 14px/1 Inter,sans-serif;transition:background .15s,color .15s,transform .15s ease-out}
 .row .go::before{content:"\2192"}                 /* right arrow: go to guide */
 .row:hover .go{background:var(--coin);color:#fff;transform:translateX(1px)}
+
+/* ---------- All Guides view: a compact reference index showing every category
+   at once. Density is increased only here (main.view-all); the single-category
+   filtered views keep the roomier default spacing above. ---------- */
+.view-all .sec{margin-top:20px}          /* tighter gap between categories        */
+.view-all .seclede{margin-top:8px}       /* heading -> description                */
+.view-all .rows{margin-top:9px;gap:5px}  /* description -> first row; row-to-row  */
+.view-all .row{padding:10px 16px}        /* less vertical padding, same width     */
 
 /* a row whose href is still "#" — flagged automatically by the script below */
 .row.pending{background:var(--paper-deep);border-style:dashed;cursor:default}
@@ -111,9 +154,12 @@ main{max-width:820px;margin:0 auto;padding:0 20px 96px}
 .row .tag{align-self:flex-start;margin-bottom:5px;font:700 8.5px ui-monospace,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--accent-deep);background:var(--coin-soft);border:1px solid #f6c9a8;border-radius:100px;padding:2px 8px}
 .row.resource .go::before{content:"\2197"}   /* up-right arrow: opens the companion hub */
 
-@media(prefers-reduced-motion:reduce){.row,.row .go{transition:none}}
+@media(prefers-reduced-motion:reduce){.row,.row .go,.cattab{transition:none}}
 @media print{
   .topbar{position:static}
+  .catnav{display:none}                       /* tabs are interactive; show all guides on paper */
+  .sec[hidden]{display:block !important}       /* unhide every category for printing */
+  .sec{margin-top:26px;break-inside:avoid}
   .row{break-inside:avoid}
   .row.pending .body::after{content:"link pending —"}
   [data-lang="es"] .row.pending .body::after{content:"enlace pendiente —"}
@@ -134,20 +180,44 @@ main{max-width:820px;margin:0 auto;padding:0 20px 96px}
   </div>
 </header>
 
-<main>
+<main class="view-all">
 <!-- ======================================================= HERO -->
 <section class="hero">
   <p class="eyebrow"><span class="en">Guide Hub</span><span class="es">Centro de guías</span></p>
   <h1><span class="en">Core Threadbare <span class="ac">Guides</span></span><span class="es"><span class="ac">Guías</span> de Core Threadbare</span></h1>
   <p class="lede"><span class="en">Use this hub whenever you need help building your StoryQuest. You do not need to use every guide or follow them in order.</span><span class="es">Usa este centro siempre que necesites ayuda para crear tu StoryQuest. No necesitas usar todas las guías ni seguirlas en orden.</span></p>
   <p class="subnote"><span class="en">Looking for gameplay you can reuse or build on? <a href="https://endlessm.github.io/learning-guides/gameplay-elements/" target="_blank" rel="noopener">Explore Threadbare Gameplay Elements</a>.</span><span class="es">¿Buscas mecánicas que puedas reutilizar o ampliar? <a href="https://endlessm.github.io/learning-guides/gameplay-elements/" target="_blank" rel="noopener">Explora los Elementos de juego de Threadbare</a>.</span></p>
-  <p class="hint-line"><span class="chip" aria-hidden="true">&rarr;</span><span class="en">Click any guide to open it.</span><span class="es">Haz clic en cualquier guía para abrirla.</span></p>
+  <p class="hint-line"><span class="chip" aria-hidden="true">&rarr;</span><span class="en">Browse all guides below, or choose a category to narrow the list.</span><span class="es">Explora todas las guías abajo o elige una categoría para acotar la lista.</span></p>
 </section>
 
+<!-- ======================================================= CATEGORY NAV -->
+<nav class="catnav" aria-label="Guide categories / Categorías de guías">
+  <div id="cattabs" class="cattabs" role="tablist" aria-orientation="horizontal" aria-label="Guide categories / Categorías de guías">
+    <button class="cattab" type="button" role="tab" id="tab-all" data-cat="all" aria-controls="panel-getting-started panel-challenges panel-godot-skills panel-building panel-planning" aria-selected="true" tabindex="0">
+      <span class="en">All Guides</span><span class="es">Todas las guías</span>
+    </button>
+    <button class="cattab" type="button" role="tab" id="tab-getting-started" data-cat="getting-started" aria-controls="panel-getting-started" aria-selected="false" tabindex="-1">
+      <span class="en">Getting Started</span><span class="es">Comenzar</span>
+    </button>
+    <button class="cattab" type="button" role="tab" id="tab-challenges" data-cat="challenges" aria-controls="panel-challenges" aria-selected="false" tabindex="-1">
+      <span class="en">Design Challenges</span><span class="es">Retos de diseño</span>
+    </button>
+    <button class="cattab" type="button" role="tab" id="tab-godot-skills" data-cat="godot-skills" aria-controls="panel-godot-skills" aria-selected="false" tabindex="-1">
+      <span class="en">Godot Skills</span><span class="es">Habilidades Godot</span>
+    </button>
+    <button class="cattab" type="button" role="tab" id="tab-building" data-cat="building" aria-controls="panel-building" aria-selected="false" tabindex="-1">
+      <span class="en">Threadbare Features</span><span class="es">Funciones Threadbare</span>
+    </button>
+    <button class="cattab" type="button" role="tab" id="tab-planning" data-cat="planning" aria-controls="panel-planning" aria-selected="false" tabindex="-1">
+      <span class="en">Plan &amp; Manage</span><span class="es">Plan y gestión</span>
+    </button>
+  </div>
+</nav>
+
 <!-- ======================================================= 1 · GETTING STARTED -->
-<section class="sec" id="getting-started">
+<section class="sec" role="tabpanel" id="panel-getting-started" data-cat="getting-started" aria-labelledby="tab-getting-started">
   <h2><span class="en">Getting Started with Your StoryQuest</span><span class="es">Comenzar con tu StoryQuest</span></h2>
-  <p class="seclede"><span class="en">Get your kit running, learn your way around Godot, and start building, saving, and sharing your work.</span><span class="es">Pon en marcha tu kit, aprende a moverte por Godot y empieza a crear, guardar y compartir tu trabajo.</span></p>
+  <p class="seclede"><span class="en">Get your kit running, find your way around Godot, and set up your first scene — everything you need to start building.</span><span class="es">Pon en marcha tu kit, aprende a moverte por Godot y prepara tu primera escena: todo lo necesario para empezar a construir.</span></p>
   <div class="rows">
 
     <a class="row" href="https://endlessm.github.io/learning-guides/storyquest-setup/">
@@ -165,21 +235,11 @@ main{max-width:820px;margin:0 auto;padding:0 20px 96px}
       <span class="go" aria-hidden="true"></span>
     </a>
 
-    <a class="row" href="https://endlessm.github.io/learning-guides/developing-with-backstitch/">
-      <span class="body"><span class="title"><span class="en">Developing your StoryQuest using Backstitch</span><span class="es">Desarrollar tu StoryQuest con Backstitch</span></span><span class="desc"><span class="en">Save versions, create branches, and collaborate.</span><span class="es">Guarda versiones, crea ramas y colabora.</span></span></span>
-      <span class="go" aria-hidden="true"></span>
-    </a>
-
-    <a class="row" href="https://endlessm.github.io/learning-guides/sharing-with-backstitch/">
-      <span class="body"><span class="title"><span class="en">Share your StoryQuest with Backstitch</span><span class="es">Comparte tu StoryQuest con Backstitch</span></span><span class="desc"><span class="en">Create a playable version others can open in a browser.</span><span class="es">Crea una versión jugable que otros puedan abrir en un navegador.</span></span></span>
-      <span class="go" aria-hidden="true"></span>
-    </a>
-
   </div>
 </section>
 
 <!-- ======================================================= 2 · DESIGN CHALLENGES -->
-<section class="sec" id="challenges">
+<section class="sec" role="tabpanel" id="panel-challenges" data-cat="challenges" aria-labelledby="tab-challenges">
   <h2><span class="en">Design Challenges</span><span class="es">Retos de diseño</span></h2>
   <p class="seclede"><span class="en">Practice by remixing and experimenting with existing Threadbare mechanics.</span><span class="es">Practica remezclando y experimentando con mecánicas que ya existen en Threadbare.</span></p>
   <div class="rows">
@@ -198,7 +258,7 @@ main{max-width:820px;margin:0 auto;padding:0 20px 96px}
 </section>
 
 <!-- ======================================================= 3 · GODOT SKILLS & CONCEPTS -->
-<section class="sec" id="godot-skills">
+<section class="sec" role="tabpanel" id="panel-godot-skills" data-cat="godot-skills" aria-labelledby="tab-godot-skills">
   <h2><span class="en">Godot Skills &amp; Concepts</span><span class="es">Habilidades y conceptos de Godot</span></h2>
   <p class="seclede"><span class="en">Learn fundamental Godot ideas and techniques you can use across different projects.</span><span class="es">Aprende ideas y técnicas fundamentales de Godot que puedes usar en diferentes proyectos.</span></p>
   <div class="rows">
@@ -212,7 +272,7 @@ main{max-width:820px;margin:0 auto;padding:0 20px 96px}
 </section>
 
 <!-- ======================================================= 4 · BUILDING WITH EXISTING THREADBARE FEATURES -->
-<section class="sec" id="building">
+<section class="sec" role="tabpanel" id="panel-building" data-cat="building" aria-labelledby="tab-building">
   <h2><span class="en">Building with Existing Threadbare Features</span><span class="es">Construir con funciones que ya existen en Threadbare</span></h2>
   <p class="seclede"><span class="en">Learn how to find, add, and set up characters, mechanics, objects, and systems that already exist in Threadbare so you can use them in your own StoryQuest.</span><span class="es">Aprende a encontrar, añadir y configurar personajes, mecánicas, objetos y sistemas que ya existen en Threadbare para usarlos en tu propia StoryQuest.</span></p>
   <div class="rows">
@@ -246,18 +306,23 @@ main{max-width:820px;margin:0 auto;padding:0 20px 96px}
 </section>
 
 <!-- ======================================================= 5 · PLANNING & MANAGING -->
-<section class="sec" id="planning">
+<section class="sec" role="tabpanel" id="panel-planning" data-cat="planning" aria-labelledby="tab-planning">
   <h2><span class="en">Planning and Managing Your Project</span><span class="es">Planificar y gestionar tu proyecto</span></h2>
-  <p class="seclede"><span class="en">Use these guides to organize your work and collaborate with your team.</span><span class="es">Usa estas guías para organizar tu trabajo y colaborar con tu equipo.</span></p>
+  <p class="seclede"><span class="en">Tools and practices you return to while developing — save and share versions, collaborate, and organize your project.</span><span class="es">Herramientas y prácticas que usarás mientras desarrollas: guarda y comparte versiones, colabora y organiza tu proyecto.</span></p>
   <div class="rows">
 
-    <a class="row" href="https://endlessm.github.io/learning-guides/Welcome-To-Your-StoryQuest-Project-Board/">
-      <span class="body"><span class="title"><span class="en">Welcome to your project board</span><span class="es">Bienvenido a tu tablero de proyecto</span></span></span>
+    <a class="row" href="https://endlessm.github.io/learning-guides/developing-with-backstitch/">
+      <span class="body"><span class="title"><span class="en">Developing your StoryQuest using Backstitch</span><span class="es">Desarrollar tu StoryQuest con Backstitch</span></span><span class="desc"><span class="en">Save versions, create branches, and collaborate.</span><span class="es">Guarda versiones, crea ramas y colabora.</span></span></span>
       <span class="go" aria-hidden="true"></span>
     </a>
 
-    <a class="row" href="https://endlessm.github.io/learning-guides/brainstorming-board/">
-      <span class="body"><span class="title"><span class="en">Set Up a Brainstorming Board</span><span class="es">Prepara un tablero de lluvia de ideas</span></span><span class="desc"><span class="en">Duplicate and share a tldraw board so your group can brainstorm together.</span><span class="es">Duplica y comparte un tablero de tldraw para que tu grupo haga una lluvia de ideas en equipo.</span></span></span>
+    <a class="row" href="https://endlessm.github.io/learning-guides/sharing-with-backstitch/">
+      <span class="body"><span class="title"><span class="en">Share your StoryQuest with Backstitch</span><span class="es">Comparte tu StoryQuest con Backstitch</span></span><span class="desc"><span class="en">Create a playable version others can open in a browser.</span><span class="es">Crea una versión jugable que otros puedan abrir en un navegador.</span></span></span>
+      <span class="go" aria-hidden="true"></span>
+    </a>
+
+    <a class="row" href="https://endlessm.github.io/learning-guides/Welcome-To-Your-StoryQuest-Project-Board/">
+      <span class="body"><span class="title"><span class="en">Welcome to your project board</span><span class="es">Bienvenido a tu tablero de proyecto</span></span></span>
       <span class="go" aria-hidden="true"></span>
     </a>
 
@@ -267,8 +332,10 @@ main{max-width:820px;margin:0 auto;padding:0 20px 96px}
 </main>
 
 <script>
-/* Language toggle (EN/ES) — flips the data-lang on <html>; the CSS shows the
-   matching .en / .es spans. */
+/* ---------- Language toggle (EN/ES) ----------
+   Flips data-lang on <html>; the CSS shows the matching .en / .es spans.
+   It never touches the selected category, so switching language keeps you
+   on the same tab. */
 (function () {
   var root = document.documentElement;
   var en = document.getElementById('langEn');
@@ -286,9 +353,88 @@ main{max-width:820px;margin:0 auto;padding:0 20px 96px}
   es.addEventListener('click', function () { set('es'); });
 })();
 
-/* Flag any row that still points at "#" (or has no href) as "link pending",
-   and stop it from navigating. As soon as a real URL is dropped into href,
-   the row becomes live automatically — no other change needed. */
+/* ---------- Category tabs ----------
+   A standard ARIA tab interface. Only the selected panel is visible; the
+   rest carry the `hidden` attribute, so they leave both the tab order and
+   the screen-reader flow. The URL hash mirrors the selected category
+   (#building, #planning, …) using the section IDs the hub already used, and
+   is written with history.pushState so switching categories never scrolls
+   the page. Back/Forward restore the category via popstate. */
+(function () {
+  var tablist = document.getElementById('cattabs');
+  if (!tablist) return;
+  var main = document.querySelector('main');
+  var tabs = Array.prototype.slice.call(tablist.querySelectorAll('[role="tab"]'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('[role="tabpanel"]'));
+  var keys = tabs.map(function (t) { return t.getAttribute('data-cat'); });
+  var DEFAULT = 'all';   /* All Guides is the default: every category, compact */
+
+  function keyFromHash() {
+    var h = (location.hash || '').replace(/^#/, '');
+    return keys.indexOf(h) !== -1 ? h : DEFAULT;
+  }
+
+  function select(cat, opts) {
+    opts = opts || {};
+    if (keys.indexOf(cat) === -1) cat = DEFAULT;
+    tabs.forEach(function (t) {
+      var on = t.getAttribute('data-cat') === cat;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+    });
+    panels.forEach(function (p) {
+      // "all" shows every category stacked; otherwise only the matching panel
+      if (cat === 'all' || p.getAttribute('data-cat') === cat) p.removeAttribute('hidden');
+      else p.setAttribute('hidden', '');
+    });
+    // compact spacing applies to the All Guides view only
+    main.classList.toggle('view-all', cat === 'all');
+    if (opts.push) history.pushState(null, '', '#' + cat);   /* no scroll jump */
+    if (opts.focus) {
+      var active = tabs[keys.indexOf(cat)];
+      if (active) active.focus();
+    }
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      select(tab.getAttribute('data-cat'), { push: true });
+    });
+  });
+
+  /* Keyboard: Left/Right move between tabs (and select — automatic
+     activation, fine here because panels are already in the DOM);
+     Home/End jump to first/last. */
+  tablist.addEventListener('keydown', function (e) {
+    var current = document.activeElement;
+    var i = current ? keys.indexOf(current.getAttribute('data-cat')) : -1;
+    if (i === -1) return;
+    var next = null;
+    switch (e.key) {
+      case 'ArrowRight': next = (i + 1) % keys.length; break;
+      case 'ArrowLeft':  next = (i - 1 + keys.length) % keys.length; break;
+      case 'Home':       next = 0; break;
+      case 'End':        next = keys.length - 1; break;
+      default: return;
+    }
+    e.preventDefault();
+    select(keys[next], { push: true, focus: true });
+  });
+
+  /* Back / Forward */
+  window.addEventListener('popstate', function () {
+    select(keyFromHash(), { push: false });
+  });
+
+  /* Initial state. No element carries the bare category id (panels are
+     panel-<cat>, tabs are tab-<cat>), so an incoming #building etc. selects
+     the category without the browser scroll-to-anchor jump. */
+  select(keyFromHash(), { push: false });
+})();
+
+/* ---------- pending-link flagging ----------
+   Any row still pointing at "#" (or with no href) is marked "link pending"
+   and does not navigate. Drop a real URL into href and the row goes live. */
 (function () {
   document.querySelectorAll('a.row').forEach(function (a) {
     var href = a.getAttribute('href');

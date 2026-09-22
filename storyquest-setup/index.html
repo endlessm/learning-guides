@@ -262,6 +262,14 @@ body.editing .sec-collapse > h2 .chev{cursor:pointer}
 @media(prefers-reduced-motion:reduce){.step-body{transition:none}.demo-num{animation:none;background:var(--coin-soft)}.demo-num::before{animation:none;opacity:0}.demo-num::after{animation:none;opacity:1}}
 
 /* ---------- concept notes ---------- */
+.partdiv{margin:112px 0 0;padding:28px 0 0;border-top:3px solid var(--ink)}
+.partdiv .pd-eyebrow{font:800 13px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-text);margin:0 0 10px}
+.partdiv .pd-title{font-family:Figtree,Inter,system-ui,sans-serif;font-size:clamp(30px,5.2vw,46px);font-weight:800;letter-spacing:-.01em;color:var(--ink-strong);margin:0;border:0;padding:0;display:block}
+.partdiv .pd-intro{margin:16px 0 0;color:var(--ink-soft);font-size:17px;max-width:660px}
+.partdiv .pd-intro p{margin:0 0 10px}
+.partdiv .pd-intro p:last-child{margin-bottom:0}
+.toc-part{font:700 12px/1.3 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-text);margin:16px 0 6px}
+.toc .toc-part:first-of-type{margin-top:2px}
 .note{margin:34px 0 0;padding:22px 26px;background:var(--coin-soft);border-radius:var(--radius-card)}
 .note .note-kicker{font:700 11px/1 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-text);margin:0 0 10px}
 .note h3{font-size:19px;margin:0 0 8px}
@@ -479,12 +487,16 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 
   <div class="toc">
     <p class="toc-label"><span class="en">In this guide</span><span class="es">En esta guía</span></p>
+    <p class="toc-part"><span class="en">Part 1 · Start here</span><span class="es">Parte 1 · Empieza aquí</span></p>
     <ol>
       <li><a href="#ch1"><span class="en">Get the StoryQuest kit onto your computer</span><span class="es">Mete el kit de StoryQuest en tu ordenador</span></a></li>
       <li><a href="#ch2"><span class="en">Use the Backstitch launcher to open your kit in Godot</span><span class="es">Usa el lanzador de Backstitch para abrir tu kit en Godot</span></a></li>
       <li><a href="#backstitch"><span class="en">So, what is Backstitch?</span><span class="es">Entonces, ¿qué es Backstitch?</span></a></li>
       <li><a href="#ch3"><span class="en">Create a project in Backstitch</span><span class="es">Crea un proyecto en Backstitch</span></a></li>
-      <li><a href="#more-projects"><span class="en">Making more than one StoryQuest project?</span><span class="es">¿Hacer más de un proyecto de StoryQuest?</span></a></li>
+    </ol>
+    <p class="toc-part"><span class="en">Part 2 · Team projects and your StoryQuest</span><span class="es">Parte 2 · Proyectos de equipo y tu StoryQuest</span></p>
+    <ol>
+      <li><a href="#more-projects"><span class="en">Start with a separate copy</span><span class="es">Empieza con una copia separada</span></a></li>
       <li><a href="#joining"><span class="en">Share or join a project</span><span class="es">Comparte o únete a un proyecto</span></a></li>
       <li><a href="#folders"><span class="en">Create your StoryQuest folders</span><span class="es">Crea las carpetas de tu StoryQuest</span></a></li>
     </ol>
@@ -492,6 +504,11 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 
   <p class="dothint"><span class="en">Words with an <span class="dotdemo">orange underline</span> open a small explainer — click any of them. Tiles with a <span class="dotdemo">▶ play badge</span> open a short clip.</span><span class="es">Las palabras con <span class="dotdemo">subrayado naranja</span> abren una pequeña explicación — haz clic en cualquiera. Los recuadros con <span class="dotdemo">▶ botón de reproducir</span> abren un clip corto.</span></p>
 </section>
+
+<div class="partdiv" id="part1">
+  <p class="pd-eyebrow"><span class="en">Part 1</span><span class="es">Parte 1</span></p>
+  <h2 class="pd-title"><span class="en">Set up your StoryQuest kit</span><span class="es">Configura tu kit de StoryQuest</span></h2>
+</div>
 
 <!-- ======================================================= CH 1 -->
 <section id="ch1" class="sec sec-stage sec-collapse" data-open="true">
@@ -654,7 +671,7 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
     </div>
 
     <!-- STEP 6 (name yourself) -->
-    <div class="step">
+    <div class="step" data-check="chk-addname">
       <span class="num"></span>
       <h3><span class="en">Add your name in Backstitch</span><span class="es">Añade tu nombre en Backstitch</span></h3>
       <div class="step-body"><div class="sbi">
@@ -672,9 +689,41 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
   </div>
 </section>
 
+<!-- ======================================================= YOU'RE SET UP (checkpoint) -->
+<section class="sec">
+  <div class="checkpoint">
+    <p class="note-kicker"><span class="en">Your StoryQuest Kit is ready when you have…</span><span class="es">Tu kit de StoryQuest está listo cuando tengas…</span></p>
+    <h3><span class="en">Your setup checklist</span><span class="es">Tu lista de configuración</span></h3>
+    <label><input type="checkbox" id="chk-download"><span><span class="en">Downloaded the StoryQuest kit</span><span class="es">Descargado el kit de StoryQuest</span></span></label>
+    <label><input type="checkbox" id="chk-unzip"><span><span class="en">Extracted the files and renamed the folder somewhere easy to find</span><span class="es">Extraído los archivos y renombrado la carpeta en un sitio fácil de encontrar</span></span></label>
+    <label><input type="checkbox" id="chk-launch"><span><span class="en">Opened Godot using the launcher for your computer</span><span class="es">Abierto Godot con el lanzador de tu ordenador</span></span></label>
+    <label><input type="checkbox" id="chk-project"><span><span class="en">Created a project in Backstitch</span><span class="es">Creado un proyecto en Backstitch</span></span></label>
+    <label><input type="checkbox" id="chk-projectid"><span><span class="en">Saved your Project ID</span><span class="es">Guardado tu Project ID</span></span></label>
+    <label><input type="checkbox" id="chk-addname"><span><span class="en">Added your name in Backstitch</span><span class="es">Añadido tu nombre en Backstitch</span></span></label>
+  </div>
+</section>
+
+<!-- READY TO EXPLORE (end of Part 1) -->
+<section class="sec">
+  <div class="note">
+    <h3><span class="en">You're ready to explore</span><span class="es">Ya puedes explorar</span></h3>
+    <p><span class="en">If you're working in your own copy of the kit, you've finished the setup you need for now. Use this copy while you explore Godot, make scenes, and work through your first design challenges.</span><span class="es">Si estás trabajando en tu propia copia del kit, has terminado la configuración que necesitas por ahora. Usa esta copia mientras exploras Godot, creas escenas y trabajas en tus primeros retos de diseño.</span></p>
+    <p><span class="en">When you start working with a teammate, or when your team is ready to begin its StoryQuest, Part 2 covers what to do next.</span><span class="es">Cuando empieces a trabajar con un compañero, o cuando tu equipo esté listo para empezar su StoryQuest, la Parte 2 cubre qué hacer a continuación.</span></p>
+  </div>
+</section>
+
+<div class="partdiv" id="part2">
+  <p class="pd-eyebrow"><span class="en">Part 2</span><span class="es">Parte 2</span></p>
+  <h2 class="pd-title"><span class="en">Working with a team and starting your StoryQuest</span><span class="es">Trabajar en equipo y empezar tu StoryQuest</span></h2>
+  <div class="pd-intro">
+    <p><span class="en">As you move from solo work to working with others, you'll sometimes need a separate copy of the StoryQuest kit for a different project. This could be for a team challenge like Void Chase or later for your team's actual StoryQuest.</span><span class="es">A medida que pasas del trabajo en solitario a trabajar con otras personas, a veces necesitarás una copia separada del kit de StoryQuest para un proyecto diferente. Esto puede ser para un reto de equipo como Void Chase o, más adelante, para el StoryQuest de verdad de tu equipo.</span></p>
+    <p><span class="en">In this part, you'll see how to keep projects separate, share or join a Backstitch project, and, when your team is ready, create the starter folders for your StoryQuest.</span><span class="es">En esta parte verás cómo mantener los proyectos separados, compartir o unirte a un proyecto de Backstitch y, cuando tu equipo esté listo, crear las carpetas iniciales de tu StoryQuest.</span></p>
+  </div>
+</div>
+
 <!-- ======================================================= MORE PROJECTS -->
 <section class="sec" id="more-projects">
-  <h2><span class="en">Making more than one StoryQuest project?</span><span class="es">¿Hacer más de un proyecto de StoryQuest?</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button></span></h2>
+  <h2><span class="en">Start with a separate copy</span><span class="es">Empieza con una copia separada</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button></span></h2>
     <p><span class="en">Each StoryQuest project should have its own copy of the kit in a separate folder. To start another project, extract the files from the .zip again into a new folder and give it a clearly different name. This keeps your projects separate from one another.</span><span class="es">Cada proyecto de StoryQuest debería tener su propia copia del kit en una carpeta separada. Para empezar otro proyecto, extrae los archivos del .zip de nuevo en una carpeta nueva y dale un nombre claramente distinto. Así mantienes tus proyectos separados unos de otros.</span></p>
     <figure class="inlinefig">
       <button class="hlfig" data-t="two kit folders" aria-label="Enlarge: two StoryQuest kit folders">
@@ -684,7 +733,8 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
         <span class="zoom" aria-hidden="true">⤢ <span class="en">Click to enlarge</span><span class="es">Clic para ampliar</span></span>
       </button>
     </figure>
-    <p><span class="en">For example, you might already have a personal StoryQuest and later want to join a teammate's project. Make a second folder for the team project and extract a new copy of the kit into it so your personal projects stay separate.</span><span class="es">Por ejemplo, quizás ya tengas un StoryQuest personal y más adelante quieras unirte al proyecto de un compañero. Crea una segunda carpeta para el proyecto del equipo y extrae en ella una copia nueva del kit para que tus proyectos personales se mantengan separados.</span></p>
+    <p><span class="en">For example, you might join someone for a team challenge like Void Chase, and later start or join your team's project for your actual StoryQuest. Make a separate folder for each one and extract a new copy of the kit into it, so your projects stay separate.</span><span class="es">Por ejemplo, quizás te unas a alguien para un reto de equipo como Void Chase y, más adelante, empieces o te unas al proyecto de tu equipo para tu StoryQuest de verdad. Crea una carpeta separada para cada uno y extrae en ella una copia nueva del kit, para que tus proyectos se mantengan separados.</span></p>
+    <p class="tip"><span class="en"><strong>One local kit folder = one Backstitch project.</strong> Keep each project in its own folder instead of loading a different project into a folder you are already using.</span><span class="es"><strong>Una carpeta local del kit = un proyecto de Backstitch.</strong> Mantén cada proyecto en su propia carpeta en vez de cargar un proyecto diferente en una carpeta que ya estás usando.</span></p>
 </section>
 
 <!-- ======================================================= JOINING -->
@@ -711,6 +761,7 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 
 <!-- ======================================================= WHEN YOU'RE READY TO BUILD (come back later) -->
 <section class="sec" id="folders">
+  <p class="eyebrow" style="margin:0 0 8px"><span class="en">When your team is ready to start its StoryQuest</span><span class="es">Cuando tu equipo esté listo para empezar su StoryQuest</span></p>
   <h2><span class="en">Create your StoryQuest folders</span><span class="es">Crea las carpetas de tu StoryQuest</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button></span></h2>
   <p class="ch-goal"><span class="en">Once you have a team, or you're ready to start building your StoryQuest, use the template tool to create your StoryQuest folders and starter scenes.</span><span class="es">Cuando tengas un equipo, o estés listo para empezar a construir tu StoryQuest, usa la herramienta de plantillas para crear las carpetas y las escenas iniciales de tu StoryQuest.</span></p>
   <p><span class="en">If you're still exploring the kit or working through design challenges, you don't need to do this yet. Come back when you're ready to begin your StoryQuest.</span><span class="es">Si todavía estás explorando el kit o trabajando en los retos de diseño, aún no necesitas hacer esto. Vuelve cuando estés listo para empezar tu StoryQuest.</span></p>
@@ -724,19 +775,6 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
     <span class="mt-badge">▶</span>
     <span class="mt-label"><span class="en">See the StoryQuest setup process</span><span class="es">Ver el proceso de configuración de StoryQuest</span></span>
   </button>
-</section>
-
-<!-- ======================================================= YOU'RE SET UP (checkpoint) -->
-<section class="sec">
-  <div class="checkpoint">
-    <p class="note-kicker"><span class="en">Your StoryQuest Kit is ready when you have…</span><span class="es">Tu kit de StoryQuest está listo cuando tengas…</span></p>
-    <h3><span class="en">Your setup checklist</span><span class="es">Tu lista de configuración</span></h3>
-    <label><input type="checkbox" id="chk-download"><span><span class="en">Downloaded the StoryQuest kit</span><span class="es">Descargado el kit de StoryQuest</span></span></label>
-    <label><input type="checkbox" id="chk-unzip"><span><span class="en">Extracted the files and renamed the folder somewhere easy to find</span><span class="es">Extraído los archivos y renombrado la carpeta en un sitio fácil de encontrar</span></span></label>
-    <label><input type="checkbox" id="chk-launch"><span><span class="en">Opened Godot using the launcher for your computer</span><span class="es">Abierto Godot con el lanzador de tu ordenador</span></span></label>
-    <label><input type="checkbox" id="chk-project"><span><span class="en">Created a project in Backstitch</span><span class="es">Creado un proyecto en Backstitch</span></span></label>
-    <label><input type="checkbox" id="chk-projectid"><span><span class="en">Saved your Project ID</span><span class="es">Guardado tu Project ID</span></span></label>
-  </div>
 </section>
 
 <!-- ======================================================= REFERENCE -->
@@ -754,10 +792,13 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 <!-- ======================================================= WHAT'S NEXT -->
 <section class="sec" id="whats-next">
   <h2><span class="en">What's next</span><span class="es">Qué sigue</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button></span></h2>
-  <p class="ch-goal"><span class="en">Your StoryQuest Kit is ready. If you're new to Godot, start with <b>A quick tour of Godot</b> to get familiar with the editor and the parts you'll use most.</span><span class="es">Tu kit de StoryQuest está listo. Si Godot es nuevo para ti, empieza con <b>Un recorrido rápido por Godot</b> para familiarizarte con el editor y las partes que más usarás.</span></p>
+  <p class="ch-goal"><span class="en"><strong>Ready to build with your team?</strong> Once your team project is set up, use <b>Developing Your StoryQuest with Backstitch</b> to learn how to save, work with branches, merge changes, and collaborate as you build.</span><span class="es"><strong>¿Listos para construir en equipo?</strong> Una vez que el proyecto de tu equipo esté configurado, usa <b>Developing Your StoryQuest with Backstitch</b> para aprender a guardar, trabajar con ramas, fusionar cambios y colaborar mientras construyen.</span></p>
   <div class="stepguides">
     <p class="sg-label"><span class="en">Keep going · related guides</span><span class="es">Sigue adelante · guías relacionadas</span></p>
     <ul>
+      <li><a data-guide-ref="03" href="https://endlessm.github.io/learning-guides/developing-with-backstitch/"><span class="en">Developing Your StoryQuest with Backstitch</span><span class="es">Desarrolla tu StoryQuest con Backstitch</span></a>
+        <p class="sg-desc"><span class="en">Learn how to save your work, use branches, merge changes, and collaborate with your team as you build.</span><span class="es">Aprende a guardar tu trabajo, usar ramas, fusionar cambios y colaborar con tu equipo mientras construyen.</span></p>
+      </li>
       <li><a data-guide-ref="05" href="https://endlessm.github.io/learning-guides/navigating-godot/"><span class="en">A quick tour of Godot</span><span class="es">Un recorrido rápido por Godot</span></a></li>
       <li><a data-guide-ref="06" href="https://endlessm.github.io/learning-guides/compose-a-scene/"><span class="en">Setting up a new scene from scratch</span><span class="es">Preparar una escena nueva desde cero</span></a>
         <p class="sg-desc"><span class="en">When you're ready to start building, this guide will show you how to create a simple playable scene and begin bringing pieces from the StoryQuest Kit into it.</span><span class="es">Cuando estés listo para empezar a construir, esta guía te mostrará cómo crear una escena jugable sencilla y empezar a incorporar piezas del kit de StoryQuest.</span></p>

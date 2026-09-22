@@ -264,12 +264,16 @@ body.editing .sec-collapse > h2 .chev{cursor:pointer}
 /* ---------- concept notes ---------- */
 .partdiv{margin:112px 0 0;padding:28px 0 0;border-top:3px solid var(--ink)}
 .partdiv .pd-eyebrow{font:800 13px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-text);margin:0 0 10px}
-.partdiv .pd-title{font-family:Figtree,Inter,system-ui,sans-serif;font-size:clamp(30px,5.2vw,46px);font-weight:800;letter-spacing:-.01em;color:var(--ink-strong);margin:0;border:0;padding:0;display:block}
+.partdiv .pd-title{font-family:Figtree,Inter,system-ui,sans-serif;font-size:clamp(30px,5.2vw,46px);font-weight:800;letter-spacing:-.01em;color:var(--ink-strong);margin:0;border:0;padding:0;display:flex;align-items:flex-start;gap:14px}
+.partdiv .pd-title > span.en,.partdiv .pd-title > span.es{flex:1 1 auto;min-width:0}
+.partdiv .pd-title .sec-controls{flex:none;margin-top:8px}
 .partdiv .pd-intro{margin:16px 0 0;color:var(--ink-soft);font-size:17px;max-width:660px}
 .partdiv .pd-intro p{margin:0 0 10px}
 .partdiv .pd-intro p:last-child{margin-bottom:0}
 .toc-part{font:700 12px/1.3 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-text);margin:16px 0 6px}
 .toc .toc-part:first-of-type{margin-top:2px}
+.toc-part a{color:inherit;text-decoration:none;border:0}
+.toc-part a:hover{color:var(--accent-deep)}
 .note{margin:34px 0 0;padding:22px 26px;background:var(--coin-soft);border-radius:var(--radius-card)}
 .note .note-kicker{font:700 11px/1 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-text);margin:0 0 10px}
 .note h3{font-size:19px;margin:0 0 8px}
@@ -494,7 +498,7 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
       <li><a href="#backstitch"><span class="en">So, what is Backstitch?</span><span class="es">Entonces, ¿qué es Backstitch?</span></a></li>
       <li><a href="#ch3"><span class="en">Create a project in Backstitch</span><span class="es">Crea un proyecto en Backstitch</span></a></li>
     </ol>
-    <p class="toc-part"><span class="en">Part 2 · Team projects and your StoryQuest</span><span class="es">Parte 2 · Proyectos de equipo y tu StoryQuest</span></p>
+    <p class="toc-part"><a href="#part2"><span class="en">Part 2 · Team projects and your StoryQuest</span><span class="es">Parte 2 · Proyectos de equipo y tu StoryQuest</span></a></p>
     <ol>
       <li><a href="#more-projects"><span class="en">Start with a separate copy</span><span class="es">Empieza con una copia separada</span></a></li>
       <li><a href="#joining"><span class="en">Share or join a project</span><span class="es">Comparte o únete a un proyecto</span></a></li>
@@ -714,7 +718,7 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 
 <div class="partdiv" id="part2">
   <p class="pd-eyebrow"><span class="en">Part 2</span><span class="es">Parte 2</span></p>
-  <h2 class="pd-title"><span class="en">Working with a team and starting your StoryQuest</span><span class="es">Trabajar en equipo y empezar tu StoryQuest</span></h2>
+  <h2 class="pd-title"><span class="en">Working with a team and starting your StoryQuest</span><span class="es">Trabajar en equipo y empezar tu StoryQuest</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button></span></h2>
   <div class="pd-intro">
     <p><span class="en">As you move from solo work to working with others, you'll sometimes need a separate copy of the StoryQuest kit for a different project. This could be for a team challenge like Void Chase or later for your team's actual StoryQuest.</span><span class="es">A medida que pasas del trabajo en solitario a trabajar con otras personas, a veces necesitarás una copia separada del kit de StoryQuest para un proyecto diferente. Esto puede ser para un reto de equipo como Void Chase o, más adelante, para el StoryQuest de verdad de tu equipo.</span></p>
     <p><span class="en">In this part, you'll see how to keep projects separate, share or join a Backstitch project, and, when your team is ready, create the starter folders for your StoryQuest.</span><span class="es">En esta parte verás cómo mantener los proyectos separados, compartir o unirte a un proyecto de Backstitch y, cuando tu equipo esté listo, crear las carpetas iniciales de tu StoryQuest.</span></p>
@@ -1234,7 +1238,7 @@ addEventListener("scroll", () => {
   document.querySelectorAll(".seclink").forEach(btn => {
     btn.addEventListener("click", e => {
       e.stopPropagation();                       // copy link must never toggle the section
-      const sec = btn.closest("section[id]");
+      const sec = btn.closest("section[id], .partdiv[id]");
       if(!sec) return;
       const url = location.href.split("#")[0] + "#" + sec.id;
       const flash = () => {

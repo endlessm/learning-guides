@@ -804,11 +804,11 @@ footer{
 .mode{flex:none;display:inline-flex;align-items:center;margin:0}
 .mode .modeimg{flex:none;width:30px;height:30px;display:block;background-position:center;background-size:contain;background-repeat:no-repeat;position:static;clip-path:none;overflow:visible}
 .sec-controls{flex:none;display:inline-flex;align-items:center;gap:8px;margin-left:4px}
-.seclink{flex:none;display:inline-flex;align-items:center;gap:6px;font:600 11.5px Inter,sans-serif;color:var(--accent-text);background:#fff;border:1.5px solid var(--hairline);border-radius:100px;padding:4px 11px 4px 9px;cursor:pointer;white-space:nowrap;line-height:1;transition:border-color .15s,background .15s,color .15s}
+.seclink{position:relative;flex:none;display:inline-flex;align-items:center;justify-content:center;font:600 11.5px Inter,sans-serif;color:var(--accent-text);background:#fff;border:1.5px solid var(--hairline);border-radius:100px;padding:7px;cursor:pointer;line-height:1;transition:border-color .15s,background .15s,color .15s}
 .seclink .lnk-ic{flex:none;display:block}
-.seclink:hover,.seclink.copied{border-color:var(--coin);background:var(--coin-soft);color:var(--accent-deep)}
+.seclink .lnk-t{position:absolute;top:calc(100% + 8px);right:0;z-index:30;display:block;background:var(--ink-strong,#020618);color:#fff;font:600 12px/1.2 Inter,sans-serif;padding:6px 10px;border-radius:8px;white-space:nowrap;pointer-events:none;opacity:0;transform:translateY(-4px);box-shadow:0 8px 22px rgba(2,6,23,.22);transition:opacity .14s ease-out,transform .14s ease-out}.seclink .lnk-t::before{content:"";position:absolute;bottom:100%;right:12px;border:5px solid transparent;border-bottom-color:var(--ink-strong,#020618)}.seclink:hover,.seclink:focus-visible,.seclink.copied{border-color:var(--coin);background:var(--coin-soft);color:var(--accent-deep)}.seclink:hover .lnk-t,.seclink:focus-visible .lnk-t,.seclink.copied .lnk-t{opacity:1;transform:none}
 .seclink:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
-@media(max-width:560px){.seclink .lnk-t{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}.seclink{padding:5px 8px}}
+
 
 .figph{min-height:150px;display:flex;align-items:center;justify-content:center;padding:22px;border:2px dashed var(--hairline);border-radius:12px;background:var(--paper-deep)}
 .figph-note{max-width:520px;text-align:center;font:600 13px/1.55 Inter,sans-serif;color:var(--ink-faint)}
@@ -866,13 +866,13 @@ footer{
     </section>
 
 <!-- ======================================================= START HERE -->
-<section class="sec sec-stage sec-collapse" id="s-setup" data-open="true">
+<section class="sec sec-stage" id="s-setup" data-open="true">
   <h2>
     <span class="en">Get set up in Godot and Backstitch</span><span class="es">Prepárate en Godot y Backstitch</span>
     <span class="mode mode-play"><span class="modeimg" aria-hidden="true"></span><span class="txt en">Play</span><span class="txt es">Jugar</span></span>
     <span class="sec-controls">
-      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button>
-      <button class="chev" type="button" aria-expanded="true" aria-controls="body-s-setup"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button>
+      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button>
+      
     </span>
   </h2>
   <div class="secbody" id="body-s-setup">
@@ -903,13 +903,13 @@ footer{
 </section>
 
 <!-- ======================================================= THE QUESTION -->
-<section class="sec sec-stage sec-collapse" id="s-question" data-open="true">
+<section class="sec sec-stage" id="s-question" data-open="true">
   <h2>
     <span class="en">So what is this chase about?</span><span class="es">Entonces, ¿de qué va esta persecución?</span>
     <span class="mode mode-reflect"><span class="modeimg" aria-hidden="true"></span><span class="txt en">Reflect</span><span class="txt es">Reflexionar</span></span>
     <span class="sec-controls">
-      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button>
-      <button class="chev" type="button" aria-expanded="true" aria-controls="body-s-question"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button>
+      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button>
+      
     </span>
   </h2>
   <div class="secbody" id="body-s-question">
@@ -936,12 +936,12 @@ footer{
 </section>
 
 <!-- ======================================================= FOR TEAMS -->
-<section class="sec sec-stage sec-collapse" id="s-teams" data-open="true">
+<section class="sec sec-stage" id="s-teams" data-open="true">
   <h2>
     <span class="en">For teams only: work on separate sub-branches.</span><span class="es">Solo para equipos: trabajad en sub-ramas separadas.</span>
     <span class="sec-controls">
-      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button>
-      <button class="chev" type="button" aria-expanded="true" aria-controls="body-s-teams"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button>
+      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button>
+      
     </span>
   </h2>
   <div class="secbody" id="body-s-teams">
@@ -960,13 +960,13 @@ footer{
 </section>
 
 <!-- ======================================================= BUILD THE CHASE (TILEMAPS) -->
-<section class="sec sec-stage sec-collapse" id="s-tilemaps" data-open="true">
+<section class="sec sec-stage" id="s-tilemaps" data-open="true">
   <h2>
     <span class="en">Build out the chase using Tilemaps</span><span class="es">Construye la persecución con Tilemaps</span>
     <span class="mode mode-create"><span class="modeimg" aria-hidden="true"></span><span class="txt en">Create</span><span class="txt es">Crear</span></span>
     <span class="sec-controls">
-      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button>
-      <button class="chev" type="button" aria-expanded="true" aria-controls="body-s-tilemaps"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button>
+      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button>
+      
     </span>
   </h2>
   <div class="secbody" id="body-s-tilemaps">
@@ -998,13 +998,13 @@ footer{
 </section>
 
 <!-- ======================================================= GIVE THE VOID A PATH -->
-<section class="sec sec-stage sec-collapse" id="s-path" data-open="true">
+<section class="sec sec-stage" id="s-path" data-open="true">
   <h2>
     <span class="en">Give the Void a path</span><span class="es">Dale un camino al Vacío</span>
     <span class="mode mode-create"><span class="modeimg" aria-hidden="true"></span><span class="txt en">Create</span><span class="txt es">Crear</span></span>
     <span class="sec-controls">
-      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button>
-      <button class="chev" type="button" aria-expanded="true" aria-controls="body-s-path"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button>
+      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button>
+      
     </span>
   </h2>
   <div class="secbody" id="body-s-path">
@@ -1037,13 +1037,13 @@ footer{
 </section>
 
 <!-- ======================================================= DRESS IT (DECORATIVE ASSETS) -->
-<section class="sec sec-stage sec-collapse" id="s-dress" data-open="true">
+<section class="sec sec-stage" id="s-dress" data-open="true">
   <h2>
     <span class="en">Dress the world with decorative assets</span><span class="es">Viste el mundo con elementos decorativos</span>
     <span class="mode mode-create"><span class="modeimg" aria-hidden="true"></span><span class="txt en">Create</span><span class="txt es">Crear</span></span>
     <span class="sec-controls">
-      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button>
-      <button class="chev" type="button" aria-expanded="true" aria-controls="body-s-dress"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button>
+      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button>
+      
     </span>
   </h2>
   <div class="secbody" id="body-s-dress">
@@ -1064,13 +1064,13 @@ footer{
 </section>
 
 <!-- ======================================================= SHARE -->
-<section class="sec sec-stage sec-collapse" id="s-share" data-open="true">
+<section class="sec sec-stage" id="s-share" data-open="true">
   <h2>
     <span class="en">Share it</span><span class="es">Compártelo</span>
     <span class="mode mode-share"><span class="modeimg" aria-hidden="true"></span><span class="txt en">Share</span><span class="txt es">Compartir</span></span>
     <span class="sec-controls">
-      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button>
-      <button class="chev" type="button" aria-expanded="true" aria-controls="body-s-share"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button>
+      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button>
+      
     </span>
   </h2>
   <div class="secbody" id="body-s-share">
@@ -1096,7 +1096,7 @@ footer{
     <span class="en">Self check</span><span class="es">Autoevaluación</span>
     <span class="mode mode-reflect"><span class="modeimg" aria-hidden="true"></span><span class="txt en">Reflect</span><span class="txt es">Reflexionar</span></span>
     <span class="sec-controls">
-      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button>
+      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button>
     </span>
   </h2>
   <div class="checkpoint">
@@ -1112,7 +1112,7 @@ footer{
   <h2>
     <span class="en">If you get stuck…</span><span class="es">Si te atascas…</span>
     <span class="sec-controls">
-      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button>
+      <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button>
     </span>
   </h2>
 

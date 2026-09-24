@@ -199,9 +199,9 @@ body.editing .sec-collapse > h2 .chev{cursor:pointer}
 }
 .sec-collapse[data-open="false"] > h2 .chev{transform:rotate(-90deg)}
 .sec-collapse > h2:hover .chev{background:var(--coin);color:#fff;border-color:var(--coin)}
-.seclink{flex:none;display:inline-flex;align-items:center;gap:6px;font:600 11.5px Inter,sans-serif;color:var(--accent-text);background:#fff;border:1.5px solid var(--hairline);border-radius:100px;padding:4px 11px 4px 9px;cursor:pointer;white-space:nowrap;line-height:1;transition:border-color .15s,background .15s,color .15s}
+.seclink{position:relative;flex:none;display:inline-flex;align-items:center;justify-content:center;font:600 11.5px Inter,sans-serif;color:var(--accent-text);background:#fff;border:1.5px solid var(--hairline);border-radius:100px;padding:7px;cursor:pointer;line-height:1;transition:border-color .15s,background .15s,color .15s}
 .seclink .lnk-ic{flex:none;display:block}
-.seclink:hover,.seclink.copied{border-color:var(--coin);background:var(--coin-soft);color:var(--accent-deep)}
+.seclink .lnk-t{position:absolute;top:calc(100% + 8px);right:0;z-index:30;display:block;background:var(--ink-strong,#020618);color:#fff;font:600 12px/1.2 Inter,sans-serif;padding:6px 10px;border-radius:8px;white-space:nowrap;pointer-events:none;opacity:0;transform:translateY(-4px);box-shadow:0 8px 22px rgba(2,6,23,.22);transition:opacity .14s ease-out,transform .14s ease-out}.seclink .lnk-t::before{content:"";position:absolute;bottom:100%;right:12px;border:5px solid transparent;border-bottom-color:var(--ink-strong,#020618)}.seclink:hover,.seclink:focus-visible,.seclink.copied{border-color:var(--coin);background:var(--coin-soft);color:var(--accent-deep)}.seclink:hover .lnk-t,.seclink:focus-visible .lnk-t,.seclink.copied .lnk-t{opacity:1;transform:none}
 .seclink:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
 @media(max-width:560px){ .seclink .lnk-t{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0} .seclink{padding:5px 8px} }
 @media(prefers-reduced-motion:reduce){.sec-collapse > h2,.chev{transition:none}}
@@ -570,8 +570,8 @@ footer{
     </section>
 
 <!-- ======================================================= SECTION 1 · ADD -->
-<section class="sec sec-collapse" id="s-add" data-open="true">
-  <h2><span class="en">Add a Collectible Item</span><span class="es">Añade un Collectible Item</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-s-add"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>
+<section class="sec" id="s-add" data-open="true">
+  <h2><span class="en">Add a Collectible Item</span><span class="es">Añade un Collectible Item</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button></span></h2>
   <div class="secbody" id="body-s-add">
     <p class="steps-label"><span class="en">Step 1</span><span class="es">Paso 1</span></p>
     <div class="steps">
@@ -595,8 +595,8 @@ footer{
 </section>
 
 <!-- ======================================================= SECTION 2 · CHOOSE THE THREAD -->
-<section class="sec sec-collapse" id="s-thread" data-open="true">
-  <h2><span class="en">Choose the Thread</span><span class="es">Elige el Thread</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-s-thread"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>
+<section class="sec" id="s-thread" data-open="true">
+  <h2><span class="en">Choose the Thread</span><span class="es">Elige el Thread</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button></span></h2>
   <div class="secbody" id="body-s-thread">
     <p class="steps-label"><span class="en">Step 2</span><span class="es">Paso 2</span></p>
     <div class="steps">
@@ -614,8 +614,8 @@ footer{
 </section>
 
 <!-- ======================================================= SECTION 3 · WHEN COLLECTED -->
-<section class="sec sec-collapse" id="s-collected" data-open="true">
-  <h2><span class="en">Decide what happens when it is collected</span><span class="es">Decide qué pasa cuando se recoge</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-s-collected"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>
+<section class="sec" id="s-collected" data-open="true">
+  <h2><span class="en">Decide what happens when it is collected</span><span class="es">Decide qué pasa cuando se recoge</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button></span></h2>
   <div class="secbody" id="body-s-collected">
     <p class="sec-intro" data-copy="s3-intro"><span class="en">You can add dialogue, move the player to another scene, or do both.</span><span class="es">Puedes añadir diálogo, mover al jugador a otra escena, o hacer las dos cosas.</span></p>
 
@@ -662,8 +662,8 @@ footer{
 </section>
 
 <!-- ======================================================= SECTION 4 · WHEN IT APPEARS -->
-<section class="sec sec-collapse" id="s-appear" data-open="true">
-  <h2><span class="en">Choose when the collectible appears</span><span class="es">Elige cuándo aparece el coleccionable</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-s-appear"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>
+<section class="sec" id="s-appear" data-open="true">
+  <h2><span class="en">Choose when the collectible appears</span><span class="es">Elige cuándo aparece el coleccionable</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button></span></h2>
   <div class="secbody" id="body-s-appear">
     <p class="sec-intro" data-copy="s-appear-intro"><span class="en">So far, the Collectible Item has been Revealed, which means the player can see and interact with it as soon as the scene begins.</span><span class="es">Hasta ahora, el Collectible Item ha estado Revealed, lo que significa que el jugador puede verlo e interactuar con él en cuanto empieza la escena.</span></p>
 

@@ -214,9 +214,9 @@ body.editing .sec-collapse > h2 .chev{cursor:pointer}
 }
 .sec-collapse[data-open="false"] > h2 .chev{transform:rotate(-90deg)}
 .sec-collapse > h2:hover .chev{background:var(--coin);color:#fff;border-color:var(--coin)}
-.seclink{flex:none;display:inline-flex;align-items:center;gap:6px;font:600 11.5px Inter,sans-serif;color:var(--accent-text);background:#fff;border:1.5px solid var(--hairline);border-radius:100px;padding:4px 11px 4px 9px;cursor:pointer;white-space:nowrap;line-height:1;transition:border-color .15s,background .15s,color .15s}
+.seclink{position:relative;flex:none;display:inline-flex;align-items:center;justify-content:center;font:600 11.5px Inter,sans-serif;color:var(--accent-text);background:#fff;border:1.5px solid var(--hairline);border-radius:100px;padding:7px;cursor:pointer;line-height:1;transition:border-color .15s,background .15s,color .15s}
 .seclink .lnk-ic{flex:none;display:block}
-.seclink:hover,.seclink.copied{border-color:var(--coin);background:var(--coin-soft);color:var(--accent-deep)}
+.seclink .lnk-t{position:absolute;top:calc(100% + 8px);right:0;z-index:30;display:block;background:var(--ink-strong,#020618);color:#fff;font:600 12px/1.2 Inter,sans-serif;padding:6px 10px;border-radius:8px;white-space:nowrap;pointer-events:none;opacity:0;transform:translateY(-4px);box-shadow:0 8px 22px rgba(2,6,23,.22);transition:opacity .14s ease-out,transform .14s ease-out}.seclink .lnk-t::before{content:"";position:absolute;bottom:100%;right:12px;border:5px solid transparent;border-bottom-color:var(--ink-strong,#020618)}.seclink:hover,.seclink:focus-visible,.seclink.copied{border-color:var(--coin);background:var(--coin-soft);color:var(--accent-deep)}.seclink:hover .lnk-t,.seclink:focus-visible .lnk-t,.seclink.copied .lnk-t{opacity:1;transform:none}
 .seclink:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
 @media(max-width:560px){ .seclink .lnk-t{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0} .seclink{padding:5px 8px} }
 @media(prefers-reduced-motion:reduce){.sec-collapse > h2,.chev{transition:none}}
@@ -568,8 +568,8 @@ footer{
 </div>
 
 <!-- ======================================================= STEP 1 · MARK THE AREA -->
-<section class="sec sec-collapse" id="s-area" data-open="true">
-  <h2><span class="en">Mark the area you want to fill</span><span class="es">Marca el área que quieres rellenar</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-s-area"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>
+<section class="sec" id="s-area" data-open="true">
+  <h2><span class="en">Mark the area you want to fill</span><span class="es">Marca el área que quieres rellenar</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button></span></h2>
   <div class="secbody" id="body-s-area">
     <p class="steps-label"><span class="en">Step 1</span><span class="es">Paso 1</span></p>
     <div class="steps">
@@ -613,8 +613,8 @@ footer{
 </section>
 
 <!-- ======================================================= STEP 2 · CHOOSE -->
-<section class="sec sec-collapse" id="s-choose" data-open="true">
-  <h2><span class="en">Add Area Filler and choose what appears</span><span class="es">Añade Area Filler y elige qué aparece</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-s-choose"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>
+<section class="sec" id="s-choose" data-open="true">
+  <h2><span class="en">Add Area Filler and choose what appears</span><span class="es">Añade Area Filler y elige qué aparece</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button></span></h2>
   <div class="secbody" id="body-s-choose">
     <p class="steps-label"><span class="en">Step 2</span><span class="es">Paso 2</span></p>
     <div class="steps">
@@ -654,8 +654,8 @@ footer{
 </section>
 
 <!-- ======================================================= STEPS 3-4 · FILL & ADJUST -->
-<section class="sec sec-collapse" id="s-fill" data-open="true">
-  <h2><span class="en">Fill the area, then adjust it</span><span class="es">Rellena el área y luego ajústala</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-s-fill"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>
+<section class="sec" id="s-fill" data-open="true">
+  <h2><span class="en">Fill the area, then adjust it</span><span class="es">Rellena el área y luego ajústala</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button></span></h2>
   <div class="secbody" id="body-s-fill">
     <p class="steps-label"><span class="en">Steps 3&ndash;4</span><span class="es">Pasos 3&ndash;4</span></p>
     <div class="steps">
@@ -685,8 +685,8 @@ footer{
 </section>
 
 <!-- ======================================================= STEP 5 · LAYERING -->
-<section class="sec sec-collapse" id="s-layer" data-open="true">
-  <h2><span class="en">Check how everything looks when you play</span><span class="es">Comprueba cómo se ve todo al jugar</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-s-layer"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>
+<section class="sec" id="s-layer" data-open="true">
+  <h2><span class="en">Check how everything looks when you play</span><span class="es">Comprueba cómo se ve todo al jugar</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span></button></span></h2>
   <div class="secbody" id="body-s-layer">
     <p class="steps-label"><span class="en">Step 5</span><span class="es">Paso 5</span></p>
     <div class="steps">

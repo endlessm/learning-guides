@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- Guide: getting-project-board · v10 · published build · 2026-09-23 ·
      style: LEARNER-GUIDES v16 · NEW-GUIDE-STARTER v11 · GUIDE-MEDIA v8 ·
-     GUIDE-CHROME v4 · PUBLISHING-GUIDELINES v6 -->
+     GUIDE-CHROME v5 · PUBLISHING-GUIDELINES v6 -->
 <!-- Core Threadbare learner guide. Procedural setup guide: how a team gets its
      own copy of the StoryQuest Project Board (GitHub accounts, one org, invites,
      the setup tool). Companion to guide [01] "Welcome to your project board",
@@ -129,12 +129,12 @@ body.editing .sec-collapse > h2 .chev,body.editing .sec-collapse > h2 .seclink{c
 .chev::before{content:"";display:block;width:0;height:0;margin-top:2px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid currentColor}
 .sec-collapse[data-open="false"] > h2 .chev{transform:rotate(-90deg)}
 .chev .txt{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
-.seclink{flex:none;display:inline-flex;align-items:center;gap:6px;font:600 11.5px Inter,sans-serif;color:var(--accent-text);background:#fff;border:1.5px solid var(--hairline);border-radius:100px;padding:4px 11px 4px 9px;cursor:pointer;white-space:nowrap;line-height:1;transition:border-color .15s,background .15s,color .15s}
+.seclink{position:relative;flex:none;display:inline-flex;align-items:center;justify-content:center;font:600 11.5px Inter,sans-serif;color:var(--accent-text);background:#fff;border:1.5px solid var(--hairline);border-radius:100px;padding:7px;cursor:pointer;line-height:1;transition:border-color .15s,background .15s,color .15s}
 .seclink .lnk-ic{flex:none;display:block}
-.seclink:hover,.seclink.copied{border-color:var(--coin);background:var(--coin-soft);color:var(--accent-deep)}
+.seclink .lnk-t{position:absolute;top:calc(100% + 8px);right:0;z-index:30;display:block;background:var(--ink-strong,#020618);color:#fff;font:600 12px/1.2 Inter,sans-serif;padding:6px 10px;border-radius:8px;white-space:nowrap;pointer-events:none;opacity:0;transform:translateY(-4px);box-shadow:0 8px 22px rgba(2,6,23,.22);transition:opacity .14s ease-out,transform .14s ease-out}.seclink .lnk-t::before{content:"";position:absolute;bottom:100%;right:12px;border:5px solid transparent;border-bottom-color:var(--ink-strong,#020618)}.seclink:hover,.seclink:focus-visible,.seclink.copied{border-color:var(--coin);background:var(--coin-soft);color:var(--accent-deep)}.seclink:hover .lnk-t,.seclink:focus-visible .lnk-t,.seclink.copied .lnk-t{opacity:1;transform:none}
 .seclink:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
 @media(prefers-reduced-motion:reduce){.chev{transition:none}}
-@media(max-width:560px){.seclink .lnk-t{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}.seclink{padding:5px 8px}}
+
 
 /* ---------- steps threaded on a wire, click-to-complete ---------- */
 .steps-label{font:700 11px ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin:34px 0 0}
@@ -346,15 +346,15 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 </section>
 
 <!-- ======================================================= 1 · ACCOUNTS -->
-<section class="sec sec-collapse" id="s-account" data-open="true">
+<section class="sec" id="s-account" data-open="true">
   <h2>
     <span class="en">Get everyone ready with a GitHub account</span><span class="es">Preparad a todos con una cuenta de GitHub</span>
     <span class="sec-controls">
       <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink>
         <svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        <span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span>
+        <span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span>
       </button>
-      <button class="chev" type="button" aria-expanded="true" aria-controls="body-s-account"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button>
+      
     </span>
   </h2>
   <div class="secbody" id="body-s-account">
@@ -382,15 +382,15 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 </section>
 
 <!-- ======================================================= 2 · ORGANIZATION -->
-<section class="sec sec-collapse" id="s-org" data-open="true">
+<section class="sec" id="s-org" data-open="true">
   <h2>
     <span class="en">Create your team's organization</span><span class="es">Crea la organización de tu equipo</span>
     <span class="sec-controls">
       <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink>
         <svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        <span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span>
+        <span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span>
       </button>
-      <button class="chev" type="button" aria-expanded="true" aria-controls="body-s-org"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button>
+      
     </span>
   </h2>
   <div class="secbody" id="body-s-org">
@@ -422,15 +422,15 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 </section>
 
 <!-- ======================================================= 3 · INVITE -->
-<section class="sec sec-collapse" id="s-invite" data-open="true">
+<section class="sec" id="s-invite" data-open="true">
   <h2>
     <span class="en">Invite your teammates</span><span class="es">Invita a tus compañeros de equipo</span>
     <span class="sec-controls">
       <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink>
         <svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        <span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span>
+        <span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span>
       </button>
-      <button class="chev" type="button" aria-expanded="true" aria-controls="body-s-invite"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button>
+      
     </span>
   </h2>
   <div class="secbody" id="body-s-invite">
@@ -464,15 +464,15 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 </section>
 
 <!-- ======================================================= 4 · CREATE BOARD -->
-<section class="sec sec-collapse" id="s-board" data-open="true">
+<section class="sec" id="s-board" data-open="true">
   <h2>
     <span class="en">Create your StoryQuest Project Board</span><span class="es">Crea tu Tablero de proyecto StoryQuest</span>
     <span class="sec-controls">
       <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink>
         <svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        <span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span>
+        <span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span>
       </button>
-      <button class="chev" type="button" aria-expanded="true" aria-controls="body-s-board"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button>
+      
     </span>
   </h2>
   <div class="secbody" id="body-s-board">
@@ -502,15 +502,15 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 </section>
 
 <!-- ======================================================= 5 · OPEN & START -->
-<section class="sec sec-collapse" id="s-open" data-open="true">
+<section class="sec" id="s-open" data-open="true">
   <h2>
     <span class="en">Open your board and get started</span><span class="es">Abre tu tablero y empieza</span>
     <span class="sec-controls">
       <button class="seclink" type="button" aria-label="Copy link to this section" data-seclink>
         <svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        <span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span>
+        <span class="lnk-t"><span class="en">Copy link to this section</span><span class="es">Copiar enlace a esta sección</span></span>
       </button>
-      <button class="chev" type="button" aria-expanded="true" aria-controls="body-s-open"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button>
+      
     </span>
   </h2>
   <div class="secbody" id="body-s-open">

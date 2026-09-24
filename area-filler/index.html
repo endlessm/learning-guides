@@ -138,8 +138,8 @@ main{max-width:760px;margin:0 auto;padding:0 20px 90px}
   font:700 11px/1 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;
   color:var(--ink-faint);margin:0 0 10px;
 }
-.toc ol{margin:0;padding:0 0 0 20px}
-.toc li{margin:4px 0;font-size:15.5px}
+.toc ol{margin:0;padding:0;list-style:none}
+.toc li{margin:4px 0;font-size:15.5px;position:relative;padding-left:17px}.toc li::before{content:"";position:absolute;left:2px;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--coin)}
 .toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hairline)}
 .toc a:hover{color:var(--accent-text);border-color:var(--coin)}
 
@@ -553,7 +553,16 @@ footer{
   </div>
 
   <p class="dothint" data-copy="hero-dothint"><span class="en">Words with an <span class="dotdemo">orange underline</span> open a short explainer. Click any of them.</span><span class="es">Las palabras con <span class="dotdemo">subrayado naranja</span> abren una breve explicación. Haz clic en cualquiera.</span></p>
-</section>
+<div class="toc">
+      <p class="toc-label"><span class="en">In this guide</span><span class="es">En esta guía</span></p>
+      <ol>
+      <li><a href="#s-area"><span class="en">Mark the area you want to fill</span><span class="es">Marca el área que quieres rellenar</span></a></li>
+      <li><a href="#s-choose"><span class="en">Add Area Filler and choose what appears</span><span class="es">Añade Area Filler y elige qué aparece</span></a></li>
+      <li><a href="#s-fill"><span class="en">Fill the area, then adjust it</span><span class="es">Rellena el área y luego ajústala</span></a></li>
+      <li><a href="#s-layer"><span class="en">Check how everything looks when you play</span><span class="es">Comprueba cómo se ve todo al jugar</span></a></li>
+      </ol>
+    </div>
+    </section>
 
 <!-- ======================================================= WHAT YOU NEED -->
 <div class="note" style="margin-top:44px">

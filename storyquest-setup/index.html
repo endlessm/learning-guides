@@ -129,8 +129,8 @@ main{max-width:760px;margin:0 auto;padding:0 20px 90px}
   font:700 11px/1 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;
   color:var(--ink-faint);margin:0 0 10px;
 }
-.toc ol{margin:0;padding:0 0 0 20px}
-.toc li{margin:4px 0;font-size:15.5px}
+.toc ol{margin:0;padding:0;list-style:none}
+.toc li{margin:4px 0;font-size:15.5px;position:relative;padding-left:17px}.toc li::before{content:"";position:absolute;left:2px;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--coin)}
 .toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hairline)}
 .toc a:hover{color:var(--accent-text);border-color:var(--coin)}
 

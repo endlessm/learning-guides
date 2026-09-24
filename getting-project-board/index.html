@@ -100,13 +100,13 @@ main{max-width:760px;margin:0 auto;padding:0 20px 90px;counter-reset:step}
 .note .one{font-weight:700;color:var(--accent-deep)}
 
 /* ---------- overview / "In this guide" (tinted numbered-coin panel) ---------- */
-.overview{margin:36px 0 0;padding:22px 26px;background:var(--coin-soft);border-radius:var(--radius-card)}
-.overview .ov-label{font:700 11px/1 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-text);margin:0 0 6px}
-.overview ol{counter-reset:ov;list-style:none;margin:8px 0 0;padding:0}
-.overview li{position:relative;counter-increment:ov;padding:12px 0 12px 44px;border-top:1px solid rgba(202,53,0,.16)}
+.overview{margin:36px 0 0;padding:20px 24px;border:1px solid var(--hairline);border-radius:var(--radius-card);background:#fff}
+.overview .ov-label{font:700 11px/1 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 6px}
+.overview ol{margin:0;padding:0;list-style:none}
+.overview li{margin:4px 0;font-size:15.5px;position:relative;padding-left:17px}
 .overview li:first-child{border-top:0}
-.overview li::before{content:counter(ov);position:absolute;left:0;top:11px;width:28px;height:28px;border-radius:50%;background:var(--coin);color:#fff;font:700 14px/28px ui-monospace,monospace;text-align:center}
-.overview a{color:var(--ink);text-decoration:none;font-weight:700;font-size:16.5px}
+.overview li::before{content:"";position:absolute;left:2px;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--coin)}
+.overview a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hairline)}
 .overview a:hover{color:var(--accent-text)}
 .overview .ov-sub{display:block;margin-top:3px;font-size:14.5px;color:var(--ink-soft);font-weight:400}
 
@@ -336,11 +336,11 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
   <div class="overview">
     <p class="ov-label" data-copy="ov-label"><span class="en">In this guide</span><span class="es">En esta guía</span></p>
     <ol>
-      <li><a href="#s-account" data-copy="ov-1"><span class="en">Get everyone ready with a GitHub account</span><span class="es">Preparad a todos con una cuenta de GitHub</span></a><span class="ov-sub" data-copy="ov-1s"><span class="en">Everyone on the team makes their own free account.</span><span class="es">Cada persona del equipo crea su propia cuenta gratuita.</span></span></li>
-      <li><a href="#s-org" data-copy="ov-2"><span class="en">Create your team's organization</span><span class="es">Crea la organización de tu equipo</span></a><span class="ov-sub" data-copy="ov-2s"><span class="en">One teammate makes the shared space where the board will live.</span><span class="es">Un miembro crea el espacio compartido donde vivirá el tablero.</span></span></li>
-      <li><a href="#s-invite" data-copy="ov-3"><span class="en">Invite your teammates</span><span class="es">Invita a tus compañeros de equipo</span></a><span class="ov-sub" data-copy="ov-3s"><span class="en">Everyone else joins the same organization.</span><span class="es">Los demás se unen a la misma organización.</span></span></li>
-      <li><a href="#s-board" data-copy="ov-4"><span class="en">Create your StoryQuest Project Board</span><span class="es">Crea tu Tablero de proyecto StoryQuest</span></a><span class="ov-sub" data-copy="ov-4s"><span class="en">The setup tool makes your team's copy from the template.</span><span class="es">La herramienta crea la copia de tu equipo a partir de la plantilla.</span></span></li>
-      <li><a href="#s-open" data-copy="ov-5"><span class="en">Open your board and get started</span><span class="es">Abre tu tablero y empieza</span></a><span class="ov-sub" data-copy="ov-5s"><span class="en">Find your board in Projects and make sure everyone can open it.</span><span class="es">Encuentra tu tablero en Projects y asegúrate de que todos puedan abrirlo.</span></span></li>
+      <li><a href="#s-account" data-copy="ov-1"><span class="en">Get everyone ready with a GitHub account</span><span class="es">Preparad a todos con una cuenta de GitHub</span></a></li>
+      <li><a href="#s-org" data-copy="ov-2"><span class="en">Create your team's organization</span><span class="es">Crea la organización de tu equipo</span></a></li>
+      <li><a href="#s-invite" data-copy="ov-3"><span class="en">Invite your teammates</span><span class="es">Invita a tus compañeros de equipo</span></a></li>
+      <li><a href="#s-board" data-copy="ov-4"><span class="en">Create your StoryQuest Project Board</span><span class="es">Crea tu Tablero de proyecto StoryQuest</span></a></li>
+      <li><a href="#s-open" data-copy="ov-5"><span class="en">Open your board and get started</span><span class="es">Abre tu tablero y empieza</span></a></li>
     </ol>
   </div>
 </section>

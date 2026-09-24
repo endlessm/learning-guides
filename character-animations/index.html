@@ -64,8 +64,8 @@ main{max-width:760px;margin:0 auto;padding:0 20px 90px;counter-reset:step}
 .lede strong{color:var(--ink)}
 .toc{margin:34px 0 0;padding:20px 24px;border:1px solid var(--hairline);border-radius:var(--radius-card);background:#fff}
 .toc .toc-label{font:700 11px/1 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 10px}
-.toc ol{margin:0;padding:0 0 0 20px}
-.toc li{margin:4px 0;font-size:15.5px}
+.toc ol{margin:0;padding:0;list-style:none}
+.toc li{margin:4px 0;font-size:15.5px;position:relative;padding-left:17px}.toc li::before{content:"";position:absolute;left:2px;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--coin)}
 .toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hairline)}
 .toc a:hover{color:var(--accent-text);border-color:var(--coin)}
 
@@ -413,7 +413,18 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 <li data-copy="hero-item-4"><span class="en">Replace its old frames with yours, then preview and test your animations.</span><span class="es">Reemplaza sus cuadros viejos por los tuyos, luego previsualiza y prueba tus animaciones.</span></li>
 </ol>
 </div>
-</section>
+<div class="toc">
+      <p class="toc-label"><span class="en">In this guide</span><span class="es">En esta guía</span></p>
+      <ol>
+      <li><a href="#ch1"><span class="en">Look at an existing animation setup</span><span class="es">Mira una configuración de animación existente</span></a></li>
+      <li><a href="#chdraw"><span class="en">Create your animation artwork</span><span class="es">Crea tu arte de animación</span></a></li>
+      <li><a href="#ch2"><span class="en">Bring your sprite sheets into Godot</span><span class="es">Trae tus hojas de sprites a Godot</span></a></li>
+      <li><a href="#ch3"><span class="en">Make your own SpriteFrames resource</span><span class="es">Crea tu propio recurso SpriteFrames</span></a></li>
+      <li><a href="#ch5"><span class="en">Use and test your new animations</span><span class="es">Usa y prueba tus nuevas animaciones</span></a></li>
+      <li><a href="#ref"><span class="en">Quick reference</span><span class="es">Referencia rápida</span></a></li>
+      </ol>
+    </div>
+    </section>
 <section class="sec sec-collapse" data-open="true" id="ch1">
 <h2 data-copy="ch1-title"><span class="en">Look at an existing animation setup</span><span class="es">Mira una configuración de animación existente</span><span class="sec-controls"><button class="seclink" type="button" aria-label="Copy link to this section" data-seclink><svg class="lnk-ic" aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button class="chev" type="button" aria-expanded="true" aria-controls="body-ch1"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>
 <div class="secbody" id="body-ch1">

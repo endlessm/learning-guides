@@ -513,6 +513,13 @@ footer{
   .demo-num::before{animation:none;opacity:0}
   .demo-num::after{animation:none;opacity:1}
 }
+
+.toc{margin:36px 0 0;padding:20px 24px;border:1px solid var(--hairline);border-radius:var(--radius-card);background:#fff}
+.toc .toc-label{font:700 11px/1 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 10px}
+.toc ol{margin:0;padding:0;list-style:none}
+.toc li{margin:4px 0;font-size:15.5px;position:relative;padding-left:17px}
+.toc li::before{content:"";position:absolute;left:2px;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--coin)}
+.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hairline)}
 </style>
 </head>
 <body>
@@ -560,7 +567,16 @@ footer{
   </div>
 
   <p class="dothint" data-copy="hero-dothint"><span class="en">Words with an <span class="dotdemo">orange underline</span> open a short explainer. Click any of them.</span><span class="es">Las palabras con <span class="dotdemo">subrayado naranja</span> abren una breve explicación. Haz clic en cualquiera.</span></p>
-</section>
+<div class="toc">
+      <p class="toc-label"><span class="en">In this guide</span><span class="es">En esta guía</span></p>
+      <ol>
+      <li><a href="#s-add"><span class="en">Add a Collectible Item</span><span class="es">Añade un Collectible Item</span></a></li>
+      <li><a href="#s-thread"><span class="en">Choose the Thread</span><span class="es">Elige el Thread</span></a></li>
+      <li><a href="#s-collected"><span class="en">Decide what happens when it is collected</span><span class="es">Decide qué pasa cuando se recoge</span></a></li>
+      <li><a href="#s-appear"><span class="en">Choose when the collectible appears</span><span class="es">Elige cuándo aparece el coleccionable</span></a></li>
+      </ol>
+    </div>
+    </section>
 
 <!-- ======================================================= SECTION 1 · ADD -->
 <section class="sec sec-collapse" id="s-add" data-open="true">

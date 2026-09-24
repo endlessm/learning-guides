@@ -52,8 +52,8 @@ main{max-width:760px;margin:0 auto;padding:0 20px 90px}
 /* in this guide / recap */
 .covered{margin:34px 0 0;padding:20px 24px;border:1px solid var(--hairline);border-radius:var(--radius-card);background:#fff}
 .covered .cov-label{font:700 11px/1 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 12px}
-.covered ol{list-style:decimal;margin:0;padding:0 0 0 24px;display:grid;gap:8px}
-.covered li{font-size:16.5px;padding-left:4px}
+.covered ol{margin:0;padding:0;list-style:none}
+.covered li{margin:4px 0;font-size:15.5px;position:relative;padding-left:17px}.covered li::before{content:"";position:absolute;left:2px;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--coin)}
 .covered li::marker{color:var(--coin);font-weight:700;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
 .covered a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hairline)}
 .covered a:hover{color:var(--accent-text);border-color:var(--coin)}

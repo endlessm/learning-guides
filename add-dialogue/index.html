@@ -87,8 +87,8 @@ main{max-width:760px;margin:0 auto;padding:0 20px 90px;counter-reset:step}
 
 .toc{margin:36px 0 0;padding:20px 24px;border:1px solid var(--hairline);border-radius:var(--radius-card);background:#fff}
 .toc .toc-label{font:700 11px/1 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 10px}
-.toc ol{margin:0;padding:0 0 0 20px}
-.toc li{margin:4px 0;font-size:15.5px}
+.toc ol{margin:0;padding:0;list-style:none}
+.toc li{margin:4px 0;font-size:15.5px;position:relative;padding-left:17px}.toc li::before{content:"";position:absolute;left:2px;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--coin)}
 .toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hairline)}
 .toc a:hover{color:var(--accent-text);border-color:var(--coin)}
 
@@ -438,7 +438,16 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 <li data-copy="proc-4"><span class="en">Try the same setup with an object or place in your world.</span><span class="es">Prueba el mismo montaje con un objeto o lugar de tu mundo.</span></li>
 </ol>
 </div>
-</section>
+<div class="toc">
+      <p class="toc-label"><span class="en">In this guide</span><span class="es">En esta guía</span></p>
+      <ol>
+      <li><a href="#s-setup"><span class="en">Set up a small practice scene</span><span class="es">Prepara una pequeña escena de práctica</span></a></li>
+      <li><a href="#s-interactarea"><span class="en">Make a character talk</span><span class="es">Haz que un personaje hable</span></a></li>
+      <li><a href="#s-notcharacter"><span class="en">More than just character conversations</span><span class="es">Más que conversaciones con personajes</span></a></li>
+      <li><a href="#s-storyquest"><span class="en">Try it in your StoryQuest</span><span class="es">Pruébalo en tu StoryQuest</span></a></li>
+      </ol>
+    </div>
+    </section>
 <!-- ==================================================== 2 · SET UP A PRACTICE SCENE -->
 <section class="sec sec-collapse" data-open="true" id="s-setup">
 <h2 data-copy="s2-title"><span class="en">Set up a small practice scene</span><span class="es">Prepara una pequeña escena de práctica</span><span class="sec-controls"><button aria-label="Copy link to this section" class="seclink" data-seclink="" type="button"><svg aria-hidden="true" class="lnk-ic" fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="13"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg><span class="lnk-t"><span class="en">Copy link</span><span class="es">Copiar enlace</span></span></button><button aria-controls="body-s-setup" aria-expanded="true" class="chev" type="button"><span class="txt en">Expand or collapse section</span><span class="txt es">Expandir o contraer la sección</span></button></span></h2>

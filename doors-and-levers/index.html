@@ -68,13 +68,13 @@ main{max-width:760px;margin:0 auto;padding:0 20px 90px}
 .dothint{margin:14px 0 0;font-size:13.5px;color:var(--ink-faint)}
 .dothint .dotdemo{border-bottom:1.5px solid rgba(245,74,0,.45);font-weight:600;color:var(--ink)}
 
-.toc{margin:36px 0 0;padding:24px 28px;border:0;border-radius:var(--radius-card);background:var(--coin-soft)}
-.toc .toc-label{font:700 11px/1 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-text);margin:0 0 14px}
-.toc ol{counter-reset:phase;list-style:none;margin:0;padding:0}
-.toc li{position:relative;counter-increment:phase;padding:11px 0 11px 44px;font-size:16.5px;line-height:1.5}
+.toc{margin:36px 0 0;padding:20px 24px;border:1px solid var(--hairline);border-radius:var(--radius-card);background:#fff}
+.toc .toc-label{font:700 11px/1 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 14px}
+.toc ol{margin:0;padding:0;list-style:none}
+.toc li{margin:4px 0;font-size:15.5px;position:relative;padding-left:17px}
 .toc li + li{border-top:1px solid rgba(202,53,0,.14)}
-.toc li::before{content:counter(phase);position:absolute;left:0;top:9px;width:28px;height:28px;border-radius:50%;background:var(--coin);color:#fff;font:700 14px/28px ui-monospace,monospace;text-align:center}
-.toc a{color:var(--ink);text-decoration:none;font-weight:600}
+.toc li::before{content:"";position:absolute;left:2px;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--coin)}
+.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hairline)}
 .toc a:hover{color:var(--accent-text)}
 
 /* ---------- sections (titles, no number) + accordion ---------- */
@@ -309,7 +309,7 @@ footer{max-width:760px;margin:70px auto 0;padding:22px 20px;border-top:1px solid
 <span class="en">For this example, your scene should already have a player and a Camera2D following the player.</span><span class="es">Para este ejemplo, tu escena ya debería tener un jugador y una Camera2D siguiendo al jugador.</span>
 </p>
 <div class="toc">
-<p class="toc-label" data-copy="toc-label"><span class="en">What you'll do</span><span class="es">Lo que harás</span></p>
+<p class="toc-label" data-copy="toc-label"><span class="en">In this guide</span><span class="es">En esta guía</span></p>
 <ol>
 <li data-copy="toc-1"><a href="#add-door"><span class="en">Add a door and lever to your playable area</span><span class="es">Añade una puerta y una palanca a tu área jugable</span></a></li>
 <li data-copy="toc-2"><a href="#connect"><span class="en">Connect the lever to the door and test it</span><span class="es">Conecta la palanca a la puerta y pruébalas</span></a></li>

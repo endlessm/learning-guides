@@ -10,7 +10,7 @@
   --accent:#FF6B00;--accent-soft:#FFE9D7;--accent-ink:#B84D00;
   --play:#68AE2F;--play-soft:#EAF5DE;--create:#0782CE;--create-soft:#DCEEFB;--share:#ED098F;--share-soft:#FCDDF0;--reflect:#FFA60B;--reflect-soft:#FFEFD3;
   --loop0:#FF6B00;--loop1:#0782CE;--loop2:#ED098F;
-  --radius:14px;--shadow:0 1px 2px rgba(47,45,60,.05),0 8px 24px rgba(47,45,60,.07);--maxw:720px;
+  --radius:14px;--shadow:0 1px 2px rgba(47,45,60,.05),0 8px 24px rgba(47,45,60,.07);--maxw:1000px;
   --sans:"Inter",system-ui,-apple-system,sans-serif;--display:"Figtree","Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
@@ -133,8 +133,8 @@ button.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .q .opt-btn:hover{border-color:var(--ink-faint)}
 .q .opt-btn.correct{background:var(--play-soft);border-color:var(--play);color:var(--ink)}
 .q .opt-btn.wrong{background:#FBE3E3;border-color:#D98A8A;color:#7A1E1E}
-:root[data-theme="dark"] .q .opt-btn.correct,:root:not([data-theme="light"]) .q .opt-btn.correct{background:#243619;border-color:var(--play);color:#D8EFC4}
-:root[data-theme="dark"] .q .opt-btn.wrong,:root:not([data-theme="light"]) .q .opt-btn.wrong{background:#3E2020;border-color:#8A4A4A;color:#F6C9C9}
+:root[data-theme="dark"] .q .opt-btn.correct,:root:not([data-theme="light"]) .q .opt-btn.correct{background:#DCEFD9;border-color:var(--play);color:#1E5B2E}
+:root[data-theme="dark"] .q .opt-btn.wrong,:root:not([data-theme="light"]) .q .opt-btn.wrong{background:#FBE3E3;border-color:#D98A8A;color:#7A1E1E}
 .q .fb{font-size:.85rem;color:var(--ink-soft);margin:10px 0 0}
 .q .opt-btn:focus-visible{outline:2px solid var(--reflect);outline-offset:2px}
 .upnext{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:36px;padding:18px 20px;border:1px dashed var(--border);border-radius:var(--radius);background:var(--surface)}
@@ -206,7 +206,7 @@ button.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .langtoggle button.on{background:var(--accent);color:#fff}
 .langtoggle button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
-</head>
+<style id="ctb-added">.gloss{background:#FFF3C4;border-bottom:1px dotted #C9A227;cursor:help}:root:not([data-theme="light"]) .gloss{background:#4a3f1e;color:inherit;border-bottom-color:#C9A227}.gloss{position:relative}.gloss:hover::after{content:attr(data-def);position:absolute;left:0;bottom:130%;z-index:9999;width:max-content;max-width:280px;background:#2b2b2b;color:#fff;padding:8px 10px;border-radius:8px;font-size:.8rem;line-height:1.4;font-weight:400;box-shadow:0 6px 18px rgba(0,0,0,.28);white-space:normal;pointer-events:none}.gloss:hover::before{content:"";position:absolute;left:14px;bottom:120%;border:6px solid transparent;border-top-color:#2b2b2b;z-index:9999}.ctb-backlink{max-width:var(--maxw);margin:32px auto 8px;padding:0 20px;text-align:center}.ctb-backlink a{display:inline-block;font-family:var(--sans,sans-serif);font-size:.95rem;font-weight:600;padding:11px 20px;border-radius:10px;background:var(--play,#3E7C4A);color:#fff;text-decoration:none}</style></head>
 <body>
 
 <div class="wrap">
@@ -254,7 +254,7 @@ button.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     <div class="phase-body">
       <p>You're going to start putting together your StoryQuest now. For that, you need a bigger team - <strong>4-5 members max</strong>.</p>
       <ul class="qlist">
-        <li>Your facilitator will use a <a href="http://randomlists.com/team-generator" target="_blank" rel="noopener">team generator</a> to find your team. You can also ask to stay with a teammate from a previous session - talk to your facilitator.</li>
+        <li>Your facilitator may use a <a href="http://randomlists.com/team-generator" target="_blank" rel="noopener">team generator</a> to find your team. You can also ask to stay with a teammate from a previous session - talk to your facilitator.</li>
         <li>While that happens, go back to your <strong>Brainstorm #1</strong> idea from Session 2 - your individual StoryQuest idea - and let it inspire you.</li>
       </ul>
       <p style="color:var(--ink-soft);margin-top:12px">This is the team you'll create your StoryQuest with, so it's worth a good start.</p>
@@ -278,7 +278,7 @@ button.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
         </div>
       </details>
       <div class="guidetiles">
-        <a class="launch" href="https://endlessm.github.io/learning-guides/gameplay-elements/" target="_blank" rel="noopener"><span class="launch-badge" style="border-radius:12px">Open: Threadbare Gameplay Elements &#8599;</span></a>
+        <a class="launch" href="https://endlessm.github.io/learning-guides/gameplay-elements/" target="_blank" rel="noopener"><span class="launch-badge" style="border-radius:12px">Open: <em>Threadbare</em> Gameplay Elements &#8599;</span></a>
       </div>
     </div>
   </section>
@@ -290,7 +290,7 @@ button.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <p>Time for another brainstorm - but this time with your team. The result of this one is your <strong>team's StoryQuest idea</strong>.</p>
       <ul class="qlist">
         <li>Get together in the same place (for example, a virtual breakout room).</li>
-        <li>Use the same <strong>tldraw StoryQuest Brainstorming Template</strong> you used in Brainstorm #1. Duplicate the template so your team has its own copy.</li>
+        <li>Use the same <a href="https://www.tldraw.com/f/VurnheWojJudo8c7LkLcw?d=v-13077.-6215.13848.7942.page" target="_blank" rel="noopener"><strong>tldraw StoryQuest Brainstorming Template</strong></a> you used in Brainstorm #1. Duplicate the template so your team has its own copy.</li>
       </ul>
       <div class="guidetiles">
         <a class="launch" href="https://www.tldraw.com/f/VurnheWojJudo8c7LkLcw?d=v-13077.-6215.13848.7942.page" target="_blank" rel="noopener"><span class="launch-badge" style="border-radius:12px">Open: StoryQuest Brainstorming Template (tldraw) &#8599;</span></a>
@@ -313,7 +313,7 @@ button.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   <section class="phase" id="share" style="--pc:var(--share)">
     <div class="phase-head"><span class="phase-tag">Share</span><h2>Congrats!</h2><span class="time-pill">5 min</span></div>
     <div class="phase-body">
-      <p>Now you have your team's StoryQuest idea! Things might shift while you build the prototype, but this is the idea you'll start from. Share with the class what you and your team came up with.</p>
+      <p>Now you have your team's StoryQuest idea! Things might shift while you build the prototype, but this is the idea you'll start from. Share with the cohort what you and your team came up with.</p>
       <div class="subcard" style="--nc:var(--share)">
         <h4>Give feedback: compliment, coach, encourage</h4>
         <ul class="qlist">
@@ -426,4 +426,4 @@ button.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   apply(saved);
 })();
 </script>
-</body></html>
+<div class="ctb-backlink"><a href="https://studio.endlessstudios.com/programs/5348760/?progTab=Topics">← Back to all sessions</a></div></body></html>

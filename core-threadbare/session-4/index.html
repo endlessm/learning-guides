@@ -405,4 +405,70 @@ button.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   apply(saved);
 })();
 </script>
-<div class="ctb-backlink"><a href="https://studio.endlessstudios.com/programs/5348760/?progTab=Topics">← Back to all sessions</a></div></body></html>
+<div class="ctb-backlink"><a href="https://studio.endlessstudios.com/programs/5348760/?progTab=Topics">← Back to all sessions</a></div>
+<script>
+/* LANG-PROP v1 — language routing for platform bilingual entry.
+   Honors ?lang=en|es on open (overrides saved preference); keeps the page's
+   EN/ES toggle working; passes the current language to every learning-guides
+   link (preserving other query params and #anchors, no duplicate lang) and to
+   embedded session guides. No valid ?lang -> existing default/saved behavior. */
+(function(){
+  function isGuide(u){try{return u.hostname==="endlessm.github.io"&&u.pathname.indexOf("/learning-guides/")===0;}catch(e){return false;}}
+  function cur(){
+    var l=document.documentElement.getAttribute("lang");
+    if(l==="en"||l==="es")return l;
+    var b=document.querySelector(".langtoggle button.on[data-lang],#langEs.on,#langEn.on");
+    if(b)return b.getAttribute("data-lang")||(b.id==="langEs"?"es":"en");
+    return "en";
+  }
+  function withLang(href,lang){
+    var u;try{u=new URL(href,location.href);}catch(e){return href;}
+    if(!isGuide(u))return href;
+    u.searchParams.set("lang",lang);
+    return u.href;
+  }
+  function rewriteLinks(lang){
+    var as=document.getElementsByTagName("a");
+    for(var i=0;i<as.length;i++){
+      var a=as[i],h=a.getAttribute("href");if(!h)continue;
+      var u;try{u=new URL(h,location.href);}catch(e){continue;}
+      if(!isGuide(u)||u.pathname===location.pathname)continue;
+      var w=withLang(u.href,lang);if(a.href!==w)a.href=w;
+    }
+  }
+  function syncFrames(lang){
+    var fs=document.querySelectorAll("iframe[data-src]");
+    for(var i=0;i<fs.length;i++){
+      var fr=fs[i],ds=fr.getAttribute("data-src");if(!ds)continue;
+      var want=withLang(new URL(ds,location.href).href,lang);
+      if(fr.src&&fr.src!==want)fr.src=want; /* only reload an already-open frame, and only if changed */
+    }
+  }
+  document.addEventListener("toggle",function(e){
+    var d=e.target;if(!d||d.tagName!=="DETAILS"||!d.open)return;
+    var fr=d.querySelector&&d.querySelector("iframe[data-src]");if(!fr)return;
+    var want=withLang(new URL(fr.getAttribute("data-src"),location.href).href,cur());
+    if(fr.src!==want)fr.src=want;
+  },true);
+  function onClick(e){
+    var a=e.target&&e.target.closest?e.target.closest("a[href]"):null;if(!a)return;
+    var u;try{u=new URL(a.getAttribute("href"),location.href);}catch(_){return;}
+    if(!isGuide(u)||u.pathname===location.pathname)return;
+    a.href=withLang(u.href,cur());
+  }
+  document.addEventListener("click",onClick,true);
+  document.addEventListener("auxclick",onClick,true);
+  function boot(){
+    var p=new URLSearchParams(location.search).get("lang");
+    if(p==="en"||p==="es"){
+      var b=document.querySelector('.langtoggle button[data-lang="'+p+'"]')||document.getElementById(p==="es"?"langEs":"langEn");
+      if(b&&cur()!==p){b.click();} else if(!b){document.documentElement.setAttribute("lang",p);document.documentElement.setAttribute("data-lang",p);}
+    }
+    var l=cur();rewriteLinks(l);syncFrames(l);
+    new MutationObserver(function(){var c=cur();rewriteLinks(c);syncFrames(c);})
+      .observe(document.documentElement,{attributes:true,attributeFilter:["lang","data-lang"]});
+  }
+  boot();
+})();
+</script>
+</body></html>

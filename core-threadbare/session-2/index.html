@@ -423,10 +423,6 @@ button.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     </div>
   </section>
 
-  <a class="backlink" href="https://studio.endlessstudios.com/programs/5348760/" target="_blank" rel="noopener" id="backlink">
-    <div><p class="label">Continue on the platform</p><p class="name">Back to Core: <em>Threadbare</em> - Topics</p></div>
-    <span class="arrow" aria-hidden="true">&rarr;</span>
-  </a>
 
 </main>
 </div>
@@ -542,7 +538,7 @@ button.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   apply(saved);
 })();
 </script>
-<div class="ctb-backlink"><a href="https://studio.endlessstudios.com/programs/5348760/?progTab=Topics">← Back to all sessions</a></div>
+<div class="ctb-backlink"><a href="https://studio.endlessstudios.com/programs/5348760/?progTab=Topics">← Back to Core: Threadbare - Topics</a></div>
 <script>
 /* LANG-PROP v1 — language routing for platform bilingual entry.
    Honors ?lang=en|es on open (overrides saved preference); keeps the page's
@@ -608,5 +604,5 @@ button.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   boot();
 })();
 </script>
-<script>/* CTB-BACKLINK-I18N v1 */(function(){var a=document.querySelector(".ctb-backlink a");if(!a)return;function s(){a.textContent=(document.documentElement.lang==="es")?"← Volver a todas las sesiones":"← Back to all sessions";}s();new MutationObserver(s).observe(document.documentElement,{attributes:true,attributeFilter:["lang","data-lang"]});})();</script>
+<script>/* CTB-BACKLINK-I18N v2 — pill text + platform program URL follow the page language (EN→program 5348760/Topics, ES→program 5354580/Temas) */(function(){var a=document.querySelector(".ctb-backlink a");if(!a)return;var EN={h:"https://studio.endlessstudios.com/programs/5348760/?progTab=Topics",t:"← Back to Core: Threadbare - Topics"},ES={h:"https://studio.endlessstudios.com/programs/5354580/?progTab=Temas",t:"← Volver a Core: Threadbare - Temas"};function s(){var o=(document.documentElement.lang==="es")?ES:EN;a.textContent=o.t;a.setAttribute("href",o.h);}s();new MutationObserver(s).observe(document.documentElement,{attributes:true,attributeFilter:["lang","data-lang"]});})();</script>
 </body></html>

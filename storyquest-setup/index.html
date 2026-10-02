@@ -263,6 +263,8 @@ body.editing .sec-collapse > h2 .chev{cursor:pointer}
 
 /* ---------- concept notes ---------- */
 .partdiv{margin:112px 0 0;padding:28px 0 0;border-top:3px solid var(--ink)}
+/* Part 1 sits against the TOC, not content: its title is the major break, so no top rule and a modest gap (Part 2 keeps the rule — it follows dense content). */
+.partdiv#part1{margin-top:48px;padding-top:0;border-top:0}
 .partdiv .pd-eyebrow{font:800 13px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-text);margin:0 0 10px}
 .partdiv .pd-title{font-family:Figtree,Inter,system-ui,sans-serif;font-size:clamp(30px,5.2vw,46px);font-weight:800;letter-spacing:-.01em;color:var(--ink-strong);margin:0;border:0;padding:0;display:flex;align-items:flex-start;gap:14px}
 .partdiv .pd-title > span.en,.partdiv .pd-title > span.es{flex:1 1 auto;min-width:0}

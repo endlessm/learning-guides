@@ -200,6 +200,14 @@ footer{max-width:960px;margin:60px auto 0;padding:22px 20px;border-top:1px solid
 .item-more .playbtn:hover{background:var(--accent-text);border-color:var(--accent-text)}
 .item-more .playbtn:focus-visible{outline:2px solid var(--coin);outline-offset:2px}
 .item-more .kit-soon{font:600 12.5px Inter,sans-serif;color:var(--ink-faint);font-style:italic}
+.item-main .meta .hasguide{font:700 8.5px ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-text);border:1px solid rgba(202,53,0,.45);border-radius:100px;padding:1px 6px}
+.item-more .guidelink{margin:16px 0 0;padding-top:12px;border-top:1px dashed var(--hairline);display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 9px;text-decoration:none;color:inherit}
+.item-more .guidelink .gl-k{font:700 9.5px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+.item-more .guidelink .gl-t{font:600 14px Inter,sans-serif;color:var(--accent-text);text-decoration:underline;text-decoration-color:rgba(202,53,0,.35);text-underline-offset:3px}
+.item-more .guidelink .gl-arrow{font:700 13px Inter,sans-serif;color:var(--accent-text);transition:transform .15s ease-out}
+.item-more .guidelink:hover .gl-t{text-decoration-color:currentColor}
+.item-more .guidelink:hover .gl-arrow{transform:translateX(2px)}
+.item-more .guidelink:focus-visible{outline:2px solid var(--coin);outline-offset:3px;border-radius:4px}
 .item-main .meta .ready{font:700 8.5px ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--success);border-radius:100px;padding:2px 7px}
 .item-more .kitbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:13px 0 0;padding:8px 11px;background:var(--coin-soft);border-radius:12px}
 .item-more .kitbar .kit-k{flex:none;min-width:0;font:700 9px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-text)}
@@ -452,7 +460,7 @@ footer{max-width:960px;margin:60px auto 0;padding:22px 20px;border-top:1px solid
         <span class="thumb" aria-hidden="true"><img alt=""><span class="mp-badge">&#9654;</span></span>
         <div class="item-main">
           <h3><span class="en" data-id="46">Doors and Levers</span><span class="es" data-id="46">Puertas y palancas</span></h3>
-          <div class="meta"><span class="k"><span class="en" data-id="47">Interactive objects</span><span class="es" data-id="47">Objetos interactivos</span></span><span class="sep">·</span><span class="ready"><span class="en">Playable</span><span class="es">Jugable</span></span></div>
+          <div class="meta"><span class="k"><span class="en" data-id="47">Interactive objects</span><span class="es" data-id="47">Objetos interactivos</span></span><span class="sep">·</span><span class="ready"><span class="en">Playable</span><span class="es">Jugable</span></span><span class="hasguide" title="Has a related how-to guide"><span class="en">+ Guide</span><span class="es">+ Guía</span></span></div>
         </div>
         <button class="openbtn" type="button" aria-label="Open details"></button>
       </div>
@@ -477,6 +485,7 @@ footer{max-width:960px;margin:60px auto 0;padding:22px 20px;border-top:1px solid
           <li><span class="en" data-id="52">Using more than one lever as part of a puzzle</span><span class="es" data-id="52">Usar más de una palanca como parte de un puzzle</span></li>
           <li><span class="en" data-id="118">Connecting a lever to a door as part of a timed, exploration, or combat challenge</span><span class="es" data-id="118">Conectar una palanca a una puerta como parte de un reto por tiempo, de exploración o de combate</span></li>
         </ul>
+        <a class="guidelink" href="../doors-and-levers/" target="_blank" rel="noopener"><span class="gl-k"><span class="en">Related how-to guide</span><span class="es">Guía relacionada</span></span><span class="gl-t"><span class="en">Use Doors and Levers</span><span class="es">Usa puertas y palancas</span></span><span class="gl-arrow" aria-hidden="true">&rarr;</span></a>
       </div>
     </article>
 
@@ -547,7 +556,7 @@ footer{max-width:960px;margin:60px auto 0;padding:22px 20px;border-top:1px solid
         <span class="thumb" aria-hidden="true"><img alt=""><span class="mp-badge">&#9654;</span></span>
         <div class="item-main">
           <h3><span class="en" data-id="73">Teleporters</span><span class="es" data-id="73">Teletransportadores</span></h3>
-          <div class="meta"><span class="k"><span class="en" data-id="74">System</span><span class="es" data-id="74">Sistema</span></span><span class="sep">·</span><span class="ready"><span class="en">Playable</span><span class="es">Jugable</span></span></div>
+          <div class="meta"><span class="k"><span class="en" data-id="74">System</span><span class="es" data-id="74">Sistema</span></span><span class="sep">·</span><span class="ready"><span class="en">Playable</span><span class="es">Jugable</span></span><span class="hasguide" title="Has a related design challenge"><span class="en">+ Challenge</span><span class="es">+ Reto</span></span></div>
         </div>
         <button class="openbtn" type="button" aria-label="Open details"></button>
       </div>
@@ -572,6 +581,7 @@ footer{max-width:960px;margin:60px auto 0;padding:22px 20px;border-top:1px solid
           <li><span class="en" data-id="79">Connecting scenes or spaces</span><span class="es" data-id="79">Conectar escenas o espacios</span></li>
           <li><span class="en" data-id="80">Building a puzzle around where or when the player teleports</span><span class="es" data-id="80">Construir un puzzle en torno a dónde o cuándo se teletransporta el jugador</span></li>
         </ul>
+        <a class="guidelink" href="../teleporter-challenge/" target="_blank" rel="noopener"><span class="gl-k"><span class="en">Related design challenge</span><span class="es">Reto de diseño relacionado</span></span><span class="gl-t"><span class="en">Grab a Teleporter and Go!</span><span class="es">Agarra un teletransportador y en marcha</span></span><span class="gl-arrow" aria-hidden="true">&rarr;</span></a>
       </div>
     </article>
 
@@ -657,7 +667,7 @@ footer{max-width:960px;margin:60px auto 0;padding:22px 20px;border-top:1px solid
         <span class="thumb" aria-hidden="true"><img alt=""><span class="mp-badge">&#9654;</span></span>
         <div class="item-main">
           <h3><span class="en" data-id="98">Void Spreading Enemy</span><span class="es" data-id="98">Enemigo que esparce el Vacío</span></h3>
-          <div class="meta"><span class="k"><span class="en" data-id="99">Enemy / hazard</span><span class="es" data-id="99">Enemigo / peligro</span></span><span class="sep">·</span><span class="ready"><span class="en">Playable</span><span class="es">Jugable</span></span></div>
+          <div class="meta"><span class="k"><span class="en" data-id="99">Enemy / hazard</span><span class="es" data-id="99">Enemigo / peligro</span></span><span class="sep">·</span><span class="ready"><span class="en">Playable</span><span class="es">Jugable</span></span><span class="hasguide" title="Has a related design challenge"><span class="en">+ Challenge</span><span class="es">+ Reto</span></span></div>
         </div>
         <button class="openbtn" type="button" aria-label="Open details"></button>
       </div>
@@ -682,6 +692,7 @@ footer{max-width:960px;margin:60px auto 0;padding:22px 20px;border-top:1px solid
           <li><span class="en" data-id="104">An obstacle course</span><span class="es" data-id="104">Una carrera de obstáculos</span></li>
           <li><span class="en" data-id="105">A moment where the player needs to reach safety before being caught</span><span class="es" data-id="105">Un momento en el que el jugador debe llegar a un lugar seguro antes de ser atrapado</span></li>
         </ul>
+        <a class="guidelink" href="../void-chase-challenge/" target="_blank" rel="noopener"><span class="gl-k"><span class="en">Related design challenge</span><span class="es">Reto de diseño relacionado</span></span><span class="gl-t"><span class="en">Why is the Void Chasing You?</span><span class="es">¿Por qué te persigue el Vacío?</span></span><span class="gl-arrow" aria-hidden="true">&rarr;</span></a>
       </div>
     </article>
 

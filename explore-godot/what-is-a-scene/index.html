@@ -5261,5 +5261,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })();
 </script>
+<script>/* EG-LANG-PARAM v1 — open in the language the link asks for: ?lang=es or ?lang=en (runs after the page's saved-language setup, so the link wins) */(function(){var p;try{p=new URLSearchParams(location.search).get("lang");}catch(e){return;}if(p!=="en"&&p!=="es")return;function go(){if(typeof setLanguage==="function")setLanguage(p);}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",go);else go();})();</script>
 </body>
 </html>

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Animate with PixelStitch — A Pixel Art Animation Tutorial</title>
+<style>
+  /* Layout: a fixed-size replica of the PixelStitch app (1520x1000) scaled to fit above the step coach. Colors match the live app. */
+  :root{
+    --bg:#0b0817; --card:#0f0b1e; --raised:#1b1630; --border:#26203c;
+    --teal:#217f97; --teal-glow:rgba(33,127,151,.5);
+    --text:#fcf5ff; --muted:#ac94b8; --magenta:#ff00ff;
+    --check-a:#f4f4f4; --check-b:#cfcfcf; --dcheck-a:#1d1830; --dcheck-b:#262040;
+    --coach-top:#18132f; --coach-edge:#2e2652; --dim:rgba(5,3,12,.62);
+    --font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);overflow:hidden;user-select:none}
+  svg.i{width:16px;height:16px;flex:0 0 auto}
+
+  /* scaled stage */
+  .viewport{position:fixed;left:0;right:0;top:calc(48px + env(safe-area-inset-top,0px));bottom:150px;overflow:hidden}
+  .app{position:absolute;left:0;top:0;width:1520px;height:1000px;transform-origin:0 0;
+    padding:12px 10px 10px;display:flex;flex-direction:column;gap:12px;font-size:14px}
+
+  /* header */
+  .hdr{display:flex;align-items:center;gap:14px;height:64px;flex:0 0 auto}
+  .logo{width:64px;height:64px;border-radius:4px;border:1px solid var(--border);background:var(--card);overflow:hidden;flex:0 0 auto}
+  .logo img{width:100%;height:100%;display:block}
+  .title{font-size:30px;font-weight:700;color:var(--teal);line-height:1.1}
+  .subtitle{font-size:14px;color:var(--muted);margin-top:2px}
+  .hdr-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+  .btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border-radius:4px;
+    background:var(--bg);border:1px solid var(--border);color:var(--text);font:500 14px/1 var(--font)}
+  .langs{display:flex;align-items:center;gap:2px;padding:2px;border:1px solid var(--border);border-radius:4px;background:var(--bg)}
+  .langs button,.langs span{height:32px;padding:0 12px;border:0;border-radius:4px;background:transparent;color:var(--text);
+    font:500 14px/32px var(--font)}
+  .langs button{cursor:pointer}
+  .langs button.active{background:var(--teal)}
+  .langs button:focus-visible,.coach button:focus-visible{outline:2px solid var(--text);outline-offset:2px}
+
+  /* columns */
+  .cols{flex:1;min-height:0;display:grid;grid-template-columns:1fr 360px;gap:12px}
+  .left{display:flex;flex-direction:column;gap:12px;min-height:0}
+  .right{display:flex;flex-direction:column;gap:12px;min-height:0;overflow:hidden;scroll-behavior:smooth}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:14px}
+
+  /* canvas sizes */
+  .sizes{align-self:flex-start;display:flex;align-items:center;gap:8px;padding:10px 14px}
+  .sizes .lbl{color:var(--muted);margin-right:4px}
+  .size{height:36px;padding:0 12px;border-radius:4px;border:1px solid var(--border);background:var(--bg);
+    display:flex;align-items:center;font-weight:500;transition:background .18s,box-shadow .18s}
+  .size.active{background:var(--teal);border-color:var(--teal);box-shadow:0 0 20px var(--teal-glow)}
+
+  /* toolbar */
+  .tb-row{display:flex;align-items:center;gap:6px}
+  .tb-row + .tb-row{margin-top:10px}
+  .tool{position:relative;width:36px;height:36px;flex:0 0 auto;border-radius:4px;border:1px solid var(--border);
+    background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--text)}
+  .tool.sm{width:30px;height:30px}
+  .tool.active{background:var(--teal);border-color:var(--teal);box-shadow:0 0 20px var(--teal-glow)}
+  .tool.off{opacity:.5}
+  .tool .badge{position:absolute;right:2px;bottom:2px;width:9px;height:9px}
+  .tool.txt{border:0;background:transparent;width:auto;padding:0 6px;font-size:12px;font-weight:500}
+  .sep{width:1px;height:28px;background:var(--border);margin:0 6px;flex:0 0 auto}
+
+  /* zoom */
+  .zoom{display:flex;justify-content:center;gap:8px;padding:7px 14px}
+  .zoom span{height:30px;min-width:30px;padding:0 10px;border-radius:4px;border:1px solid var(--border);background:var(--bg);
+    display:flex;align-items:center;justify-content:center;font-size:13px}
+
+  /* canvas */
+  .canvas-card{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px var(--teal-glow)}
+  .stage{position:relative;width:420px;height:420px;border:1px solid var(--teal)}
+  .checker{position:absolute;inset:0;background-color:var(--check-a);
+    background-image:linear-gradient(45deg,var(--check-b) 25%,transparent 25%,transparent 75%,var(--check-b) 75%),
+      linear-gradient(45deg,var(--check-b) 25%,transparent 25%,transparent 75%,var(--check-b) 75%);}
+  .gridlines{position:absolute;inset:0;pointer-events:none;background-image:
+      linear-gradient(to right,rgba(70,70,90,.35) 1px,transparent 1px),
+      linear-gradient(to bottom,rgba(70,70,90,.35) 1px,transparent 1px)}
+  .sprite,.ghost{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges}
+  .ghost{opacity:0}
+  .sprite{opacity:0;transition:opacity .35s}
+
+  /* frames */
+  .frames{flex:0 0 auto}
+  .frames-head{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  .frames-head .h{font-weight:600;margin-right:auto}
+  .frames-head .tool{width:36px}
+  .thumbs{display:flex;gap:12px;height:96px}
+  .thumb{min-width:100px;flex:0 0 auto;border-radius:4px;background:var(--raised);border:1px solid var(--border);padding:6px;display:flex;flex-direction:column;gap:6px}
+  .thumb.sel{border:2px solid var(--teal);box-shadow:0 0 20px var(--teal-glow)}
+  .dcheck{background-color:var(--dcheck-a);background-size:12px 12px;background-position:0 0,6px 6px;
+    background-image:linear-gradient(45deg,var(--dcheck-b) 25%,transparent 25%,transparent 75%,var(--dcheck-b) 75%),
+      linear-gradient(45deg,var(--dcheck-b) 25%,transparent 25%,transparent 75%,var(--dcheck-b) 75%)}
+  .thumb .pic{position:relative;width:62px;height:62px;border-radius:2px;overflow:hidden}
+  .thumb .pic img{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated}
+  .thumb .meta{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);white-space:nowrap}
+  .thumb .meta .ic{display:flex;color:var(--text)}
+  .thumb .meta .ic svg{width:15px;height:15px}
+  .thumb .meta .ic.dup{margin-left:auto}
+  @keyframes popin{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+  .thumb.new{animation:popin .38s cubic-bezier(.2,1.2,.4,1)}
+
+  /* right column */
+  .muted{color:var(--muted)}
+  .kv{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:var(--muted)}
+  .kv b{color:var(--text);font-weight:700}
+  .slider{position:relative;height:20px;margin:4px 0 0}
+  .slider::before{content:"";position:absolute;left:0;right:0;top:6px;height:8px;border-radius:4px;background:var(--teal)}
+  .slider i{position:absolute;top:0;left:calc(var(--v,50%) - 10px);width:20px;height:20px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--teal)}
+  .colorrow{display:flex;gap:14px}
+  .bigsw{width:56px;height:56px;border-radius:4px;border:2px solid var(--border);background:var(--magenta);flex:0 0 auto}
+  .colorins{flex:1;display:flex;flex-direction:column;gap:6px}
+  .colorins div{height:25px;border-radius:4px;border:1px solid var(--border);background:var(--bg);padding:5px 8px;display:flex;align-items:center}
+  .colorins .bar{width:100%;height:100%;background:var(--magenta)}
+  .colorins .hex{font:13px var(--mono)}
+  .palhint{font-size:12px;color:var(--muted);margin:12px 0 2px}
+  .sublbl{color:var(--muted);font-size:10px;font-weight:500;letter-spacing:.5px;margin:10px 0 5px}
+  .swatches{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+  .sw{aspect-ratio:1;border-radius:4px;border:1px solid var(--border)}
+  .sec-head{display:flex;align-items:center;font-weight:600}
+  .sec-head .btn{margin-left:auto;height:32px}
+  .layer{margin-top:12px;border:2px solid var(--teal);border-radius:6px;background:var(--raised);padding:8px 10px}
+  .layer .top{display:flex;align-items:center;gap:8px;color:var(--muted)}
+  .layer .name{flex:1;height:26px;border-radius:4px;background:var(--bg);color:var(--text);padding:0 10px;display:flex;align-items:center}
+  .layer .kv{margin-top:8px}
+  .toggle{margin-left:auto;width:44px;height:24px;border-radius:12px;background:var(--border);position:relative;transition:background .2s}
+  .toggle i{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--bg);transition:left .2s,background .2s}
+  .toggle.on{background:var(--teal)} .toggle.on i{left:23px;background:var(--text)}
+  .onion-body{max-height:0;opacity:0;overflow:hidden;transition:max-height .3s,opacity .3s}
+  .onion-body.show{max-height:200px;opacity:1;margin-top:12px}
+  .onion-body .kv{font-weight:500}
+  .onion-body .kv + .slider{margin-bottom:8px}
+  .preview-box{width:106px;height:106px;margin:12px auto;border:1px solid var(--teal);border-radius:4px;
+    position:relative;overflow:hidden;box-shadow:0 0 20px var(--teal-glow)}
+  .preview-box img{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;opacity:0}
+
+  /* tour overlay (screen coordinates) */
+  .spotlight{position:fixed;border-radius:10px;box-shadow:0 0 0 9999px var(--dim);border:2px solid var(--teal);
+    transition:all .4s cubic-bezier(.4,0,.2,1);pointer-events:none;z-index:40;opacity:0}
+  .spotlight.on{opacity:1}
+  .spotlight.nodim{box-shadow:none;border-color:transparent}
+  .tip{position:fixed;z-index:44;background:var(--card);border:1px solid var(--teal);color:var(--text);
+    padding:7px 12px;border-radius:6px;font-size:13px;white-space:nowrap;opacity:0;transition:opacity .3s;
+    box-shadow:0 6px 20px rgba(0,0,0,.5);pointer-events:none}
+  .tip.on{opacity:1}
+  .cursor{position:fixed;z-index:50;width:28px;height:28px;left:0;top:0;pointer-events:none;
+    transition:transform .55s cubic-bezier(.45,.05,.3,1);filter:drop-shadow(0 2px 3px rgba(0,0,0,.6))}
+  .cursor.click::after{content:"";position:absolute;left:2px;top:2px;width:20px;height:20px;border-radius:50%;
+    border:2px solid var(--teal);animation:ping .5s ease-out}
+  @keyframes ping{from{transform:scale(.3);opacity:.9}to{transform:scale(2.2);opacity:0}}
+
+  /* step coach */
+  .coach{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:60;
+    width:min(780px,calc(100vw - 32px));background:linear-gradient(180deg,var(--coach-top),var(--card));
+    border:1px solid var(--coach-edge);border-radius:14px;padding:14px 18px;display:flex;align-items:center;gap:16px;
+    box-shadow:0 12px 40px rgba(0,0,0,.55)}
+  .coach .step-no{flex:0 0 auto;width:44px;height:44px;border-radius:10px;background:var(--teal);
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;box-shadow:0 0 14px var(--teal-glow)}
+  .coach .body{flex:1;min-width:0}
+  .coach .ct{font-weight:800;font-size:16px;margin-bottom:3px;text-wrap:balance}
+  .coach .cd{font-size:13.5px;color:#cfc4dc;line-height:1.4}
+  .coach .nav{flex:0 0 auto;display:flex;align-items:center;gap:10px}
+  .coach .nav button{padding:10px 18px;border-radius:8px;font:700 14px var(--font);border:1px solid var(--border);
+    background:var(--bg);color:var(--text);cursor:pointer}
+  .coach .nav button.primary{background:var(--teal);border-color:var(--teal);box-shadow:0 0 12px var(--teal-glow)}
+  .coach .nav button:disabled{opacity:.4;cursor:default}
+  .dots{display:flex;gap:6px;margin-top:8px}
+  .dots span{width:7px;height:7px;border-radius:4px;background:var(--border)}
+  .dots span.on{background:var(--teal);width:20px}
+  @media (max-width:640px){
+    .coach{flex-wrap:wrap;gap:12px;padding:12px 14px}
+    .coach .step-no{width:36px;height:36px;font-size:16px}
+    .coach .body{flex-basis:calc(100% - 52px)}
+    .coach .nav{flex-basis:100%;justify-content:flex-end}
+    .tip{font-size:12px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .cursor,.spotlight,.sprite,.toggle i,.onion-body{transition:none}
+    .thumb.new,.cursor.click::after{animation:none}
+  }
+  /* EG-BACKLINK — green "Back to Explore: Godot" pill (same pattern as the Core TB session guides); fixed top-left because this guide is a single screen */
+  .eg-backlink{position:fixed;z-index:70;top:calc(8px + env(safe-area-inset-top,0px));left:max(12px,env(safe-area-inset-left,0px))}
+  .eg-backlink a{display:inline-block;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:.85rem;font-weight:600;padding:8px 14px;border-radius:10px;background:#3E7C4A;color:#fff;text-decoration:none}
+  .eg-backlink a:hover{background:#4a9058}
+  .eg-backlink a:focus-visible{outline:2px solid var(--text);outline-offset:3px}
+</style>
+</head>
+<body>
+
+<div class="viewport" id="viewport">
+<div class="app" id="app">
+  <!-- header -->
+  <div class="hdr">
+    <div class="logo"><img src="data:image/webp;base64,UklGRp4RAABXRUJQVlA4IJIRAABQPwCdASqQAJAAPj0ci0OiIaEUjN2EIAPEsYBrUFXBZkn8p9s/xt5+8rf09DP6V6Mn1O/13/c+oX9Zf2997n0U/7f1AP8p1HfoAeXT+5Xwuf27/neltqti9v7Z4L+HnyH7UceDoX/e+gv8d+1v4z8pf3S/5fxR3j/A3+u9QL8U/kf9r/J78yvmK927IPTf756BHq589/yn9v/dT/C/Kt8J5l/Xn2AP57/Qv8v/Y/3J/vftUeCL5v7Af83/qv/F/vf7kfLD/Qf9j/Rflz7XPzz/B/9D/J/AN/KP6P/sf7v/m/+3/iP///8/vA9kX7T+yV+xX/zOQj4vub4UDc2Ysr/qxRAgpvP5wmyikA4fGFInHsf5bA/U6Zkw6mchb28Xwb5Q6s4rVjMbHX/nIm2GzHy7whdHUHmapdn9P///WCX/lzHK7urNmI/RqFhwy3filZo7Tzn3CBUHpk1xlXD5VepTHbnUXYlD/FMSg1/vLGL30RLrkFMOT6oG69Ar5Qt9pRyX1ixlzSDUtC1ylnmFdtOa+1t1gu0bLXEOxl/dM/duwIeVuHf/TtcDjRhnvh43IuA+z4cvoOKogYJUur6aCmR2vf5xRuNLOpMDfkbUZyvd/KbWJz7seLv79tcihJ3ZDDbnnq//9A4S99GrEwcOHgVJ1LLkbeP9vmfAFg6GtpJWp9P6AAD+/lgpfw2DYMZzmsA/Hc8AC06mHkjlMGTm1PRfpCW0N79E777EaQctrrtgOj+t6z12xt42Ivjd8z7/Vir+k6+CAaMud4hKGIgfkkcnUrizvXZGK+eRv3YFqVGvbtUaOQmnCroUGWLWflIcWkuA5vUD96BOlO2/x/CokDKrYBE05nArEzGk0K3envMH49J3jaGrHYhsRcRw8Xaa1h1/K8sbcrpJQ3l/8aW+R/v29PKlIXKc97P7Qe+0wjbtPl0oo9ve9q/aqHMnA+HghYU7bTgU5tmTrWx5DaPWZ1U3AQpYog5JFIUoZdnjNQueJk1JhuHQQg7IarMPi/YaPSU4luVwm+2VMLC3jIiQ46xkym8nN/QABxtHXKsBV/YxH3J5901jAfNN6+W02QG8jMX38UVHaBP8VDFLplw9BKJuS8K7rD6Y7cdBx63Xx1nzmt1xxllbja9PXB3hjrL/xyhSQDJ4D8xNflq6Qx5/smucSQTbbCjnIlF1wCUQXtV8phImf1AQlmy5BV1PrW7nfOdfgssBNsELyZRL5HV3HAGF0qIIsKY5fQPNID3KwzPBvTUC/axnRBV2gk0coHSG5DNdVZs0bvzaKwY2GJogqsjFwjYaFxYn6oBv5sj9IrzWxAJcvj27wkTouQFIx86aK8Bb0xw+feIaqUJEWCYH6zU7pL4wqUeY49pScRMIIZzTPUPzUSmON+q150Gbowa5i55G0y01RtsFksYd5mxTo+eMTR/zpp0+WKxPa8PloVyTToOyQYJd64ltWFXfZtDPhqVaRNNHI8jTjf9DR11ixP+LG2DTY536NZpecA2/erXNi+YDFhzKL3KS5l1LUtpWvPhXW/cBDWHhnSU6r/YjZ8rEN/Ps18aLFf3bxQ+ryN8UrkG2GDVnfC3MHYbPRCLFYWmZ6yF0e4OASO+JAW/12zkHBRZiofqjSTSyPRRcbAsDPOSaXBoNmM9udcF5z1W3qygNV05FX6YB952zfo/ynyd30zhlqOjlQJ2sdXjsXN0Uky6V9Pwew0Pw8OhH8rk4ZwefN5vvgMuWgLzrUCEekACQtUJvHyXioMsGWfv4lMHQgMTUI3YcD5QaKAe2JshhVlHbu2ruCK5U3d07aQai0pEyM4QmbxK+CybCW2G0VwAbcr2BYvrOQQTjdbTuCXU00vFCCa4O4bb7Byc0vO7o2nry4Kzc6ilXbPfb13K6B9tpoUppDooCke1ssxrPMs7PX8Y93ZOJ78D7BFd7AP6+5+3WPGfeBNPiEOjngXUMGNf3t9NNgYkX/Acd/roAL1dTiSIyqGN1mYXegHcwoYPyeYe18mbhK4IDQleK9PifkRZkrasRY8culR5wp+RXF+KiCKMywDYCSt9lKr/wW/BLha7nPLf1u1eEAWNF5WO40+1N7eLCb3Fr1mDcJFIEx+bQ2g1OHY8objMSbiTHfOeSDJWPMHm4Nruf4KiJIzVuMGoqejCEIjkyAMhF5l2w1GKzMyTt/tXkApVX8Cvszc9CXVvprfg+sTslHURomHgSg7JXU9BOG/ZeIe7OKYKvKwBJ7uiAXimLD361Odx3siglhrkyhE2TemDNH80yXY+uX/RmOM48spbRuU4/IFGfWYXsLXmDIZmGCPpp6jBWkw3qLuBmchXHsJ0fJQoAcDb2TlFS7buiUu7YUN8W0/tifnK09dVyDiOeDmu7jZ718cru1fTe4wCoZ04fEA5piIytZYl89o6WrdvFB1QqslVEkr0z+JFNJ7L5SWKSeR3UwJ6BsB9fqJNV0SCS29Rq9BK4ziTAVHsavbeA0hqOTC+JzGRFiiRtYgYOiAIVKEQM9bIQvzVsz0VuGKK64CHwizzlW7ULXPh+RWsy7yYnOvzRjJj10WEnRA0nHNyzvpH/RHN7kzJjJvi6XCfG3rBvxnSBbb80Z2SjnmZKu7oKFQiCot5Ahd2UT746RnZ+ZkX3NCvwLBtUZPZAcO4wzm6gsOmMNRg5w/RUJkI4Gf4xqoZq5ptT93rxY5qZZs/vc9OXgG4nseg/n7XQNK1WeDcG32EkPILWCQOmzhjagf3TyO5QNLeilK18MAU8hwOE1mZtihYWK6cF4DPwMHMyypRgCWCZkpv5+l38VuyU7hi7aX5gh/9/6EkibM9vjPuH9g8ZEG8yvutgOkf+tyQRuHJ3j9+vC4M0j9Hqs6AMn4WA+yi34wk08B5B3I5OARtBwheTEjn6PlT8ybTrRiR4qYRGkXW387BhGYFI2S0tly6449VecaC/HFD7mK22mS8pUBtI0Y0UzTl1M+F90lzK3XcsPr0a2DY4TobQunUy8tyLafsaNYf5P2rSmCjxwHCGF9xojCUJcS/9l66BeKt/rXvvmU4RXIg5SujvAs7Qbyglyiqp1/OXhzDkUd3iQJ7tIMzvpCJFNlPjNOb7GoncluY7ekl4G35yMCRO76mNhggHiYnOBwtAY+iffrSgdlHb7uedNtfCFICdebyHkGas7rlvV8T0GEbTtT5iQGqcpxvKv26LRJczOkxTDL03leypArS9Ahv/5tq9PBorbUruD+lv1zktFX/hcO1SEQWVMXuCNCjICC1hRhP7DZeM/822Sb6cmQV7Huso8EZbZ3thjcjYxy/MZ7pq9FXsboqYzrcyyo578JaxG+tUNq1NXoig5+Isx3CK7x7inl9bWMljUtyNTCWx9V9vYISad9jMo5jcwjRj/3PjMT0e9SBG5F7FJVi21EQgDpsWMjwc9aqGCg42LWbyifd6NhRY8xKI8TEhsxmqqBPVSFBz7KXhsV5xaYt743QDjcPF8qDOtJHlzrwXW+QqfXdIDpD181CGlwv4cBfbQxdu0WcVtw6PgA9/R2HqQwfXQbPZxKyCpFnsu/rK7xAa/cu22dQqJ8xcqD9QroIuhlfCyxNylGTCNv5T5l0u27FldqMSkhACvp0Ac47/gOGLzE6UX/9LVvO6h2lq2Qjpqw0n4TQMLVEXtdhSyC49U6HxVxHBGjjgTVb0Pc5b8mJ2DPkcXw8Ztvezx0FFp4iGR/Y8ero6oanM8xKJtrrEhCMR3gc/wAj2v9Xg2Dv3fqzTAba52nzptHJy2f/yi4bUcStrQux2+7DXrwgQfoYwuNbVHmJTGlAOnlR09RyhGsRSMlC8FeKabv+UqupDfVGfi67eJJ/ALnuZyfCoWidJTVpuDpgt3Cbz7v5XcnvNkNQymjwtvPXoeRsRcF42H++Hxr8rwkRkdNGtaGl5dS3AgUKG0Qi0xagGv01zzMjHAZ7oC9hwKYg0aVaHcK8++X2CyHC/pnJ9866xcr7UTUu1yK0+Ri5knICQABBLsdcmio52ferJF42rbso/MhLmKH+SEC4D+IyCCRPhfA44P41tgFNWD845vGAJ4OlKteC4vglORMHcUZsPB3wze4eJAkpMtCwCHfC+8lInx0Gn0xzJx08yY4dSkcCLKtnEv85LAK/1bZtxMchhoNjscA2Fy9Pw8VDVuxhbqCvfjr/r40f3V0tYuUcyO0YQPXpBmvTjMJgCVHOGeju5Qf1vrwXmCiXKRHdqfkXvJMBGjrTkLdaxRDoPEyp58k0TWcDcjBpIyvUHe5BkKI40//HWb+gUq4oPjDMx5iDzHxZ2svt8YhobJJ+tRkY8mv76rVW0b6mZlgxMlbtO7pdfLG8iHvaBpB4bVzgCi5IW6iNj/FZJaeDrB4oT/UkVZcpweGkbUa+bqqPiJ4tC2/g0K4cTURPHEMCYdL64PQcjMMfvHu/MrK445pJ1H0cdfFZZLxrCgTQiWUqnCgtzyTqnXG4IPtuN37UZf3jkwSlXrBQdtrwHvakx5lCrO7Fwsr/If/Xo6jBa01c+M3ITshs/VoBI9HbuUSuz4SduSP8ORX6kjNrK+jOfR7+AjhIZDi3E8/4xgR2OzHNP2oFEL8qZ5GJVCwp/Bm4DbpHO4NNjPBaXTT8Mfl7dwe1wgFW7ccINmDdxCTOcrkD8jpnY83FaAwy5tL8enQRu8shQWawdDjq2c/F1IvnvqsdorMoqnnGT2Zf9vjVd0z3EJoWPHeAJy90xS+Xii5KbP0mkas0mPxZvnuLtuwPr6/VEfMVg5Zx4H0OHlxFVI/lzp5GdeM3GnYT2sxSUVUUsPBXpPoX1gC/4mGL6ftT1Ga4pC2qmImzlcPKoHc4EW5d5ml/ceUW+4YdEbFY+WHvrxKuo6pVm07xyDFkKY5Z/5ur9+HeXukCkjUoAmC/a3RQmpSCvA8IqG/tss7wc+QKdoZ7JUeycG0ookTzCri7s6UQD8JsS1CHiPXnwrGii6P5fXD9bYbny/rAyuZn1ckwWs/pPPuvRGcmtk/kkKsj6H/DARBGbJR9nmJzAKRqdZYfeYU7Zv3pgZOcnmh3H4LI2E4okY8yo6TytEfbyXyjA46bej9eLHvpLRT+1MvaCJsCqwMLj+WkhcTFqWQnRJ4Nx0MtZ2BolEDzhQ+Y/TroUVIRcBJudww3hF5kDXd6IuY2sAdCHi8OaqHJ6MEIAn/EfWJ8862x1iNbo3wprMxnx+aop1CZa+QAEynozx3BwhjFFllrfuNN7nkALoDK5HAxzE9e4f8+oStM/qjpbezfnfZUtlTXTQ7jyIuw/BO746ra5k7VSqSK3CkAsQfLNzCX2WKOGxiDha6llwmeS+uJRR3e6LChoYZGCX+ckDtd6P1Jr4MQ+y4FNT1YoLDxSZeDAQnd9bovVvquNlPCxc6tqSbQ7Y1ESpM38VmbkrdmCNiU2wUdaR4ZR7mzJ4+4175aWSVFO72msx7xxFUghZv4pBBGAZe01x5f6KGdlh1B6Lb7fC73r9VBRxwQXIZDoLYmXPHyLE1g1VZ5HSrJcIb2oiqaIJhAYRZ6WzUqGvc2QR+weDARHgPk+B3UUUGVn91lZV/ei75aZfDIsD/MhfQDzgFXvIYuO2FT4WZvfeP0R3GyvNfDjzn1aIJ5TIy7sjDL8c75xyWsHwaiV+zZ2IV5iPByQOCBfovb52kVPswX8ucHYTiZ88ESnzRRGOyCqjhT/vDtwq+20O/hTfgf3wPHLCzbuLzstdJMOImsplpjC3RaO0utcoUWQvyM2Tng7hRnnB1H9klrE1IzfoN05XhXaWXf0C0J9BHPQRFSHi2AwZdkN80SRZ0H/EdSd+pkiGOm12dhkIAb63lUzC4Uv589/2PtRrW3FRTgPHU9ofEosLnslTUMrLy98AH1k3qUH9dnOLRnLnYAAAB6UyeHJdDmCqY2fsypOU2KYdLKF8m/MalQmzbk6plMObI9B9CiaFtfPYXd0iGX9aEIWwfe/CdjA0YkFhImDAEpP/ctFUCjzr6AAAAAAAAAA" alt=""></div>
+    <div>
+      <div class="title">Threadbare Pixel Stitch</div>
+      <div class="subtitle" data-i18n="subtitle">Weave Pixel Art and Animations</div>
+    </div>
+    <div class="hdr-right">
+      <span class="btn"><svg class="i" data-icon="folder-open"></svg><span data-i18n="open">Open</span></span>
+      <div class="langs"><span class="lang-slot" data-slot="en"></span><span class="lang-slot" data-slot="es"></span><span>العربية</span></div>
+    </div>
+  </div>
+
+  <div class="cols">
+    <div class="left">
+      <div class="card sizes">
+        <span class="lbl" data-i18n="canvas">Canvas:</span>
+        <span class="size" data-size="16">16x16</span>
+        <span class="size active" data-size="32" data-tour="size32">32x32</span>
+        <span class="size" data-size="64" data-tour="size64">64x64</span>
+        <span class="size" data-size="128">128x128</span>
+      </div>
+
+      <div class="card">
+        <div class="tb-row">
+          <span class="tool active"><svg class="i" data-icon="pencil"></svg></span>
+          <span class="tool"><svg class="i" data-icon="eraser"></svg></span>
+          <span class="tool"><svg class="i" data-icon="paint-bucket"></svg></span>
+          <span class="tool"><svg class="i" data-icon="paintbrush-vertical"></svg></span>
+          <span class="tool"><svg class="i" data-icon="pipette"></svg></span>
+          <span class="tool" data-tour="select"><svg class="i" data-icon="square-dashed"></svg></span>
+          <span class="tool"><svg class="i" data-icon="scissors"></svg></span>
+          <span class="tool"><svg class="i" data-icon="flip-horizontal"></svg></span>
+          <span class="tool"><svg class="i" data-icon="flip-vertical"></svg></span>
+          <span class="sep"></span>
+          <span class="tool"><svg class="i" data-icon="square-dashed-mouse-pointer"></svg></span>
+          <span class="tool off"><svg class="i" data-icon="copy"></svg></span>
+          <span class="tool off"><svg class="i" data-icon="scissors"></svg></span>
+          <span class="tool off"><svg class="i" data-icon="clipboard-paste"></svg></span>
+          <span class="sep"></span>
+          <span class="tool sm off"><svg class="i" data-icon="minus"></svg></span>
+          <span class="tool txt">1×1</span>
+          <span class="tool sm"><svg class="i" data-icon="plus"></svg></span>
+          <span class="sep"></span>
+          <span class="tool off"><svg class="i" data-icon="undo"></svg></span>
+          <span class="tool off"><svg class="i" data-icon="redo"></svg></span>
+          <span class="sep"></span>
+          <span class="tool active" data-tour="grid"><svg class="i" data-icon="grid-3x3"></svg></span>
+          <span class="tool" data-tour="import"><svg class="i" data-icon="download"></svg></span>
+          <span class="tool"><svg class="i" data-icon="upload"></svg></span>
+          <span class="tool" data-tour="gif"><svg class="i" data-icon="file-image"></svg></span>
+          <span class="tool"><svg class="i" data-icon="trash-2"></svg><svg class="i badge" data-icon="chevron-down"></svg></span>
+          <span class="sep"></span>
+          <span class="tool" data-tour="spritesheet"><svg class="i" data-icon="layout-grid"></svg><svg class="i badge" data-icon="arrow-up-from-line"></svg></span>
+          <span class="tool"><svg class="i" data-icon="layout-grid"></svg><svg class="i badge" data-icon="arrow-down-to-line"></svg></span>
+        </div>
+        <div class="tb-row">
+          <span class="btn"><svg class="i" data-icon="save"></svg><span data-i18n="save">Save</span></span>
+          <span class="btn" data-tour="save"><svg class="i" data-icon="send"></svg><span data-i18n="saveSubmit">Save &amp; Submit</span></span>
+        </div>
+      </div>
+
+      <div class="card zoom"><span>−</span><span>100%</span><span>+</span></div>
+
+      <div class="card canvas-card">
+        <div class="stage" data-tour="canvas">
+          <div class="checker" id="checker"></div>
+          <img class="ghost" id="ghost" alt="">
+          <img class="sprite" id="sprite" alt="">
+          <div class="gridlines" id="grid"></div>
+        </div>
+      </div>
+
+      <div class="card frames">
+        <div class="frames-head">
+          <span class="h" data-i18n="animFrames">Animation Frames</span>
+          <span class="tool" data-tour="play"><svg class="i" data-icon="play"></svg></span>
+          <span class="btn" data-tour="addframe"><svg class="i" data-icon="plus"></svg><span data-i18n="addFrame">Add Frame</span></span>
+        </div>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+    </div>
+
+    <div class="right" id="right">
+      <div class="card">
+        <div class="colorrow">
+          <div class="bigsw"></div>
+          <div class="colorins"><div><span class="bar"></span></div><div class="hex">#FF00FF</div></div>
+        </div>
+        <div class="kv" style="margin-top:14px;font-size:14px"><span data-i18n="brushOpacity">Brush Opacity</span><b style="font-size:12px">100%</b></div>
+        <div class="slider" style="--v:100%"><i></i></div>
+        <div class="palhint" data-i18n="dragColors">Drag colors to slots to customize palette</div>
+        <div class="sublbl" data-i18n="palColor">COLOR</div><div class="swatches" id="pal-color"></div>
+        <div class="sublbl" data-i18n="palS1">COLOR SHADE 1</div><div class="swatches" id="pal-s1"></div>
+        <div class="sublbl" data-i18n="palS2">COLOR SHADE 2</div><div class="swatches" id="pal-s2"></div>
+        <div class="sublbl" data-i18n="palHi">HIGHLIGHT</div><div class="swatches" id="pal-hi"></div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><span data-i18n="layers">Layers</span><span class="btn"><svg class="i" data-icon="plus"></svg><span data-i18n="addLayer">Add Layer</span></span></div>
+        <div class="layer">
+          <div class="top"><svg class="i" data-icon="eye" style="color:var(--text)"></svg><span class="name" data-i18n="layer1">Layer 1</span><svg class="i" data-icon="chevron-up"></svg><svg class="i" data-icon="chevron-down"></svg><svg class="i" data-icon="trash-2"></svg></div>
+          <div class="kv"><span data-i18n="opacity">Opacity</span><span>100%</span></div>
+          <div class="slider" style="--v:100%"><i></i></div>
+        </div>
+      </div>
+
+      <div class="card" data-tour="onion">
+        <div class="sec-head"><span data-i18n="onion">Onion Skinning</span><span class="toggle" id="onionToggle"><i></i></span></div>
+        <div class="onion-body" id="onionBody">
+          <div class="kv"><span data-i18n="prevFrames">Previous Frames</span><span>1</span></div>
+          <div class="slider" style="--v:22%"><i></i></div>
+          <div class="kv"><span data-i18n="nextFrames">Next Frames</span><span>1</span></div>
+          <div class="slider" style="--v:22%"><i></i></div>
+          <div class="kv"><span data-i18n="onionOpacity">Onion Opacity</span><span>30%</span></div>
+          <div class="slider" style="--v:30%"><i></i></div>
+        </div>
+      </div>
+
+      <div class="card" data-tour="preview">
+        <div class="sec-head"><span data-i18n="animPreview">Animation Preview</span></div>
+        <div class="preview-box dcheck"><img id="previewImg" alt=""></div>
+        <div class="kv"><span>FPS: 8</span><span id="frameCount">Frame 1 / 1</span></div>
+        <div class="slider" style="--v:25%"><i></i></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- tour overlay -->
+<div class="spotlight" id="spotlight"></div>
+<div class="tip" id="tip"></div>
+<svg class="cursor" id="cursor" viewBox="0 0 24 24" aria-hidden="true">
+  <g stroke="#111" stroke-width="1" stroke-linejoin="round">
+    <path d="M2 2 L7.5 3.4 L20 15.9 L15.9 20 L3.4 7.5 Z" fill="#f2c14e"/>
+    <path d="M2 2 L4.8 6.2 L6.2 4.8 Z" fill="#2b2b2b"/>
+    <path d="M15.9 20 L20 15.9 L21.8 21.8 Z" fill="#e86a6a"/>
+  </g>
+</svg>
+
+<!-- step coach -->
+<div class="coach" id="coach" role="region" aria-label="Guide steps">
+  <div class="step-no" id="stepNo">1</div>
+  <div class="body">
+    <div class="ct" id="coachTitle" aria-live="polite"></div>
+    <div class="cd" id="coachDesc"></div>
+    <div class="dots" id="dots"></div>
+  </div>
+  <div class="nav">
+    <button id="backBtn" type="button">Back</button>
+    <button id="nextBtn" type="button" class="primary">Next</button>
+  </div>
+</div>
+
+<script>
+const F = {
+  f1:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEBUlEQVR4nO1brW4bQRAen6JgAwMDP4EVYBRFQXmAKqCoCiyIqjyEgdUnKIiigMAoKKDqAxRFkZGBlScwOGBgHOAUuHud25vZm92dPV/S+5Dvbv/m25nZ2dk1QIcOHf5n9PbR6XB49BZaN8+XPVM/z5fR42+cgBjhKcSS0AgBnND9bAW/v01q65/dLGCzHbHfY0hIRsBwePSG1RVDKjiHyfWafB9CRBICUghNgdIMXxIqhfHMhTBKCb+4Gvg24wVbI3zGXSpIDd6nMbt+ilnnQJmFZOwH5kesd8b1/wmeduY1kAGUB38IF3AIF0UBCTG08M2in61gcTUomZtk7Bl+wIJjIlwNaa/rocCk97NV8btufJnrI4ZE0H3Nvg17DK6xH+CHV7gvaYGNuhA0pfCuYChmlekB0AxhIl7hvvhtC2/qas0+F+S44Oobt0dNHEuAAUWEaUhT+BDBOWCNsDXHJqF4sEnAYSynDQDphO9nK3h6vq2te3pyWTENMyZJbFAbKNhLpDYBnG1LCTCgiLBBmcABVdCA8w02CaGghPcV3MDUGR/PvOqxyyAlPCV46OxPrtdqwmO8zKelOACDkqmiAT6Bza4j/yXo7GYBAGXhX+ZT73Y4PD3fikwCQLAZ4hBq+7Zj0ph1DpQ52H5AbTMUApfwpyeXpedUJDmdoDbw7GvPfChh4r2AJlKqvS8q2+HUaJPwAAINyPNljwogNtvRX2/+vpEBVD2jecbvORJ8sdmOYHw88w5YUqFwghwJ9jvbXM5uFsHB0Ph4xppEU2YSlBaPSX5S4a9mEGRABULsdjgEMbl/19Y3lgyXaakSABB/AMLtBH1IkPoSLoulqgEGGiRogyMgKBCqixt8lsgUeUSTIpcgOhTuZyvYbEfsFlQC/aMzeXtRBJRVvf2nQBT2shdoE7w1ANt/audF5Q6wz5hcr50O15inC16rQMrTX620uO1PzCrDrQLBPqCNwuO2zPjqNKCRhIimgFJstqNSv9yFj6DLDxoh7z6BiQjSgDq1ch12SIh7HJyLxvF5/dP5nZsArA3eBFBCVDuij6p8YoXZ7M75fTr96vy+I/Gust02ewdDgogAe+kzYW4TMXwIHgfnBYF2XuFlPi1toNRMgEts2NlaKepm2IUf32cAIAvPvQ5HOdQlOg3jMUJJ8OXTqOjLNSZTJs+XvQ8VCkuEtyFaBuu0QKoBADsbfPgVvnME2M001bZkTLi82AlyV9RDzhPsAYeYBSc0vrliss8cTNnou8L4mgznBPeR8XFNDi6rcllaogmxmiNt29WHelK0rkNXx3V1JUK9y3+McMDCuQTT/LsMQJcRag8BvjOq5UcavSChAS3VN2iNBmC05QZ6hw4dPj7+AHjzXaLGMqJrAAAAAElFTkSuQmCC", f2:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAELElEQVR4nO1bvU7jQBCeWIg6RYoUfoKIIlWEqHgAREGFKK9AJx4ihXVPcEWEKCgRFQW6B7gKoVQpojxBChcpUlOEK2DNeD2znv1zfHf+JKQ42V3PfDszOzu7AHTo8F+jt4+XDodH765983zZU/3zfOktf+ME+ChPwZeERgjglO4na/j9fVzb//R2Adtdyv7uQ0I0AobDo3dsrhhSxTmMZxvyexciohAQQ2kKlGXYklBpjGfOhVFK+cXNwHYYK+gWYSN3qSElvM1gev8Ys86BcguJ7Afqg290xv2/FI878yGQAJSFP4QrOISrooGEGFr5ZtFP1rC4GZTcTSJ7gh+w4pgI00Ch13VXYNL7ybr4XCdfYvoRQ6LovmZfhy6DSfYD/PAGDyUr0FGXgsZU3pQM+awyPQCaIUzEGzwUn3XlVd9Qs88lOSaY3o3HoyaOJUCBIkINFFJ5F8U5YIvQLUcnoXjQScBpLGcNAPGU7ydreHm9q+17cnxdcQ0lkyQ3qE0U9CUyNAGcb0sJUKCI0EG5wAHVUIGLDToJrqCUt1VcQfUZTTKrfuwySClPKe46++PZJpjyGKv5tJQHYFA6VSzAJrH5eJH9EnR6uwCAsvKr+dR6HA4vr3cilwAQbIY4uPq+HphCzDoHyh30OBBsM+QCk/Inx9el51gkGYNgaODZDz3zroSJ9wIhEdPsbVHZDsdGm5QHEFhAni97VAKx3aWf0fzvRgJQjYzqGX/PkWCL7S6F0SSzTlhioQiCHAn6d7q7nN4unJOh0SRjXaIpN3Eqi/sUP6n0N2QSpEAlQux22AU+tX/T1teXDJNrBSUAwP8AhNsJ2pAgjSVcFSuoBSiEICE0OAKcEqG6vMFmiYxRR1Qlcgm8U+F+sobtLmW3oBKEPzqTj+dFQNnU238KRGEve4E2wdoCsP/HDl5U7QDHjPFsYwy4yj1NsFoFYp7+hiqL6/FErTLcKuAcA9qoPB5LyVdnAc4EmJQ3lbp1E24K3IUPMQH6ETiO+lVF6IOKJleK7S6tyEWdbXrd/pAGQVt3eRqci9pdbJ6drUiRYO0CX8dO1e+pLaxeq5Miy+6Nv0+n3wDAnESZyFEuISJAX/r0ur6pzPXyegejSQbj2aYQWuFi8yx5vRM+rOi+Ipu+eXIKgk1sXnSybPA0OC8sSJ+Y1XxaIqGWgJAF0yy7h9V8Co+/1oWgPnganJNW9PNHBgCy/Umj5wIAZRP0mWUFTOLlWfo5fiquPouqwnVttruUDXauQdCEy7O0+MNQ5NqU3q2XQUxICPdwsYK6FQKAJwFbYJ4ve953hdtyTQ6genVH0jbIZWmbF0rb24K7vFXXNthtcekLpX2pPtw9Jklbbsy9/MsMBSywibCQ/y4D0FWE2kOA7YyGiiONJ0K+CGX6Cq2xAIw2La0dOnTo8E/jDxTxZSl/+YyyAAAAAElFTkSuQmCC", f2a:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEFklEQVR4nO1bvU4bQRAenxC1Cxcu/ASIwhVCVDwAokiFKFOgiIdwccoTpLCQC0qUiiLKA6RCiMqFxRO4uMKFawqTAtbMzc3szf6dj+Q+Ccnn213vfDt/O7sAdOjQ4X9Gbxc/Ohwevvr2LYpFz/QvikXw/BsnIER4DqEkNEKAJHQ/W8Kfb+Pa/qc3c1hvRuL7EBKSETAcHr5idcXQCi5hPF2x3/sQkYSAFEJz4DTDlYRKY7xyPoxyws+vB67DOIFqhMu8Sw25ybsMRvunWHUJnFlo5r5nPoR6Z9z/Q/C0Kx8DGUB58vtwCftwuW2gIYYXvln0syXMrwclc9PMPcMPWHBMhG2g2HHdF5j0frbcfq6bX2Z7iaERdFerT0HnYJv7Hn54gbuSFlDUpaAphbclQyFRpgfAM4SJeIG77WcqvOkba/WlJMcG22/j8biFEwkw4IgwA8UU3kdwCVgjqOZQErYPlAScxkraAJBO+H62hIfHWW3fk+OrimmYOWlyg9pEgYbI2ARItq0lwIAjgoIzgT2uoYHkGygJvuCEdxXcwPQ5OMqd+olhkBOeE9x39cfTVTThMZ6fJqU8AIOTqaIBLonN2w+5h6DTmzkAlIV/fpo4jyPh4XGmMgkAxWZIgq/tU8cUY9UlcOZA/UC0zZAPbMKfHF+VnlORZHWCsYFXP/bK+xKm3gvEREq1d0VlO5wabRIeQKEBRbHocQnEejN69+afGxlA1TOaZ/y9RIIr1psRHBzlzglLKmydoEQC/Y6ay+nN3DsZOjjKRZNoyky8yuIhxU8u/Y2ZBBlwiZC4HfZBSO3ftvUNJcNmWlEJAAg/AJF2gi4kaH2JVMWKqgEGMUiIDYkAr0SoLm9wCZEp6oimRK5BcCrcz5aw3ozELagG8Y/O9OMFEVBW9fafAnHYyV6gTXDWAGz/qZ0XVzvAPmM8XVkdrjFPG5yiQMrT31hlcepPTJSRooC3D2ij8HgsM79kGmDz3LZSN1XhJuFcFsegR+DY61cF4Q8qdh0puLPNoNsfWifoai73g3NVuy+rX9b3Ng0zJDj7gI9jp+r33BaW1uq0yPNb6/vJ5Kv1/RuJt5V5mb2DuQOlygNo6KNprq3M9fA4g/VmBOPpCu4H56W/VLgfnG8JpPOiGy2vKNDE5qVuhW348T0HAF16XktAzIJpnt/C89MEfv5+m1ioFtD+F2ejdxUfqYuvjZ4LAJT37yGrbBvbpfKsigLa+0GSE5RMxpeAi7OP8aSCiDQf3L4oFj3nMIhjaAzz8CFBihD05ooNpm3wXeG2XJOT7i7VtY1yWdqFcW17F3Aprvbab7Tb4lrGtX01Qn3K/xiRgIWzCRbz32UAuopQewhwXdFYfqTxRCgUsVTfoDUagNGW0NqhQ4d/H38BiARc2l9zrCIAAAAASUVORK5CYII=", f3:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEBUlEQVR4nO1brW4bQRAen6JgAwMDP4EVYBRFQXmAKqCoCiyIqjyEgdUnKIiigMAoKKDqAxRFkZGBlScwOGBgHOAUuHud25vZm92dPV/S+5Dvbv/m25nZ2dk1QIcOHf5n9PbR6XB49BZaN8+XPVM/z5fR42+cgBjhKcSS0AgBnND9bAW/v01q65/dLGCzHbHfY0hIRsBwePSG1RVDKjiHyfWafB9CRBICUghNgdIMXxIqhfHMhTBKCb+4Gvg24wVbI3zGXSpIDd6nMbt+ilnnQJmFZOwH5kesd8b1/wmeduY1kAGUB38IF3AIF0UBCTG08M2in61gcTUomZtk7Bl+wIJjIlwNaa/rocCk97NV8btufJnrI4ZE0H3Nvg17DK6xH+CHV7gvaYGNuhA0pfCuYChmlekB0AxhIl7hvvhtC2/qas0+F+S44Oobt0dNHEuAAUWEaUhT+BDBOWCNsDXHJqF4sEnAYSynDQDphO9nK3h6vq2te3pyWTENMyZJbFAbKNhLpDYBnG1LCTCgiLBBmcABVdCA8w02CaGghPcV3MDUGR/PvOqxyyAlPCV46OxPrtdqwmO8zKelOACDkqmiAT6Bza4j/yXo7GYBAGXhX+ZT73Y4PD3fikwCQLAZ4hBq+7Zj0ph1DpQ52H5AbTMUApfwpyeXpedUJDmdoDbw7GvPfChh4r2AJlKqvS8q2+HUaJPwAAINyPNljwogNtvRX2/+vpEBVD2jecbvORJ8sdmOYHw88w5YUqFwghwJ9jvbXM5uFsHB0Ph4xppEU2YSlBaPSX5S4a9mEGRABULsdjgEMbl/19Y3lgyXaakSABB/AMLtBH1IkPoSLoulqgEGGiRogyMgKBCqixt8lsgUeUSTIpcgOhTuZyvYbEfsFlQC/aMzeXtRBJRVvf2nQBT2shdoE7w1ANt/audF5Q6wz5hcr50O15inC16rQMrTX620uO1PzCrDrQLBPqCNwuO2zPjqNKCRhIimgFJstqNSv9yFj6DLDxoh7z6BiQjSgDq1ch12SIh7HJyLxvF5/dP5nZsArA3eBFBCVDuij6p8YoXZ7M75fTr96vy+I/Gust02ewdDgogAe+kzYW4TMXwIHgfnBYF2XuFlPi1toNRMgEts2NlaKepm2IUf32cAIAvPvQ5HOdQlOg3jMUJJ8OXTqOjLNSZTJs+XvQ8VCkuEtyFaBuu0QKoBADsbfPgVvnME2M001bZkTLi82AlyV9RDzhPsAYeYBSc0vrliss8cTNnou8L4mgznBPeR8XFNDi6rcllaogmxmiNt29WHelK0rkNXx3V1JUK9y3+McMDCuQTT/LsMQJcRag8BvjOq5UcavSChAS3VN2iNBmC05QZ6hw4dPj7+AHjzXaLGMqJrAAAAAElFTkSuQmCC", f4:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEDUlEQVR4nO1brW4jMRCerKrigICAfYKqICiqivIA1YFDVeGB6tSHCFjdExyoqoLAwgP3BIeqqigg6hMELAgILkgPpE5nvTPesT3ebO/yoeyPvTPfzNjjsQNwwAH/NXr7+OhwePoW2rYsFz3TviwX0fK3TkCM8hRiSWiFAE7pfraEP99Hje0nd3NYb3L2eQwJyQgYDk/fsLtiSBXnMLpdkfdDiEhCQAqlKVCe4UtC7WVsuRBGKeXnNwPfbrxge4SP3JUXKeF9OrPbp7A6ByosJLIfmR+xozNu/6F4WstrIAOoCn8MV3AMV7sXJMTQyreLfraE+c2gEm4S2TN8gRXHRLg60p7XQ4FJ72fL3e8m+TLXQwyJovuyvg1bBpfsR/jiFR4qXmCjKQVNqbwrGYqZZXoANEOYiFd42P22lTdttazPJTkuuL6N+6MMxxJgQBFhOtJUPkRxDtgjbM+xSdhd2CTgNJbzBoB0yvezJTw+3Te2PT+7roWGkUmSGzQmCvYUqU0AF9tSAgwoImxQIXBEvWjAjQ02CaGglPdV3MC0ORkXXu3YaZBSnlI81Pqj25Wa8hgvz9NKHoBB6VTzAJ/EZvsh/ylocjcHgKryL89T7344PD7di0ICQLAY4hAa+/bApGF1DlQ42OOA2mIoBC7lz8+uK9epSHIOgtrA1te2fChh4rWAJlK6vS9qy+HU6JLyAAIPKMtFj0og1pv8fTT/3MgA6iOjucb3ORJ8sd7kcDIuvBOWVNgNghwJ9j07XCZ38+Bk6GRcsCHRVpgElcVjip9U+quZBBlQiRC7HA5BTO3ftfSNJcMVWqoEAMRvgHArQR8SpGMJV8VS9QADDRK0wREQlAg15Q0+U2SKOqIpkUsQnQr3syWsNzm7BJVAf+tM3l8UAVVX7/4uEIW9rAW6BG8PwPGfevCiagd4zHBNp9txgC6MYnjNAil3fzXL4hyomSA4BD6b8gBbA9pGbKUgklJB1wzCfRcf/hATELIF3pZlKfwafAGAWW2xZTJHQ0KQBzQNfq7NDglxW+Gb8XX1m21fFDMAqK8qX56nlfTZm4C2tsCNAhym02/ss58/CgCQJWciAuypz64B1F2d3qtLkSxhb7m8yN+tm4tLb8EhkHoR47IwB+PaPnVHr81RF7iPmnI1FTbSWHeBCxVOHhz/ZbnoqRDQxLj5aIhVm9A0VrggmgW44677xOXFR+gVkbVVUSZoV4dDDycXxcwSPsx6pqpsV4N8ZDPvqZTEpCGQEtzZpaZ3o5bDpqP1Jq/tzRlw9zXhY3XvIzISSMYI/GH7uJ30jDJ1jilEXgy14/JSl5O0d72v+XcZAMXVoJZAbaMzJTFfArWm5lYPSGhA29M64wEYXUu8DjjggAP+WfwFbdVchauoKhEAAAAASUVORK5CYII="
+};
+const ICONS={
+ "folder-open":'<path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/>',
+ "pencil":'<path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/>',
+ "eraser":'<path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/>',
+ "paint-bucket":'<path d="m19 11-8-8-8.6 8.6a2 2 0 0 0 0 2.8l5.2 5.2c.8.8 2 .8 2.8 0L19 11Z"/><path d="m5 2 5 5"/><path d="M2 13h15"/><path d="M22 20a2 2 0 1 1-4 0c0-1.6 1.7-2.4 2-4 .3 1.6 2 2.4 2 4Z"/>',
+ "paintbrush-vertical":'<path d="M10 2v2"/><path d="M14 2v4"/><path d="M17 2a1 1 0 0 1 1 1v9H6V3a1 1 0 0 1 1-1z"/><path d="M6 12a1 1 0 0 0-1 1v1a2 2 0 0 0 2 2h2a1 1 0 0 1 1 1v2.9a2 2 0 1 0 4 0V17a1 1 0 0 1 1-1h2a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1"/>',
+ "pipette":'<path d="m2 22 1-1h3l9-9"/><path d="M3 21v-3l9-9"/><path d="m15 6 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z"/>',
+ "square-dashed":'<path d="M5 3a2 2 0 0 0-2 2"/><path d="M19 3a2 2 0 0 1 2 2"/><path d="M21 19a2 2 0 0 1-2 2"/><path d="M5 21a2 2 0 0 1-2-2"/><path d="M9 3h1"/><path d="M9 21h1"/><path d="M14 3h1"/><path d="M14 21h1"/><path d="M3 9v1"/><path d="M21 9v1"/><path d="M3 14v1"/><path d="M21 14v1"/>',
+ "scissors":'<circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/>',
+ "flip-horizontal":'<path d="M8 3H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h3"/><path d="M16 3h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-3"/><path d="M12 20v2"/><path d="M12 14v2"/><path d="M12 8v2"/><path d="M12 2v2"/>',
+ "flip-vertical":'<path d="M21 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v3"/><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3"/><path d="M4 12H2"/><path d="M10 12H8"/><path d="M16 12h-2"/><path d="M22 12h-2"/>',
+ "square-dashed-mouse-pointer":'<path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.943.033z"/><path d="M5 3a2 2 0 0 0-2 2"/><path d="M19 3a2 2 0 0 1 2 2"/><path d="M5 21a2 2 0 0 1-2-2"/><path d="M9 3h1"/><path d="M9 21h2"/><path d="M14 3h1"/><path d="M3 9v1"/><path d="M21 9v2"/><path d="M3 14v1"/>',
+ "copy":'<rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+ "clipboard-paste":'<path d="M15 2H9a1 1 0 0 0-1 1v2c0 .6.4 1 1 1h6c.6 0 1-.4 1-1V3c0-.6-.4-1-1-1Z"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2M16 4h2a2 2 0 0 1 2 2v2M11 14h10"/><path d="m17 10 4 4-4 4"/>',
+ "minus":'<path d="M5 12h14"/>',
+ "plus":'<path d="M5 12h14"/><path d="M12 5v14"/>',
+ "undo":'<path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/>',
+ "redo":'<path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/>',
+ "grid-3x3":'<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/>',
+ "download":'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/>',
+ "upload":'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/>',
+ "file-image":'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><circle cx="10" cy="12" r="2"/><path d="m20 17-1.296-1.296a2.41 2.41 0 0 0-3.408 0L9 22"/>',
+ "trash-2":'<path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/>',
+ "chevron-down":'<path d="m6 9 6 6 6-6"/>',
+ "chevron-up":'<path d="m18 15-6-6-6 6"/>',
+ "layout-grid":'<rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/>',
+ "arrow-up-from-line":'<path d="m18 9-6-6-6 6"/><path d="M12 3v14"/><path d="M5 21h14"/>',
+ "arrow-down-to-line":'<path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/>',
+ "save":'<path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/>',
+ "send":'<path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/>',
+ "play":'<polygon points="6 3 20 12 6 21 6 3"/>',
+ "eye":'<path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/>'
+};
+function svgIcon(name,cls){return '<svg class="'+(cls||'i')+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+ICONS[name]+'</svg>';}
+document.querySelectorAll("svg[data-icon]").forEach(s=>{
+  s.setAttribute("viewBox","0 0 24 24"); s.setAttribute("fill","none"); s.setAttribute("stroke","currentColor");
+  s.setAttribute("stroke-width","2"); s.setAttribute("stroke-linecap","round"); s.setAttribute("stroke-linejoin","round");
+  s.innerHTML=ICONS[s.dataset.icon]||"";
+});
+
+// language buttons (EN/ES are live; the Arabic label mirrors the real app's header)
+document.querySelectorAll(".lang-slot").forEach(slot=>{
+  const b=document.createElement("button"); b.type="button"; b.dataset.langBtn=slot.dataset.slot;
+  b.textContent=slot.dataset.slot.toUpperCase(); if(slot.dataset.slot==="en") b.classList.add("active");
+  slot.replaceWith(b);
+});
+
+// palette (exact colors from the live app)
+const PAL={
+ color:["#ffffff","#73ff00","#fff700","#ffa200","#ff0000","#ff00a2","#8c00ff","#1e00ff","#00fffb","#000000"],
+ s1:["#878787","#008509","#828500","#856100","#850000","#850068","#5b0085","#0f0085","#006f85","#000000"],
+ s2:["#656565","#006307","#616300","#634900","#630000","#63004e","#440063","#0b0063","#005363","#000000"],
+ hi:["#ffffff","#c9ff99","#fffb99","#ffd899","#ff9999","#ff99d8","#d199ff","#a399ff","#99fffd","#999999"]
+};
+for(const [id,arr] of [["pal-color",PAL.color],["pal-s1",PAL.s1],["pal-s2",PAL.s2],["pal-hi",PAL.hi]]){
+  const el=document.getElementById(id);
+  arr.forEach(c=>{const d=document.createElement("span");d.className="sw";d.style.background=c;el.appendChild(d);});
+}
+
+const app=document.getElementById("app"), vp=document.getElementById("viewport"), right=document.getElementById("right"),
+      sprite=document.getElementById("sprite"), ghost=document.getElementById("ghost"), checker=document.getElementById("checker"),
+      grid=document.getElementById("grid"), onionToggle=document.getElementById("onionToggle"),
+      onionBody=document.getElementById("onionBody"), thumbsEl=document.getElementById("thumbs"),
+      previewImg=document.getElementById("previewImg"), frameCount=document.getElementById("frameCount"),
+      spotlight=document.getElementById("spotlight"), tip=document.getElementById("tip"),
+      cursor=document.getElementById("cursor"), coach=document.getElementById("coach");
+
+// STEPS
+const STEPS=[
+ {t:"Start with any still image",t2:"Empieza con cualquier imagen",
+  d:"We'll animate this little character here as our example — but the same steps work for anything you draw: a character, a tree swaying in the wind, a waving flag, any object. Click Next to see how it's done.",
+  d2:"Animaremos este personaje como ejemplo, pero los mismos pasos sirven para lo que dibujes: un personaje, un árbol movido por el viento, una bandera, cualquier objeto. Toca Siguiente para verlo.",
+  size:"32", frames:[], onion:false, target:"canvas", nodim:true},
+ {t:"Pick a canvas size",t2:"Elige el tamaño del lienzo",
+  d:"For our example we'll switch to a bigger 64×64 canvas so there's room for detail. You can choose any size up here that fits your image — 32×32 works fine too. It's your call.",
+  d2:"Para el ejemplo usaremos un lienzo más grande de 64×64 para tener espacio. Puedes elegir arriba el tamaño que quieras; 32×32 también sirve. Tú decides.",
+  size:"64", frames:[], onion:false, target:"size64"},
+ {t:"Import your image",t2:"Importa tu imagen",
+  d:"First, make sure your image is saved on your computer. You can't drag and drop it onto the canvas — you have to use the 'Import image to canvas' button to bring it in. It arrives as pixels you can edit.",
+  d2:"Primero, guarda tu imagen en la computadora. No puedes arrastrarla y soltarla en el lienzo: usa el botón 'Importar imagen al lienzo' para traerla. Llega como píxeles que puedes editar.",
+  size:"64", frames:["f1"], sel:0, onion:false, target:"import", tip:"Import image to canvas", tip2:"Importar imagen al lienzo"},
+ {t:"Duplicate the frame",t2:"Duplica el fotograma",
+  d:"An animation is just frames that each change a little. Click the copy button on your frame to make a second one — watch it appear along the bottom. It's an exact duplicate, ready to edit.",
+  d2:"Una animación son fotogramas que cambian un poco. Toca el botón de copiar en tu fotograma para crear un segundo; míralo aparecer abajo. Es una copia exacta, lista para editar.",
+  size:"64", startFrames:["f1"], frames:["f1","f1"], sel:1, onion:false, target:"frame-dup", action:"duplicate"},
+ {t:"Turn on onion skinning",t2:"Activa la piel de cebolla",
+  d:"Flip this on. Now the frame before shows through faintly, like tracing paper, so you can see where things were while you make small changes.",
+  d2:"Actívala. El fotograma anterior se ve tenue por detrás, como papel de calco, para guiarte al hacer cambios pequeños.",
+  size:"64", frames:["f1","f2a"], sel:1, onion:true, ghost:"f1", target:"onion"},
+ {t:"Select a part and nudge it",t2:"Selecciona una parte y muévela",
+  d:"With the Select tool you can grab any part of your image and move it a few pixels — here we swing the character's hands and bob the body. If moving a piece doesn't look right for your image, you can also just erase and redraw that part with the pencil instead. Either way, it's the small changes between frames that create the motion.",
+  d2:"Con la herramienta Seleccionar puedes tomar una parte de tu imagen y moverla unos píxeles; aquí movemos las manos y damos un leve rebote al cuerpo. Si mover una pieza no queda bien en tu imagen, también puedes borrarla y volver a dibujarla con el lápiz. En ambos casos, los cambios pequeños entre fotogramas crean el movimiento.",
+  size:"64", frames:["f1","f2"], sel:1, onion:true, ghost:"f1", target:"select"},
+ {t:"Repeat for more frames",t2:"Repite para más fotogramas",
+  d:"Copy, nudge, copy, nudge. Doing that a couple more times gives you a short loop — here we end up with four frames.",
+  d2:"Copia, mueve, copia, mueve. Un par de veces más y tienes un bucle corto; aquí terminamos con cuatro fotogramas.",
+  size:"64", frames:["f1","f2","f1","f4"], sel:3, onion:true, ghost:"f1", target:"addframe"},
+ {t:"Play it back",t2:"Reprodúcelo",
+  d:"Press play to watch your frames loop into a simple idle motion. Slide the FPS control to speed it up or slow it down.",
+  d2:"Toca reproducir para ver tus fotogramas en bucle con un leve movimiento. Usa el control de FPS para acelerarlo o hacerlo más lento.",
+  size:"64", frames:["f1","f2","f1","f4"], sel:3, onion:false, target:"play", preview:true, walk:true},
+ {t:"Export as a sprite sheet",t2:"Exporta como hoja de sprites",
+  d:"Click 'Export all frames as sprite sheet' to save every frame laid out side by side in one image. That's the format a game engine like Godot reads to play your animation.",
+  d2:"Toca 'Exportar todos los fotogramas como hoja de sprites' para guardar todos los fotogramas juntos en una sola imagen. Es el formato que un motor como Godot lee para reproducir tu animación.",
+  size:"64", frames:["f1","f2","f1","f4"], sel:3, onion:false, target:"spritesheet", tip:"Export all frames as sprite sheet", tip2:"Exportar todos los fotogramas como hoja de sprites"},
+ {t:"Export as an animated GIF",t2:"Exporta como GIF animado",
+  d:"Want a version that actually moves? Click 'Export animation as GIF' to save the whole loop as a GIF you can preview or share just about anywhere.",
+  d2:"¿Quieres una versión que se mueva? Toca 'Exportar animación como GIF' para guardar todo el bucle como un GIF que puedes ver o compartir casi donde sea.",
+  size:"64", frames:["f1","f2","f1","f4"], sel:3, onion:false, target:"gif", tip:"Export animation as GIF", tip2:"Exportar animación como GIF"},
+ {t:"Submit it to the platform",t2:"Envíala a la plataforma",
+  d:"Want to share it on Endless? Click 'Save & Submit'. It saves your animation file and opens the Endless platform in your browser, ready for you to post your creation. That's it — now try it with something of your own.",
+  d2:"¿Quieres compartirla en Endless? Toca 'Guardar y Enviar'. Guarda tu archivo de animación y abre la plataforma Endless en tu navegador para publicar tu creación. ¡Listo! Ahora inténtalo con algo tuyo.",
+  size:"64", frames:["f1","f2","f1","f4"], sel:3, onion:false, target:"save"}
+];
+let lang="en";
+// App labels match the live PixelStitch in each language.
+const LANG={
+ en:{subtitle:"Weave Pixel Art and Animations",open:"Open",save:"Save",canvas:"Canvas:",saveSubmit:"Save & Submit",
+     dragColors:"Drag colors to slots to customize palette",palColor:"COLOR",palS1:"COLOR SHADE 1",palS2:"COLOR SHADE 2",palHi:"HIGHLIGHT",
+     brushOpacity:"Brush Opacity",layers:"Layers",addLayer:"Add Layer",layer1:"Layer 1",opacity:"Opacity",onion:"Onion Skinning",
+     prevFrames:"Previous Frames",nextFrames:"Next Frames",onionOpacity:"Onion Opacity",animPreview:"Animation Preview",
+     animFrames:"Animation Frames",addFrame:"Add Frame",back:"Back",next:"Next",restart:"Restart",frame:"Frame"},
+ es:{subtitle:"Teje Arte Pixel y Animaciones",open:"Abrir",save:"Guardar",canvas:"Lienzo:",saveSubmit:"Guardar y Enviar",
+     dragColors:"Arrastra colores a los espacios para personalizar la paleta",palColor:"COLOR",palS1:"TONO DE COLOR 1",palS2:"TONO DE COLOR 2",palHi:"RESALTADO",
+     brushOpacity:"Opacidad del Pincel",layers:"Capas",addLayer:"Añadir Capa",layer1:"Capa 1",opacity:"Opacidad",onion:"Piel de Cebolla",
+     prevFrames:"Fotogramas Anteriores",nextFrames:"Fotogramas Siguientes",onionOpacity:"Opacidad de Cebolla",animPreview:"Vista Previa de Animación",
+     animFrames:"Fotogramas de Animación",addFrame:"Añadir Fotograma",back:"Atrás",next:"Siguiente",restart:"Reiniciar",frame:"Fotograma"}
+};
+
+const W=1520, H=1000;
+let prevOnion=false, scale=1, cur=0, previewTimer=null, canvasTimer=null, revealTimer=null, placeTimer=null;
+
+function fit(){
+  vp.style.bottom=(coach.offsetHeight+24)+"px";
+  const aw=vp.clientWidth-16, ah=vp.clientHeight-8;
+  scale=Math.max(.1,Math.min(aw/W, ah/H));
+  app.style.transform="scale("+scale+")";
+  app.style.left=Math.round((vp.clientWidth-W*scale)/2)+"px";
+  app.style.top=Math.max(4,Math.round((vp.clientHeight-H*scale)/2))+"px";
+}
+function stopCanvasWalk(){ if(canvasTimer){clearInterval(canvasTimer);canvasTimer=null;} }
+function setGrid(size){
+  const cell=420/parseInt(size,10);
+  grid.style.backgroundSize=cell+"px "+cell+"px";
+  checker.style.backgroundSize=(cell*2)+"px "+(cell*2)+"px";
+  checker.style.backgroundPosition="0 0,"+cell+"px "+cell+"px";
+}
+function renderThumbs(frames,sel,newIdx){
+  thumbsEl.innerHTML="";
+  frames.forEach((f,i)=>{
+    const t=document.createElement("div"); t.className="thumb"+(i===sel?" sel":"")+(i===newIdx?" new":"");
+    if(i===0) t.setAttribute("data-tour-dup","1");
+    t.innerHTML='<div class="pic dcheck"><img alt="" src="'+F[f]+'"></div>'+
+      '<div class="meta"><span>'+LANG[lang].frame+' '+(i+1)+'</span><span class="ic dup">'+svgIcon("copy")+'</span><span class="ic">'+svgIcon("trash-2")+'</span></div>';
+    thumbsEl.appendChild(t);
+  });
+}
+function stopPreview(){ if(previewTimer){clearInterval(previewTimer);previewTimer=null;} previewImg.style.opacity=0; }
+function startPreview(frames){
+  stopPreview(); let i=0; previewImg.style.opacity=1;
+  const seq=frames.length?frames:["f1"];
+  previewImg.src=F[seq[0]];
+  previewTimer=setInterval(()=>{ i=(i+1)%seq.length; previewImg.src=F[seq[i]]; },140);
+}
+
+function moveCursorTo(sel){
+  const el = sel==="frame-dup" ? document.querySelector('[data-tour-dup] .dup') : document.querySelector('[data-tour="'+sel+'"]');
+  if(placeTimer){clearTimeout(placeTimer);placeTimer=null;}
+  if(!el){ spotlight.classList.remove("on"); tip.classList.remove("on"); return; }
+  const place=()=>{
+    const r=el.getBoundingClientRect(), pad=6;
+    spotlight.style.left=(r.left-pad)+"px"; spotlight.style.top=(r.top-pad)+"px";
+    spotlight.style.width=(r.width+pad*2)+"px"; spotlight.style.height=(r.height+pad*2)+"px";
+    spotlight.classList.add("on");
+    spotlight.classList.toggle("nodim", !!STEPS[cur].nodim);
+    const cx=r.left+r.width/2, cy=r.top+r.height/2;
+    cursor.style.transform="translate("+(cx-2)+"px,"+(cy-2)+"px)";
+    cursor.classList.remove("click"); void cursor.offsetWidth; cursor.classList.add("click");
+    const tt = lang==="es" ? STEPS[cur].tip2 : STEPS[cur].tip;
+    if(tt){
+      tip.textContent=tt; tip.classList.add("on");
+      const th=tip.offsetHeight, tw=tip.offsetWidth;
+      let top=r.top-pad-th-8; if(top<8) top=r.bottom+pad+8;
+      let left=cx-tw/2; left=Math.max(8,Math.min(left,window.innerWidth-tw-8));
+      tip.style.top=top+"px"; tip.style.left=left+"px";
+    } else tip.classList.remove("on");
+  };
+  if(right.contains(el)){
+    const er=el.getBoundingClientRect(), rr=right.getBoundingClientRect();
+    const want=right.scrollTop+((er.top-rr.top)-(rr.height-er.height)/2)/scale;
+    const target=Math.max(0,Math.min(want,right.scrollHeight-right.clientHeight));
+    if(Math.abs(target-right.scrollTop)>1){ right.scrollTop=target; placeTimer=setTimeout(place,420); return; }
+  }
+  place();
+}
+
+function render(){
+  const s=STEPS[cur];
+  if(revealTimer){clearTimeout(revealTimer);revealTimer=null;}
+  document.querySelectorAll(".size").forEach(b=>b.classList.toggle("active", b.dataset.size===s.size));
+  setGrid(s.size);
+  stopCanvasWalk();
+  if(s.frames && s.frames.length){
+    sprite.src=F[s.frames[s.sel]]; sprite.style.opacity=1;
+    if(s.walk){ let i=s.sel; canvasTimer=setInterval(()=>{ i=(i+1)%s.frames.length; sprite.src=F[s.frames[i]]; },150); }
+  } else { sprite.style.opacity=0; }
+  if(s.onion && s.ghost){ ghost.src=F[s.ghost]; ghost.style.opacity=0.4; } else { ghost.style.opacity=0; }
+  const onionChanged = !!s.onion !== prevOnion; prevOnion = !!s.onion;
+  onionToggle.classList.toggle("on", !!s.onion);
+  onionBody.classList.toggle("show", !!s.onion);
+  if(!s.onion && !right.contains(document.querySelector('[data-tour="'+s.target+'"]'))) right.scrollTop=0;
+  const fr=LANG[lang].frame;
+  if(s.action==="duplicate" && s.startFrames){
+    renderThumbs(s.startFrames, 0);
+    frameCount.textContent=fr+" 1 / "+s.startFrames.length;
+    revealTimer=setTimeout(()=>{
+      renderThumbs(s.frames, s.sel, s.sel);
+      frameCount.textContent=fr+" "+(s.sel+1)+" / "+s.frames.length;
+      moveCursorTo(s.target);
+    }, 2100);
+  } else {
+    const sel=s.sel!=null?s.sel:0;
+    renderThumbs(s.frames.length?s.frames:[], sel);
+    frameCount.textContent=fr+" "+(sel+1)+" / "+Math.max(1,s.frames.length);
+  }
+  if(s.preview) startPreview(s.frames); else stopPreview();
+  document.getElementById("stepNo").textContent=cur+1;
+  document.getElementById("coachTitle").textContent = lang==="es" ? s.t2 : s.t;
+  document.getElementById("coachDesc").textContent  = lang==="es" ? s.d2 : s.d;
+  const back=document.getElementById("backBtn"), next=document.getElementById("nextBtn");
+  back.disabled = cur===0; back.textContent=LANG[lang].back;
+  next.textContent = cur===STEPS.length-1 ? LANG[lang].restart : LANG[lang].next;
+  const dots=document.getElementById("dots"); dots.innerHTML="";
+  STEPS.forEach((_,i)=>{const d=document.createElement("span"); if(i===cur) d.className="on"; dots.appendChild(d);});
+  fit();
+  requestAnimationFrame(()=>setTimeout(()=>moveCursorTo(s.target), onionChanged ? 360 : 40));
+}
+
+function applyLang(){
+  document.documentElement.lang=lang;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{ el.textContent=LANG[lang][el.dataset.i18n]; });
+  document.querySelectorAll("[data-lang-btn]").forEach(b=>b.classList.toggle("active", b.dataset.langBtn===lang));
+}
+document.querySelectorAll("[data-lang-btn]").forEach(b=>{
+  b.addEventListener("click",()=>{ lang=b.dataset.langBtn; applyLang(); render(); });
+});
+document.getElementById("nextBtn").onclick=()=>{ cur=(cur+1)%STEPS.length; render(); };
+document.getElementById("backBtn").onclick=()=>{ if(cur>0){cur--;render();} };
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight") document.getElementById("nextBtn").click();
+  if(e.key==="ArrowLeft") document.getElementById("backBtn").click();
+});
+let resizeT=null;
+window.addEventListener("resize",()=>{ fit(); clearTimeout(resizeT); resizeT=setTimeout(()=>moveCursorTo(STEPS[cur].target),60); });
+applyLang(); render();
+</script>
+<div class="eg-backlink"><a href="https://studio.endlessstudios.com/programs/3942356/?progTab=Topics">← Back to Explore: Godot - Topics</a></div>
+<script>/* EG-BACKLINK-I18N v1 — pill text + platform program URL follow the page language (EN→program 3942356/Topics, ES→program 4093976/Temas) */(function(){var a=document.querySelector(".eg-backlink a");if(!a)return;var EN={h:"https://studio.endlessstudios.com/programs/3942356/?progTab=Topics",t:"← Back to Explore: Godot - Topics"},ES={h:"https://studio.endlessstudios.com/programs/4093976/?progTab=Temas",t:"← Volver a Explore: Godot - Temas"};function s(){var o=(document.documentElement.lang==="es")?ES:EN;a.textContent=o.t;a.setAttribute("href",o.h);}s();new MutationObserver(s).observe(document.documentElement,{attributes:true,attributeFilter:["lang","data-lang"]});})();</script>
+<script>/* EG-LANG-PARAM v1 — open in the language the link asks for: ?lang=es or ?lang=en (drives the page's own EN/ES toggle) */(function(){var p;try{p=new URLSearchParams(location.search).get("lang");}catch(e){return;}if(p!=="en"&&p!=="es")return;var b=document.querySelector('[data-lang-btn="'+p+'"]');if(b&&!b.classList.contains("active"))b.click();})();</script>
+
+</body>
+</html>
